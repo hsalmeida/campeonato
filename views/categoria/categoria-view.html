@@ -1,0 +1,33 @@
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Admin</a></li>
+  <li class="#">Categorias</li>
+  <li class="active">Categoria XPTO</li>
+</ol>
+<div>
+  <table class="table">
+    <tr>
+      <td><h3>Detalhes da Categoria {{categoria.nome}}</h3></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Nome</td>
+      <td>{{categoria.nome}}</td>
+    </tr>
+    <tr>
+      <td>Idade</td>
+      <td>{{movie.director}}</td>
+    </tr>
+    <tr>
+      <td>Release Year</td>
+      <td>{{movie.releaseYear}}</td>
+    </tr>
+    <tr>
+      <td>Movie Genre</td>
+      <td>{{movie.genre}}</td>
+    </tr>
+  </table>
+  <div>
+    <a class="btn btn-primary" ui-sref="editMovie({id:movie._id})">Edit</a>
+  </div>
+</div>

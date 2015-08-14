@@ -1,0 +1,39 @@
+<div ng-controller="CompetidoresController" ng-init="viewInit()">
+  <table class="table">
+    <tr>
+      <td><h3>Competidor: {{competidor.nome}}</h3></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Academia</td>
+      <td>{{competidor.academia}}</td>
+    </tr>
+    <tr>
+      <td>Estado/Pais</td>
+      <td>{{competidor.estado.name}} {{competidor.pais.name}}</td>
+    </tr>
+    <tr>
+      <td>Idade</td>
+      <td>{{competidor.idade}}</td>
+    </tr>
+    <tr>
+      <td>Sexo</td>
+      <td>{{competidor.sexo}}</td>
+    </tr>
+    <tr>
+      <td>Graduação</td>
+      <td>{{competidor.graduacao}}</td>
+    </tr>
+    <tr>
+      <td>Peso</td>
+      <td>{{competidor.peso}}</td>
+    </tr>
+    <tr>
+      <td>Disputa</td>
+      <td>{{competidor.formato}}</td>
+    </tr>
+  </table>
+  <div>
+    <a class="btn btn-primary" ui-sref="editCompetidor({id:movie._id})">Editar</a>
+  </div>
+</div>

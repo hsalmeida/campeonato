@@ -1,0 +1,26 @@
+[
+  {
+    "_id" : 1,
+    "nome":"Competidor",
+    "academia": "Arena Fight Vilda da Penha",
+    "pais" : {"name": "Brasil","code": "BR"},
+    "estado": {"name": "Rio de Janeiro","code": "RJ"},
+    "idade" : 20,
+    "sexo": "m",
+    "graduacao": 1,
+    "peso": 36.6,
+    "formato": 0
+  },
+  {
+    "_id": 2,
+    "nome":"Competidor2",
+    "academia": "Monte Sinai",
+    "pais" : {"name": "Brasil","code": "BR"},
+    "estado": {"name": "Rio de Janeiro","code": "RJ"},
+    "idade" : 17,
+    "sexo": "m",
+    "graduacao": 6,
+    "peso": 25,
+    "formato": 2
+  }
+]

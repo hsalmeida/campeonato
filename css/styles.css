@@ -1,0 +1,35 @@
+.principia {
+  margin: 25px;
+}
+
+.categoria-form {
+  margin : 20px;
+  max-width: 450px;
+}
+
+.competidor-form {
+  margin : 20px;
+  max-width: 450px;
+}
+
+#idadeSlider .slider-selection {
+	background: #BABABA;
+}
+
+#graduacaoSlider .slider-selection {
+	background: #BABABA;
+}
+
+#pesoSlider .slider-selection {
+	background: #BABABA;
+}
+
+.thumbnail h3 {
+  text-align: center;
+}
+
+.thumbnail img {
+  height: 200px;
+  width: 200px;
+  display: block;
+}

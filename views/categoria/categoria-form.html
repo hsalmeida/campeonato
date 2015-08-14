@@ -1,0 +1,74 @@
+
+<div class="categoria-form">
+  <div class="form-group">
+    <label>Nome:</label>
+    <input type="text" ng-model="categoria.nome" class="form-control" placeholder="Nome" aria-describedby="basic-addon1">
+  </div>
+
+  <div class="form-group">
+    <label>Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos</label>
+    <span slider id="idadeSlider"
+      ng-model="categoria.idade" 
+      min="idadeOptions.min" 
+      step="idadeOptions.step" 
+      max="idadeOptions.max" 
+      value="valorIdade"
+      tooltip="hide"
+      range="range"
+      tooltipseparator="{{ idadeOptions.tooltipseparator }}"
+      tooltipsplit="{{ idadeOptions.tooltipsplit }}">
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="sel1">Sexo:</label>
+    <select class="form-control" ng-model="categoria.sexo" id="sel1">
+      <option value="m">Masculino</option>
+      <option value="f">Feminino</option>
+      <option value="i">Indiferente</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Graduação de 
+      <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/> 
+      {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate 
+      <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/> 
+      {{ listaGraduacoes[categoria.graduacao[1] - 1] }}</label>
+    
+    <span slider id="graduacaoSlider"
+      ng-model="categoria.graduacao" 
+      min="graduacaoOption.min" 
+      step="graduacaoOption.step" 
+      max="graduacaoOption.max" 
+      value="valorGraduacao"
+      tooltip="hide"
+      range="range">
+    </span>
+  </div>
+  
+  <div class="form-group">
+    <label>Peso de {{categoria.peso[0]}} ate {{categoria.peso[1]}} quilos </label>
+    
+    <span slider id="pesoSlider"
+      ng-model="categoria.peso"
+      min="pesoOption.min"
+      step="pesoOption.step"
+      max="pesoOption.max"
+      value="valorPeso"
+      tooltip="hide"
+      range="range">
+    </span>
+  </div>
+  
+  <div class="form-group">
+    <label>Formato da Categoria:</label>
+    <br/>
+    <label class="radio-inline"><input type="radio" ng-model="categoria.formato" value="0" name="optradio">Luta</label>
+    <label class="radio-inline"><input type="radio" ng-model="categoria.formato" value="1" name="optradio">Forma</label>
+  </div>
+
+<button type="button" class="btn btn-primary">Salvar</button>
+<button type="button" class="btn btn-warning">Cancelar</button>
+  
+</div>

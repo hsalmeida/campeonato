@@ -1,0 +1,11 @@
+<div data-ng-controller="CategoriasController" data-ng-init="init()">
+  <ol class="breadcrumb">
+    <li><a href="">Home</a></li>
+    <li><a href="#">Admin</a></li>
+    <li><a href="categorias">Categorias</a></li>
+    <li class="active">Criando Categoria</li>
+  </ol>
+  <form class="form-horizontal" role="form" ng-submit="addCategoria()">
+    <div ng-include="'views/categoria/categoria-form.html'"></div>
+  </form>
+</div>
