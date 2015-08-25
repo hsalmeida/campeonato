@@ -1,4 +1,7 @@
 campeonato
-    .factory('Competidor',function($resource){
-        return $resource('js/components/services/competidores.json', {id : '@_id'});
+    .factory('Competidores', function($mongolabResourceHttp){
+        return $mongolabResourceHttp('competidores');
+    })
+    .factory('Categorias', function($mongolabResourceHttp) {
+        return $mongolabResourceHttp('categorias');
     });

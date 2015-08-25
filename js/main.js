@@ -1,6 +1,7 @@
 var campeonato = angular.module('campeonato', [
-	'ui.router','ngResource', 'categorias', 'admin', 'grade', 'ui.bootstrap-slider'
+	'ui.router','ngResource', 'categorias', 'admin', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp'
 ])
+.constant('MONGOLAB_CONFIG',{API_KEY:'YXgR-q92vuVCKlSm-ji3nplDTE7rHIQh', DB_NAME:'ltdb'})
 .config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise("/");
 
