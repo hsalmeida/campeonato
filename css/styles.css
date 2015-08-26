@@ -33,3 +33,13 @@
   width: 200px;
   display: block;
 }
+
+.list-competidores {
+  width: 66.66%;
+  min-width: 640px;
+}
+
+.competidor-view {
+  width: 66.66%;
+  min-width: 540px;
+}
