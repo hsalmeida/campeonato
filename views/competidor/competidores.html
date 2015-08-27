@@ -4,14 +4,20 @@
     <li><a href="#/admin">Admin</a></li>
     <li class="active">Competidores</li>
   </ol>
-  <div><h1 class="page-header">Lista de competidores</h1></div>
+  <div>
+    <h1 class="page-header">
+      Lista de competidores
+      <button class="btn btn-lg btn-info" ui-sref="newCompetidor" >Novo</button>
+    </h1>
+
+  </div>
 
   <div class="list-group list-competidores">
     <div class="list-group-item" ng-repeat="competidor in competidores">
       <h4 class="list-group-item-heading">
-        <a href="#/competidores/{{competidor._id}}/view">{{competidor.nome}}</a>
+        <a href="#/competidores/{{competidor._id.$oid}}/view">{{competidor.nome}}</a>
         <span class="pull-right">
-          <button class="btn btn-lg btn-info" ui-sref="editCompetidor({id:competidor._id})" >Editar</button>
+          <button class="btn btn-lg btn-info" ui-sref="editCompetidor({id:competidor._id.$oid})" >Editar</button>
           <button class="btn btn-lg btn-warning">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
@@ -22,7 +28,7 @@
         {{parseEstado(competidor.estado.name)}}
         {{competidor.pais.name}} - {{parseSexo(competidor.sexo)}} - {{competidor.peso}}Kg<br/>
         <img src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
-        {{listaFormatos[competidor.formato]}}
+         - {{listaFormatos[competidor.formato]}}
       </p>
     </div>
   </div>

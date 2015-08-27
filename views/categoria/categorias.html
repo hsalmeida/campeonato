@@ -1,8 +1,38 @@
-<ol class="breadcrumb">
-  <li><a href="#/">Home</a></li>
-  <li><a href="#/admin">Admin</a></li>
-  <li class="active">Categorias</li>
-</ol>
-<div>
-  lista de categorias
+<div ng-controller="CategoriasController" ng-init="initList()">
+  <ol class="breadcrumb">
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/admin">Admin</a></li>
+    <li class="active">Categorias</li>
+  </ol>
+  <div>
+    <h1 class="page-header">
+      Lista de Categorias
+      <button class="btn btn-lg btn-info" ui-sref="newCategoria">Nova</button>
+    </h1>
+
+    <div class="list-group list-competidores">
+      <div class="list-group-item" ng-repeat="categoria in categorias">
+        <h4 class="list-group-item-heading">
+          <a href="#/categorias/{{categoria._id.$oid}}/view">
+            {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
+          </a>
+        <span class="pull-right">
+          <button class="btn btn-lg btn-info" ui-sref="editCategoria({id:categoria._id.$oid})" >Editar</button>
+          <button class="btn btn-lg btn-warning">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </span>
+        </h4>
+        <p class="list-group-item-text">
+          Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos - {{parseSexo(categoria.sexo)}}<br />
+          Graduação de
+          <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
+          {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
+          <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
+          {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
+        </p>
+      </div>
+    </div>
+    
+  </div>
 </div>

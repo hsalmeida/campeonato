@@ -1,4 +1,10 @@
 <div ng-controller="CompetidoresController" ng-init="viewInit()">
+  <ol class="breadcrumb">
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/admin">Admin</a></li>
+    <li><a href="#/competidores">Competidores</a></li>
+    <li class="active">Visualizando {{competidor.nome}}</li>
+  </ol>
   <h3>{{competidor.nome}}</h3>
   <div class="table-responsive">
     <table class="table">
@@ -33,6 +39,6 @@
     </table>
   </div>
   <div>
-    <a class="btn btn-lg btn-primary" ui-sref="editCompetidor({id:competidor._id})">Editar</a>
+    <a class="btn btn-lg btn-primary" ui-sref="editCompetidor({id:competidor._id.$oid})">Editar</a>
   </div>
 </div>

@@ -1,33 +1,45 @@
-<ol class="breadcrumb">
-  <li><a href="#">Home</a></li>
-  <li><a href="#">Admin</a></li>
-  <li class="#">Categorias</li>
-  <li class="active">Categoria XPTO</li>
-</ol>
-<div>
-  <table class="table">
-    <tr>
-      <td><h3>Detalhes da Categoria {{categoria.nome}}</h3></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Nome</td>
-      <td>{{categoria.nome}}</td>
-    </tr>
-    <tr>
-      <td>Idade</td>
-      <td>{{movie.director}}</td>
-    </tr>
-    <tr>
-      <td>Release Year</td>
-      <td>{{movie.releaseYear}}</td>
-    </tr>
-    <tr>
-      <td>Movie Genre</td>
-      <td>{{movie.genre}}</td>
-    </tr>
-  </table>
+<div ng-controller="CompetidoresController" ng-init="viewInit()">
+  <ol class="breadcrumb">
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/admin">Admin</a></li>
+    <li><a href="#/categorias">Categorias</a></li>
+    <li class="active">Visualizando {{categoria.nome}}</li>
+  </ol>
+  <h3>{{categoria.nome}}</h3>
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <td>Idade</td>
+        <td>
+          {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos
+        </td>
+      </tr>
+      <tr>
+        <td>Sexo</td>
+        <td>{{parseSexo(categoria.sexo)}}</td>
+      </tr>
+      <tr>
+        <td>Graduação</td>
+        <td>
+          <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
+          {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
+          <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
+          {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
+        </td>
+      </tr>
+      <tr>
+        <td>Peso</td>
+        <td>
+          {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
+        </td>
+      </tr>
+      <tr>
+        <td>Disputa</td>
+        <td>{{listaFormatos[categoria.formato]}}</td>
+      </tr>
+    </table>
+  </div>
   <div>
-    <a class="btn btn-primary" ui-sref="editMovie({id:movie._id})">Edit</a>
+    <a class="btn btn-lg btn-primary" ui-sref="editCompetidor({id:categoria._id.$oid})">Editar</a>
   </div>
 </div>
