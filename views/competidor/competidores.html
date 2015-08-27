@@ -11,7 +11,7 @@
       <h4 class="list-group-item-heading">
         <a href="#/competidores/{{competidor._id}}/view">{{competidor.nome}}</a>
         <span class="pull-right">
-          <button class="btn btn-lg btn-info" go-click="editCompetidor:{{competidor._id}}">Editar</button>
+          <button class="btn btn-lg btn-info" ui-sref="editCompetidor({id:competidor._id})" >Editar</button>
           <button class="btn btn-lg btn-warning">
             <span class="glyphicon glyphicon-trash"></span>
           </button>

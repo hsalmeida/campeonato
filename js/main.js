@@ -61,22 +61,4 @@ var campeonato = angular.module('campeonato', [
 			templateUrl: "views/grade.html",
 			controller: "GradeController"
 		});
-})
-.directive( 'goClick', function ( $state ) {
-	return function ( scope, element, attrs ) {
-		var path;
-		var _id;
-
-		attrs.$observe( 'goClick', function (val) {
-			var split = val.split(':');
-			path = split[0];
-			_id = split[1];
-		});
-
-		element.bind( 'click', function () {
-			scope.$apply( function () {
-				$state.go( path, {"id" : _id});
-			});
-		});
-	};
 });

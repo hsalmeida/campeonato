@@ -58,10 +58,8 @@ campeonato
             formato: 0
           };
           
-
-          
           $scope.addCompetidor = function (){
-            
+            $scope.competidor.$save();
           };
 
         };
@@ -86,8 +84,6 @@ campeonato
             $scope.competidor.$saveOrUpdate(changeSuccess, changeSuccess, changeError, changeError);
           };
         };
-
-
 
         $scope.viewInit = function(){
           Competidores.getById($stateParams.id).then(function(competidor){
