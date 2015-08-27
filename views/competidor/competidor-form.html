@@ -56,7 +56,7 @@
   
   <div class="form-group">
     <label>Peso:</label>
-    <input type="number" ng-model="competidor.peso" class="form-control" placeholder="Peso (exemplo 36,6)" aria-describedby="basic-addon2">
+    <input type="number" step="any" ng-model="competidor.peso" class="form-control" placeholder="Peso (exemplo 36,6)" aria-describedby="basic-addon2">
   
   </div>
   
@@ -69,6 +69,6 @@
   </div>
 
   <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
-  <button type="button" go-click="competidores:0" class="btn btn-lg btn-warning">Cancelar</button>
+  <button type="button" ui-sref="competidores" class="btn btn-lg btn-warning">Cancelar</button>
   
 </div>

@@ -1,5 +1,5 @@
 var campeonato = angular.module('campeonato', [
-	'ui.router','ngResource', 'categorias', 'admin', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp'
+	'ui.router','ngResource', 'admin', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp'
 ])
 .constant('MONGOLAB_CONFIG',{API_KEY:'YXgR-q92vuVCKlSm-ji3nplDTE7rHIQh', DB_NAME:'ltdb'})
 .config(function($stateProvider, $urlRouterProvider) {
@@ -61,22 +61,4 @@ var campeonato = angular.module('campeonato', [
 			templateUrl: "views/grade.html",
 			controller: "GradeController"
 		});
-})
-.directive( 'goClick', function ( $state ) {
-	return function ( scope, element, attrs ) {
-		var path;
-		var _id;
-
-		attrs.$observe( 'goClick', function (val) {
-			var split = val.split(':');
-			path = split[0];
-			_id = split[1];
-		});
-
-		element.bind( 'click', function () {
-			scope.$apply( function () {
-				$state.go( path, {"id" : _id});
-			});
-		});
-	};
 });

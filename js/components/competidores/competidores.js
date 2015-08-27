@@ -1,6 +1,6 @@
 campeonato
 	.controller('CompetidoresController', 
-		['$scope', 'Competidores', '$stateParams', function($scope, Competidores, $stateParams, $stateProvider){
+		['$scope', 'Competidores', '$stateParams', '$state', function($scope, Competidores, $stateParams, $state){
 
           $scope.listaFormatos = ['Luta', 'Forma', 'Ambas (Forma e Luta)'];
 
@@ -46,35 +46,26 @@ campeonato
           
           buildCompetidor($scope);
 
-          $scope.competidor = {
-            nome: "",
-            academia : "",
-            pais: {"name": "Brasil","code": "BR","continent": "South America","filename": "brasil"},
-            estado: {"name": "Rio de Janeiro","code": "RJ"},
-            idade : 20,
-            sexo: "m",
-            graduacao: 1,
-            peso: 36.6,
-            formato: 0
-          };
-          
+          $scope.competidor = new Competidores();
 
-          
+          $scope.competidor.nome = "";
+          $scope.competidor.academia = "";
+          $scope.competidor.pais = {"name": "Brasil","code": "BR","continent": "South America","filename": "brasil"};
+          $scope.competidor.estado = {"name": "Rio de Janeiro","code": "RJ"};
+          $scope.competidor.idade = 20;
+          $scope.competidor.sexo = "m";
+          $scope.competidor.graduacao = 1;
+          $scope.competidor.peso = 36.6;
+          $scope.competidor.formato = 0;
+
           $scope.addCompetidor = function (){
-            
+            $scope.competidor.$save();
+            $state.go('competidores');
           };
 
         };
 
         $scope.initEdit = function(){
-
-          var changeSuccess = function() {
-            $stateProvider.go('competidores');
-          };
-
-          var changeError = function() {
-            throw new Error('Sth went wrong...');
-          };
 
           buildCompetidor($scope);
           Competidores.getById($stateParams.id).then(function(competidor){
@@ -82,12 +73,10 @@ campeonato
           });
 
           $scope.editCompetidor = function (){
-            console.log($scope.competidor);
-            $scope.competidor.$saveOrUpdate(changeSuccess, changeSuccess, changeError, changeError);
+            $scope.competidor.$saveOrUpdate();
+            $state.go('competidores');
           };
         };
-
-
 
         $scope.viewInit = function(){
           Competidores.getById($stateParams.id).then(function(competidor){
