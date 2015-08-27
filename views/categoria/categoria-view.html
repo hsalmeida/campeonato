@@ -1,4 +1,4 @@
-<div ng-controller="CompetidoresController" ng-init="viewInit()">
+<div ng-controller="CategoriasController" ng-init="viewInit()">
   <ol class="breadcrumb">
     <li><a href="#/">Home</a></li>
     <li><a href="#/admin">Admin</a></li>
@@ -19,7 +19,7 @@
         <td>{{parseSexo(categoria.sexo)}}</td>
       </tr>
       <tr>
-        <td>Graduação</td>
+        <td>GraduaÃ§Ã£o</td>
         <td>
           <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
@@ -40,6 +40,6 @@
     </table>
   </div>
   <div>
-    <a class="btn btn-lg btn-primary" ui-sref="editCompetidor({id:categoria._id.$oid})">Editar</a>
+    <a class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})">Editar</a>
   </div>
 </div>

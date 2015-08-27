@@ -2,37 +2,6 @@ campeonato
     .controller('CategoriasController',
     ['$scope', 'Categorias', '$stateParams', '$state', function($scope, Categorias, $stateParams, $state){
 
-      function buildCategoria($scope){
-        $scope.range = true;
-
-        $scope.idadeOptions = {
-          min: 1,
-          max: 100,
-          step: 1,
-          orientation: 'horizontal',
-          tooltipseparator: ':',
-          tooltipsplit: false
-        };
-        $scope.valorIdade = [2, 20];
-
-        $scope.graduacaoOption = {
-          min: 1,
-          max: 16,
-          step: 1,
-          orientation: 'horizontal',
-          tooltipseparator: ':',
-          tooltipsplit: false
-        };
-        $scope.valorGraduacao = [1, 3];
-
-        $scope.pesoOption = {
-          min: 1,
-          max: 200,
-          step: 0.5
-        };
-        $scope.valorPeso = [20, 40];
-      }
-
       $scope.listaGraduacoes =
           ['Branca','Ponta Amarela',
             'Amarela','Ponta Verde',
@@ -48,6 +17,41 @@ campeonato
 
       $scope.objSexo = {"m" : "Masculino", "f" : "Feminino", "i" : "Indiferente"};
 
+      function buildCategoria($scope, buildDefault){
+        $scope.range = true;
+
+        $scope.idadeOptions = {
+          min: 1,
+          max: 100,
+          step: 1,
+          orientation: 'horizontal',
+          tooltipseparator: ':',
+          tooltipsplit: false
+        };
+
+        $scope.graduacaoOption = {
+          min: 1,
+          max: 16,
+          step: 1,
+          orientation: 'horizontal',
+          tooltipseparator: ':',
+          tooltipsplit: false
+        };
+
+        $scope.pesoOption = {
+          min: 1,
+          max: 200,
+          step: 0.5
+        };
+
+        if(buildDefault) {
+          $scope.valorIdade = [2, 20];
+          $scope.valorGraduacao = [1, 3];
+          $scope.valorPeso = [20, 40];
+        }
+
+      }
+
       $scope.initList = function(){
         Categorias.all().then(function(categorias){
           $scope.categorias = categorias;
@@ -57,13 +61,26 @@ campeonato
 
       $scope.viewInit = function(){
         Categorias.getById($stateParams.id).then(function(categorias){
-          $scope.categorias = categorias;
+          $scope.categoria = categorias;
         });
+      };
+
+      $scope.initEdit = function(){
+
+        buildCategoria($scope, false);
+        Categorias.getById($stateParams.id).then(function(categorias){
+          $scope.categoria = categorias;
+        });
+
+        $scope.editCatergoria = function (){
+          $scope.categoria.$saveOrUpdate();
+          $state.go('categorias');
+        };
       };
 
       $scope.init = function() {
         //define que o slide vai ser range
-        buildCategoria($scope);
+        buildCategoria($scope, true);
 
         $scope.categoria = new Categorias();
 
