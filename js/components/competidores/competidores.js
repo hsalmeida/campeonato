@@ -84,6 +84,15 @@ campeonato
           });
         };
         $scope.initList = function(){
+
+          $scope.predicate = 'nome';
+          $scope.reverse = false;
+
+          $scope.order = function(predicate) {
+            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+            $scope.predicate = predicate;
+          };
+
           Competidores.all().then(function(competidores){
             $scope.competidores = competidores;
           });
