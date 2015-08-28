@@ -1,4 +1,4 @@
-<div data-ng-controller="CategoriasController" data-ng-init="initEdit()">
+<div data-ng-controller="CategoriasController">
   <ol class="breadcrumb">
     <li><a href="#/">Home</a></li>
     <li><a href="#/admin">Admin</a></li>
@@ -6,6 +6,6 @@
     <li class="active">Editar Categoria {{categoria.nome}}</li>
   </ol>
   <form class="form-horizontal" role="form" ng-submit="updateCategoria()">
-    <div ng-include="'views/categoria/categoria-form.html'"></div>
+    <div ng-include="'views/categoria/categoria-form.html'" onload="initEdit()"></div>
   </form>
 </div>

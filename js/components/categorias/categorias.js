@@ -17,25 +17,19 @@ campeonato
 
       $scope.objSexo = {"m" : "Masculino", "f" : "Feminino", "i" : "Indiferente"};
 
-      function buildCategoria($scope, buildDefault){
+      function buildCategoria($scope, buildDefault, categoria){
         $scope.range = true;
 
         $scope.idadeOptions = {
           min: 1,
           max: 100,
-          step: 1,
-          orientation: 'horizontal',
-          tooltipseparator: ':',
-          tooltipsplit: false
+          step: 1
         };
 
         $scope.graduacaoOption = {
           min: 1,
           max: 16,
-          step: 1,
-          orientation: 'horizontal',
-          tooltipseparator: ':',
-          tooltipsplit: false
+          step: 1
         };
 
         $scope.pesoOption = {
@@ -48,6 +42,10 @@ campeonato
           $scope.valorIdade = [2, 20];
           $scope.valorGraduacao = [1, 3];
           $scope.valorPeso = [20, 40];
+        } else {
+          $scope.valorIdade = categoria.idade;
+          $scope.valorGraduacao = categoria.graduacao;
+          $scope.valorPeso = categoria.peso;
         }
 
       }
@@ -67,14 +65,13 @@ campeonato
 
       $scope.initEdit = function(){
 
-        buildCategoria($scope, false);
-        Categorias.getById($stateParams.id).then(function(categorias){
-          $scope.categoria = categorias;
+        Categorias.getById($stateParams.id).then(function(categoria){
+          $scope.categoria = categoria;
+          buildCategoria($scope, false, categoria);
         });
 
-        $scope.editCatergoria = function (){
-          $scope.categoria.$saveOrUpdate();
-          $state.go('categorias');
+        $scope.updateCategoria = function (){
+          $scope.categoria.$saveOrUpdate().then($state.go('categorias'));
         };
       };
 
