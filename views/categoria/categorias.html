@@ -11,7 +11,10 @@
     </h1>
 
     <div class="list-group list-competidores">
-      <div class="list-group-item" ng-repeat="categoria in categorias">
+      <div class="list-group-item active">
+        <input type="text" ng-model="searchtext.nome" class="form-control" placeholder="Busca" aria-describedby="basic-addon1">
+      </div>
+      <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext">
         <h4 class="list-group-item-heading">
           <a href="#/categorias/{{categoria._id.$oid}}/view">
             {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
