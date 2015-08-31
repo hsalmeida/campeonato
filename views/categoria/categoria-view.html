@@ -42,4 +42,21 @@
   <div>
     <a class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})">Editar</a>
   </div>
+  <br />
+  <div class="list-group list-competidores">
+    <div class="list-group-item active">
+      <h3>Competidores para esta categoria</h3>
+    </div>
+    <div class="list-group-item" ng-repeat="competidor in competidores">
+      <h4 class="list-group-item-heading">
+        <a href="#/competidores/{{competidor._id.$oid}}/view">{{competidor.nome}}</a>
+      </h4>
+      <p class="list-group-item-text">
+        {{competidor.academia}}
+        {{parseEstado(competidor.estado.name)}}
+        {{competidor.pais.name}} - {{parseSexo(competidor.sexo)}} - {{competidor.peso}}Kg<br/>
+        <img src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
+      </p>
+    </div>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 campeonato
     .controller('CategoriasController',
-    ['$scope', 'Categorias', '$stateParams', '$state', function($scope, Categorias, $stateParams, $state){
+    ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', function($scope, Categorias, Competidores, $stateParams, $state){
 
       $scope.listaGraduacoes =
           ['Branca','Ponta Amarela',
@@ -51,6 +51,15 @@ campeonato
       }
 
       $scope.initList = function(){
+
+        $scope.predicate = 'nome';
+        $scope.reverse = false;
+
+        $scope.order = function(predicate) {
+          $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+          $scope.predicate = predicate;
+        };
+
         Categorias.all().then(function(categorias){
           $scope.categorias = categorias;
         });
@@ -60,6 +69,31 @@ campeonato
       $scope.viewInit = function(){
         Categorias.getById($stateParams.id).then(function(categorias){
           $scope.categoria = categorias;
+
+          var query = {
+            "graduacao" : {
+              "$gte" : $scope.categoria.graduacao[0],
+              "$lte" : $scope.categoria.graduacao[1]
+            },
+            "idade" : {
+              "$gte" : $scope.categoria.idade[0],
+              "$lte" : $scope.categoria.idade[1]
+            },
+            "peso" : {
+              "$gte" : $scope.categoria.peso[0],
+              "$lte" : $scope.categoria.peso[1]
+            },
+            "formato" : {
+              "$in" : [$scope.categoria.formato, 2]
+            }
+          };
+
+
+
+          Competidores.query(query).then(function(competidores){
+            $scope.competidores = competidores;
+          });
+
         });
       };
 
