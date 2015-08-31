@@ -73,8 +73,7 @@ campeonato
           });
 
           $scope.editCompetidor = function (){
-            $scope.competidor.$saveOrUpdate();
-            $state.go('competidores');
+            $scope.competidor.$saveOrUpdate().then($state.go('competidores'));
           };
         };
 
