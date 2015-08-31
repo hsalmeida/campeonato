@@ -133,4 +133,14 @@ campeonato
         return $scope.objSexo[sexo];
       }
 
+      $scope.parseEstado = function(nomeEstado){
+        if(nomeEstado) {
+          return '- ' + nomeEstado + ' /';
+        }
+        return '';
+      };
+      $scope.parseGraduacao = function(graduacao) {
+        return $scope.listaGraduacoes[ graduacao ];
+      };
+
     }]);
