@@ -49,7 +49,9 @@
     </div>
     <div class="list-group-item" ng-repeat="competidor in competidores">
       <h4 class="list-group-item-heading">
-        <a href="#/competidores/{{competidor._id.$oid}}/view">{{competidor.nome}}</a>
+        <a href="#/competidores/{{competidor._id.$oid}}/view">
+          {{competidor.nome}} - {{competidor.idade}} anos
+        </a>
       </h4>
       <p class="list-group-item-text">
         {{competidor.academia}}
