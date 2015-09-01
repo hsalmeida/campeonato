@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/hsalmeida/campeonato.png)](http://travis-ci.org/hsalmeida/campeonato)
+
 # campeonato
 
 Programa para controle de campeonatos de taekwon-do tradicional
