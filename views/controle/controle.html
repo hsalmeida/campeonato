@@ -1,0 +1,9 @@
+<div ng-controller="ControleController">
+    <div ng-repeat="categoria in categorias">
+        <h2>{{categoria.nome}} - {{categoria.formato}}</h2>
+        <h3>competidores</h3>
+        <div ng-repeat="competidor in categoria.competidores">
+            {{competidor.nome}}
+        </div>
+    </div>
+</div>
