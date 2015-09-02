@@ -1,8 +1,8 @@
 <div ng-controller="CategoriasController" ng-init="viewInit()">
   <ol class="breadcrumb">
-    <li><a href="#/">Home</a></li>
-    <li><a href="#/admin">Admin</a></li>
-    <li><a href="#/categorias">Categorias</a></li>
+    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="admin">Admin</a></li>
+    <li><a ui-sref="categorias">Categorias</a></li>
     <li class="active">Visualizando {{categoria.nome}}</li>
   </ol>
   <h3>{{categoria.nome}}</h3>
@@ -21,9 +21,9 @@
       <tr>
         <td>Graduação</td>
         <td>
-          <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
+          <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
-          <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
+          <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
         </td>
       </tr>
@@ -49,7 +49,7 @@
     </div>
     <div class="list-group-item" ng-repeat="competidor in competidores">
       <h4 class="list-group-item-heading">
-        <a href="#/competidores/{{competidor._id.$oid}}/view">
+        <a ui-sref="viewCompetidores({id:competidor._id.$oid})">
           {{competidor.nome}} - {{competidor.idade}} anos
         </a>
       </h4>
@@ -57,7 +57,7 @@
         {{competidor.academia}}
         {{parseEstado(competidor.estado.name)}}
         {{competidor.pais.name}} - {{parseSexo(competidor.sexo)}} - {{competidor.peso}}Kg<br/>
-        <img src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
+        <img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
       </p>
     </div>
   </div>

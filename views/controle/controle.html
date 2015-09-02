@@ -1,4 +1,11 @@
 <div ng-controller="ControleController">
+
+    <ol class="breadcrumb">
+        <li><a ui-sref="home">Home</a></li>
+        <li><a ui-sref="admin">Admin</a></li>
+        <li class="active">Competidores</li>
+    </ol>
+
     <div ng-repeat="categoria in categorias">
         <h2>{{categoria.nome}} - {{categoria.formato}}</h2>
         <h3>competidores</h3>
