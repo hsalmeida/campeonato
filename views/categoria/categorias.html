@@ -1,7 +1,7 @@
 <div ng-controller="CategoriasController" ng-init="initList()">
   <ol class="breadcrumb">
-    <li><a href="#/">Home</a></li>
-    <li><a href="#/admin">Admin</a></li>
+    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="admin">Admin</a></li>
     <li class="active">Categorias</li>
   </ol>
   <div>
@@ -29,7 +29,7 @@
       </div>
       <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:predicate:reverse ">
         <h4 class="list-group-item-heading">
-          <a href="#/categorias/{{categoria._id.$oid}}/view">
+          <a ui-sref="viewCategoria({id:categoria._id.$oid})">
             {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
           </a>
         <span class="pull-right">
@@ -42,9 +42,9 @@
         <p class="list-group-item-text">
           Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos - {{parseSexo(categoria.sexo)}}<br />
           Graduação de
-          <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
+          <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
-          <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
+          <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
         </p>
       </div>
