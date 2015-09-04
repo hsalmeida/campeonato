@@ -56,6 +56,12 @@
   content: '\25bc';
 }
 
+<<<<<<< HEAD
 .search-bar {
   color: #ffffff !important;
 }
+=======
+.open {
+  display: block !important;
+}
+>>>>>>> master

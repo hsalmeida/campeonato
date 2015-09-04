@@ -64,6 +64,20 @@ campeonato
           $scope.categorias = categorias;
         });
 
+        $scope.open = function(categoria) {
+          $scope.dialogClass = 'open';
+          $scope.exCategoria = categoria;
+        };
+
+        $scope.delete = function() {
+          $scope.exCategoria.$remove().then(function(){
+            Categorias.all().then(function(categorias){
+              $scope.dialogClass = 'close';
+              $scope.competidores = categorias;
+            });
+          });
+        }
+
       };
 
       $scope.viewInit = function(){
@@ -105,7 +119,9 @@ campeonato
         });
 
         $scope.updateCategoria = function (){
-          $scope.categoria.$saveOrUpdate().then($state.go('categorias'));
+          $scope.categoria.$saveOrUpdate().then(function(){
+            $state.go('categorias');
+          });
         };
       };
 
@@ -123,8 +139,10 @@ campeonato
         $scope.categoria.sexo = "m";
 
         $scope.addCategoria = function (){
-          $scope.categoria.$save();
-          $state.go('categorias');
+          $scope.categoria.$save().then(function(){
+            $state.go('categorias');
+          });
+
         };
 
       };

@@ -41,7 +41,7 @@
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
           <button class="btn btn-lg btn-warning">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="glyphicon glyphicon-trash" ng-click="open(categoria)"></span>
           </button>
         </span>
         </h4>
@@ -55,6 +55,23 @@
         </p>
       </div>
     </div>
-    
+  </div>
+  <div class="modal" ng-class="dialogClass">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Confimar Exclusão</h4>
+        </div>
+        <div class="modal-body">
+          <p>Confirma exclusao da categoria?</p>
+          <h3>{{exCategoria.nome}}</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" ng-click="dialogClass = 'close'" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" ng-click="delete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
