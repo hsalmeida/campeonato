@@ -48,8 +48,6 @@
   min-width: 400px;
 }
 
-<<<<<<< HEAD
-=======
 .sortorder:after {
   content: '\25b2';
 }
@@ -57,14 +55,7 @@
 .sortorder.reverse:after {
   content: '\25bc';
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> master
-=======
 
 .search-bar {
   color: #ffffff !important;
 }
->>>>>>> master
-=======
->>>>>>> master
