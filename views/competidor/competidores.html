@@ -32,7 +32,7 @@
     </div>
     <div class="list-group-item" ng-repeat="competidor in competidores | filter:searchtext | orderBy:predicate:reverse  ">
       <h4 class="list-group-item-heading">
-        <a ui-sref="viewCompetidores({id:competidor._id.$oid})">{{competidor.nome}} - {{competidor.idade}} anos</a>
+        <a ui-sref="viewCompetidor({id:competidor._id.$oid})">{{competidor.nome}} - {{competidor.idade}} anos</a>
         <span class="pull-right">
           <button class="btn btn-lg btn-info" ui-sref="editCompetidor({id:competidor._id.$oid})" >Editar</button>
           <button class="btn btn-lg btn-warning">
