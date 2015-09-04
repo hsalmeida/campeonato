@@ -55,3 +55,7 @@
 .sortorder.reverse:after {
   content: '\25bc';
 }
+
+.open {
+  display: block !important;
+}
