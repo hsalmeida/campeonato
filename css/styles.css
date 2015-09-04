@@ -24,6 +24,10 @@
 	background: #BABABA;
 }
 
+.search-bar {
+  color: #ffffff !important;
+}
+
 .thumbnail {
   text-align: center;
 }
@@ -50,8 +54,4 @@
 
 .sortorder.reverse:after {
   content: '\25bc';
-}
-
-.search-bar {
-  color: #ffffff !important;
 }
