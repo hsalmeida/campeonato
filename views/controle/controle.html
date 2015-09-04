@@ -1,0 +1,20 @@
+<div ng-controller="ControleController" ng-init="initControle()">
+
+    <ol class="breadcrumb">
+        <li><a ui-sref="home">Home</a></li>
+        <li><a ui-sref="admin">Admin</a></li>
+        <li class="active">Competidores</li>
+    </ol>
+
+    <div ng-repeat="categoria in categorias">
+        <h2>{{categoria.nome}} - {{categoria.formato}}</h2>
+        <h3>competidores</h3>
+        <div ng-repeat="competidor in categoria.competidores">
+            {{competidor.nome}}
+        </div>
+    </div>
+
+    <div id="chaves">
+
+    </div>
+</div>

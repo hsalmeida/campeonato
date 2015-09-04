@@ -29,9 +29,9 @@
 
   <div class="form-group">
     <label>Graduação de 
-      <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/> 
+      <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
       {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate 
-      <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/> 
+      <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
       {{ listaGraduacoes[categoria.graduacao[1] - 1] }}</label>
     
     <span slider id="graduacaoSlider"
@@ -62,8 +62,8 @@
   <div class="form-group">
     <label>Formato da Categoria:</label>
     <br/>
-    <label class="radio-inline"><input type="radio" ng-model="categoria.formato" value="0" name="optradio">Luta</label>
-    <label class="radio-inline"><input type="radio" ng-model="categoria.formato" value="1" name="optradio">Forma</label>
+    <label class="radio-inline"><input type="radio" ng-model="categoria.formato" ng-value="0" name="optradio">Luta</label>
+    <label class="radio-inline"><input type="radio" ng-model="categoria.formato" ng-value="1" name="optradio">Forma</label>
   </div>
 
 <button type="submit" class="btn btn-lg btn-primary">Salvar</button>

@@ -55,7 +55,11 @@ var campeonato = angular.module('campeonato', [
 			templateUrl: "views/competidor/competidor-edit.html",
 			controller: 'CompetidoresController'
 		})
-
+		.state('controle', {
+			url: "/controle",
+			templateUrl: "views/controle/controle.html",
+			controller: 'ControleController'
+		})
 		.state('grade', {
 			url: "/grade",
 			templateUrl: "views/grade.html",

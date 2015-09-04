@@ -1,21 +1,24 @@
 <div ng-controller="CompetidoresController" ng-init="initList()">
   <ol class="breadcrumb">
-    <li><a href="#/">Home</a></li>
-    <li><a href="#/admin">Admin</a></li>
+    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="admin">Admin</a></li>
     <li class="active">Competidores</li>
   </ol>
   <div>
-    <h1 class="page-header">
+    <h3 class="page-header">
       Lista de competidores
-      <button class="btn btn-lg btn-info" ui-sref="newCompetidor" >Novo</button>
-    </h1>
-
+      <button class="btn btn-lg btn-danger" ui-sref="newCompetidor" >
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </h3>
   </div>
 
   <div class="list-group list-competidores">
     <div class="list-group-item active">
-      <input type="text" ng-model="searchtext.nome" class="form-control" placeholder="Buscar pelo nome" aria-describedby="basic-addon1">
-      <label>Ordenar por  </label>
+      <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Buscar pelo nome" aria-describedby="basic-addon1">
+    </div>
+    <div class="list-group-item">
+      <label class="control-label">Ordenar por:&nbsp;&nbsp;&nbsp;&nbsp;</label>
       <label class="checkbox-inline">
         <input type="radio" checked name="optradio" ng-click="order('nome')">Nome
         <span class="sortorder" ng-show="predicate === 'nome'" ng-class="{reverse:reverse}"></span>
@@ -31,10 +34,12 @@
     </div>
     <div class="list-group-item" ng-repeat="competidor in competidores | filter:searchtext | orderBy:predicate:reverse  ">
       <h4 class="list-group-item-heading">
-        <a href="#/competidores/{{competidor._id.$oid}}/view">{{competidor.nome}} - {{competidor.idade}} anos</a>
+        <a ui-sref="viewCompetidor({id:competidor._id.$oid})">{{competidor.nome}} - {{competidor.idade}} anos</a>
         <span class="pull-right">
-          <button class="btn btn-lg btn-info" ui-sref="editCompetidor({id:competidor._id.$oid})" >Editar</button>
-          <button class="btn btn-lg btn-warning">
+          <button class="btn btn-lg btn-primary" ui-sref="editCompetidor({id:competidor._id.$oid})" >
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button class="btn btn-lg btn-warning" ng-click="open(competidor)">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </span>
@@ -43,10 +48,27 @@
         {{competidor.academia}}
         {{parseEstado(competidor.estado.name)}}
         {{competidor.pais.name}} - {{parseSexo(competidor.sexo)}} - {{competidor.peso}}Kg<br/>
-        <img src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
+        <img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
          - {{listaFormatos[competidor.formato]}}
       </p>
     </div>
   </div>
-
+  <div class="modal" ng-class="dialogClass">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Confimar Exclusão</h4>
+        </div>
+        <div class="modal-body">
+          <p>Confirma exclusao do competidor?</p>
+          <h3>{{exCompetidor.nome}}</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" ng-click="dialogClass = 'close'" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" ng-click="delete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

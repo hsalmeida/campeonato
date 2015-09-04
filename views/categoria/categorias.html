@@ -1,19 +1,23 @@
 <div ng-controller="CategoriasController" ng-init="initList()">
   <ol class="breadcrumb">
-    <li><a href="#/">Home</a></li>
-    <li><a href="#/admin">Admin</a></li>
+    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="admin">Admin</a></li>
     <li class="active">Categorias</li>
   </ol>
   <div>
-    <h1 class="page-header">
+    <h3 class="page-header">
       Lista de Categorias
-      <button class="btn btn-lg btn-info" ui-sref="newCategoria">Nova</button>
-    </h1>
+      <button class="btn btn-lg btn-danger" ui-sref="newCategoria">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </h3>
 
     <div class="list-group list-competidores">
       <div class="list-group-item active">
-        <input type="text" ng-model="searchtext.nome" class="form-control" placeholder="Busca por nome" aria-describedby="basic-addon1">
-        <label>Ordenar por  </label>
+        <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Busca por nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="list-group-item">
+        <label class="control-label">Ordenar por:&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <label class="checkbox-inline">
           <input type="radio" checked name="optradio" ng-click="order('nome')">Nome
           <span class="sortorder" ng-show="predicate === 'nome'" ng-class="{reverse:reverse}"></span>
@@ -29,26 +33,45 @@
       </div>
       <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:predicate:reverse ">
         <h4 class="list-group-item-heading">
-          <a href="#/categorias/{{categoria._id.$oid}}/view">
+          <a ui-sref="viewCategoria({id:categoria._id.$oid})">
             {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
           </a>
         <span class="pull-right">
-          <button class="btn btn-lg btn-info" ui-sref="editCategoria({id:categoria._id.$oid})" >Editar</button>
+          <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})" >
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
           <button class="btn btn-lg btn-warning">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="glyphicon glyphicon-trash" ng-click="open(categoria)"></span>
           </button>
         </span>
         </h4>
         <p class="list-group-item-text">
           Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos - {{parseSexo(categoria.sexo)}}<br />
           Graduação de
-          <img src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
+          <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
-          <img src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
+          <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
           {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
         </p>
       </div>
     </div>
-    
+  </div>
+  <div class="modal" ng-class="dialogClass">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Confimar Exclusão</h4>
+        </div>
+        <div class="modal-body">
+          <p>Confirma exclusao da categoria?</p>
+          <h3>{{exCategoria.nome}}</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" ng-click="dialogClass = 'close'" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" ng-click="delete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

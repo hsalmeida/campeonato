@@ -59,10 +59,10 @@ campeonato
           $scope.competidor.formato = 0;
 
           $scope.addCompetidor = function (){
-            $scope.competidor.$save();
-            $state.go('competidores');
+            $scope.competidor.$save().then(function (){
+              $state.go('competidores');
+            });
           };
-
         };
 
         $scope.initEdit = function(){
@@ -73,8 +73,9 @@ campeonato
           });
 
           $scope.editCompetidor = function (){
-            $scope.competidor.$saveOrUpdate();
-            $state.go('competidores');
+            $scope.competidor.$saveOrUpdate().then(function(){
+              $state.go('competidores');
+            });
           };
         };
 
@@ -96,6 +97,20 @@ campeonato
           Competidores.all().then(function(competidores){
             $scope.competidores = competidores;
           });
+
+          $scope.open = function(competidor) {
+            $scope.dialogClass = 'open';
+            $scope.exCompetidor = competidor;
+          };
+
+          $scope.delete = function() {
+            $scope.exCompetidor.$remove().then(function(){
+              Competidores.all().then(function(competidores){
+                $scope.dialogClass = 'close';
+                $scope.competidores = competidores;
+              });
+            });
+          }
 
         };
 
