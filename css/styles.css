@@ -24,7 +24,7 @@
 	background: #BABABA;
 }
 
-.thumbnail h3 {
+.thumbnail {
   text-align: center;
 }
 
@@ -49,4 +49,8 @@
 }
 .sortorder.reverse:after {
   content: '\25bc';
+}
+
+.search-bar {
+  color: #ffffff !important;
 }
