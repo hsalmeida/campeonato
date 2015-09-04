@@ -5,10 +5,12 @@
     <li class="active">Categorias</li>
   </ol>
   <div>
-    <h1 class="page-header">
+    <h3 class="page-header">
       Lista de Categorias
-      <button class="btn btn-lg btn-info" ui-sref="newCategoria">Nova</button>
-    </h1>
+      <button class="btn btn-lg btn-danger" ui-sref="newCategoria">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </h3>
 
     <div class="list-group list-competidores">
       <div class="list-group-item active">
@@ -35,7 +37,9 @@
             {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
           </a>
         <span class="pull-right">
-          <button class="btn btn-lg btn-info" ui-sref="editCategoria({id:categoria._id.$oid})" >Editar</button>
+          <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})" >
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
           <button class="btn btn-lg btn-warning">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
