@@ -24,6 +24,10 @@
 	background: #BABABA;
 }
 
+.search-bar {
+  color: #ffffff !important;
+}
+
 .thumbnail {
   text-align: center;
 }
@@ -54,10 +58,13 @@
   content: '\25bc';
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> master
 =======
 
 .search-bar {
   color: #ffffff !important;
 }
+>>>>>>> master
+=======
 >>>>>>> master
