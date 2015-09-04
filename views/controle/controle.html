@@ -1,4 +1,4 @@
-<div ng-controller="ControleController">
+<div ng-controller="ControleController" ng-init="initControle()">
 
     <ol class="breadcrumb">
         <li><a ui-sref="home">Home</a></li>
@@ -12,5 +12,9 @@
         <div ng-repeat="competidor in categoria.competidores">
             {{competidor.nome}}
         </div>
+    </div>
+
+    <div id="chaves">
+
     </div>
 </div>
