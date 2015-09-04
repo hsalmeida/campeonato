@@ -13,18 +13,22 @@
 }
 
 #idadeSlider .slider-selection {
-	background: #BABABA;
+  background: #BABABA;
 }
 
 #graduacaoSlider .slider-selection {
-	background: #BABABA;
+  background: #BABABA;
 }
 
 #pesoSlider .slider-selection {
-	background: #BABABA;
+  background: #BABABA;
 }
 
-.thumbnail h3 {
+.search-bar {
+  color: #ffffff !important;
+}
+
+.thumbnail {
   text-align: center;
 }
 
@@ -47,6 +51,11 @@
 .sortorder:after {
   content: '\25b2';
 }
+
 .sortorder.reverse:after {
   content: '\25bc';
+}
+
+.open {
+  display: block !important;
 }
