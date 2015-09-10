@@ -71,3 +71,7 @@
 .open {
   display: block !important;
 }
+
+#elimination-bracket {
+  width: 960px;
+}
