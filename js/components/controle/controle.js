@@ -2,8 +2,24 @@ campeonato
 .controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state',
     function($scope, Categorias, Competidores, $stateParams, $state) {
 
+        var quantidadeRounds = {
+            "1" : 0, "2" : 1, "4" : 2, "8" : 3, "16" : 4, "32" : 5,
+            "64" : 6, "128" : 7
+        };
+
         function powerOfTwo(numero) {
             return !(numero == 0) && !(numero & (numero - 1))
+        }
+
+        function getQuantidadePartidas(len) {
+            if(powerOfTwo(len)) {
+                var ret = quantidadeRounds[len];
+                console.log(ret);
+                return ret;
+            } else {
+                len++;
+                return getQuantidadePartidas(len);
+            }
         }
 
         $scope.initControle = function(){
@@ -81,14 +97,20 @@ campeonato
             });
             */
             var margin = {top: 20, right: 120, bottom: 20, left: 120},
-                width = 960 - margin.right - margin.left,
+                width = 960 - margin.right - margin.left, halfWidth = width / 2,
                 height = 800 - margin.top - margin.bottom;
 
             var tree = d3.layout.tree()
                 .size([height, width]);
 
+            var diagonal = d3.svg.line().interpolate('step')
+                .x(function (d) { return d.x; })
+                .y(function (d) { return d.y; });
+
+            /*
             var diagonal = d3.svg.diagonal()
                 .projection(function(d) { return [d.y, d.x]; });
+            */
 
             var svg = d3.select("#elimination-bracket").append("svg")
                 .attr("width", width + margin.right + margin.left)
@@ -113,19 +135,21 @@ campeonato
                 var chavePerfeita = powerOfTwo(len);
                 //pego a quantidade de nos, menos 1, e vejo a quantidade de partidas,
                 //partidas informa os pulos nos nós.
-                var qtdPartidas = len - 1;
+                var qtdPartidas = getQuantidadePartidas(len);
                 //para saber se a quantidade de competidores é par, faço mod de 2.
                 //isso vai me dizer se tem um competidor na baia.
                 var even = nos.length % 2;
                 var partidas = [];
+                var loopPartidas = 0;
                 for (var i = 0; i < qtdPartidas; i++) {
                     var partida = [];
                     //partida vencedora.
                     if(i === 0) {
                         partida.push({"name": "Campeão"});
                         partidas.push(partida);
+                        loopPartidas = 1;
                     } else {
-                        var loopPartidas = i * 2;
+                        loopPartidas = loopPartidas * 2;
                         for(var j = 0; j < loopPartidas; j++) {
                             //ultimo item da qtdPartidas
                             if(i === (qtdPartidas - 1)) {
@@ -141,17 +165,45 @@ campeonato
                 //loop nas partidas, lembrando que é multidimensional;
                 console.log(partidas);
                 for(var a = 0; a < partidas.length; a++) {
-
+                    var loopPai = partidas[a].length;
+                    var pais = partidas[a];
+                    var idx = 0;
+                    for(var b = 0; b < loopPai; b++) {
+                        if(partidas[(a + 1)]){
+                            var filho1 = partidas[(a + 1)][idx];
+                            idx++;
+                            var filho2 = partidas[(a + 1)][idx];
+                            idx++;
+                            pais[b].children = [];
+                            pais[b].children.push(filho1);
+                            pais[b].children.push(filho2);
+                        }
+                    }
                 }
+                //var json = angular.toJson(partidas[0][0]);
+                var json = partidas[0][0];
+                json.x0 = height / 2;
+                json.y0 = width / 2;
 
-                var nodes = tree.nodes(partidas),
+                var nodes = tree.nodes(json),
                     links = tree.links(nodes);
 
                 var link = svg.selectAll("path.link")
                     .data(links)
-                    .enter().append("path")
-                    .attr("class", "link")
-                    .attr("d", diagonal);
+                    .enter()
+                    .append('svg:path', 'g')
+                    .duration(self.duration)
+                    .attr('d', function (d) {
+                        return self.diagonal([{
+                            y: d.source.x,
+                            x: d.source.y
+                        }, {
+                            y: d.target.x,
+                            x: d.target.y
+                        }]);
+                    })
+                    .attr("class", "link");
+                    //.attr("d", diagonal);
 
                 var node = svg.selectAll("g.node")
                     .data(nodes)
