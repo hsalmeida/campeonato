@@ -22,6 +22,8 @@ campeonato
             }
         }
 
+
+
         $scope.initControle = function(){
             /*
             Categorias.all().then(function(categorias){
@@ -107,6 +109,13 @@ campeonato
                 .x(function (d) { return d.x; })
                 .y(function (d) { return d.y; });
 
+            var calcLeft = function(d){
+                var l = d.y;
+                l = d.y-halfWidth;
+                l = halfWidth - l;
+                return {x : d.x, y : l};
+            };
+
             /*
             var diagonal = d3.svg.diagonal()
                 .projection(function(d) { return [d.y, d.x]; });
@@ -130,6 +139,7 @@ campeonato
                 });
 
                 //quantidade de nos
+                console.log(nos);
                 var len = nos.length;
                 //verifico se a chave é perfeita ou pode gerar baias futuras ou iniciais.
                 var chavePerfeita = powerOfTwo(len);
@@ -163,13 +173,12 @@ campeonato
                     }
                 }
                 //loop nas partidas, lembrando que é multidimensional;
-                console.log(partidas);
                 for(var a = 0; a < partidas.length; a++) {
                     var loopPai = partidas[a].length;
                     var pais = partidas[a];
                     var idx = 0;
                     for(var b = 0; b < loopPai; b++) {
-                        if(partidas[(a + 1)]){
+                        if(partidas[(a + 1)]) {
                             var filho1 = partidas[(a + 1)][idx];
                             idx++;
                             var filho2 = partidas[(a + 1)][idx];
@@ -180,26 +189,56 @@ campeonato
                         }
                     }
                 }
+                //possui baia
+                if(!chavePerfeita) {
+                    //verificar se foi par o impar a quantidade.
+                    //quando par, tenho que criar uma nova chave e impar adiciono somente o competidor.
+                    var lenPartidas = partidas.length;
+                    var lenUltimaPartida = partidas[(lenPartidas - 1)].length;
+                    var difNosLenPartidas = len - lenUltimaPartida;
+                    if(!even) {
+                        //par
+                        //mais simples e coloca as baias na proxima luta.
+                        nos.reverse();
+                        for(var z = 0; z < difNosLenPartidas; z++) {
+                            var nomeOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].name;
+                            partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].name = "Vencedor";
+                            var filhoMovido = {"name" : nomeOriginal};
+                            var filhoNovo = {"name" : nos[z].name};
+                            partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children = [];
+                            partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoMovido);
+                            partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoNovo);
+                        }
+                    }
+                }
+
+                console.log(partidas);
+
                 //var json = angular.toJson(partidas[0][0]);
                 var json = partidas[0][0];
                 json.x0 = height / 2;
                 json.y0 = width / 2;
 
-                var nodes = tree.nodes(json),
+                var nodes = tree.nodes(json).reverse(),
                     links = tree.links(nodes);
+
+                nodes.forEach(function(d) {
+                    var p = calcLeft(d);
+                    d.x0 = p.x;
+                    d.y0 = p.y;
+                });
 
                 var link = svg.selectAll("path.link")
                     .data(links)
                     .enter()
                     .append('svg:path', 'g')
-                    .duration(self.duration)
                     .attr('d', function (d) {
-                        return self.diagonal([{
-                            y: d.source.x,
-                            x: d.source.y
+                        return diagonal([{
+                            y: d.source.x0,
+                            x: d.source.y0
                         }, {
-                            y: d.target.x,
-                            x: d.target.y
+                            y: d.target.x0,
+                            x: d.target.y0
                         }]);
                     })
                     .attr("class", "link");
@@ -209,16 +248,19 @@ campeonato
                     .data(nodes)
                     .enter().append("g")
                     .attr("class", "node")
-                    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+                    .attr("transform", function(d) { return "translate(" + d.y0 + "," + d.x0 + ")"; });
 
                 node.append("circle")
                     .attr("r", 4.5);
 
                 node.append("text")
-                    .attr("dx", function(d) { return d.children ? -8 : 8; })
-                    .attr("dy", 3)
-                    .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
+                    //.attr("dx", function(d) { return d.children ? -8 : 8; })
+                    .attr("dy", -8)
+                    .attr("text-anchor", "middle")
                     .text(function(d) { return d.name; });
+
+
+
             });
 
         };
