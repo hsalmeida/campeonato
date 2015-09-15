@@ -12,16 +12,28 @@
   max-width: 450px;
 }
 
-#idadeSlider .slider-selection {
-  background: #BABABA;
+.slider-track{
+  height: 5px !important;
+  background-image: none;
+  box-shadow: none;
 }
 
-#graduacaoSlider .slider-selection {
-  background: #BABABA;
+.slider-track-high,.slider-track-low {
+  background-color: #e0e0e0;
+  top: 3px !important;
+  border-radius: 0;
 }
 
-#pesoSlider .slider-selection {
-  background: #BABABA;
+.slider-selection {
+  background: #3367d6;
+  top: 3px !important;
+}
+
+.slider-handle {
+  background-color: #3367d6;
+  background-image: -webkit-linear-gradient(top, #3367d6 0%, #3367d6 100%);
+  background-image: -o-linear-gradient(top, #3367d6 0%, #3367d6 100%);
+  background-image: linear-gradient(to bottom, #3367d6 0%, #3367d6 100%);
 }
 
 .search-bar {
@@ -58,4 +70,37 @@
 
 .open {
   display: block !important;
+}
+
+#elimination-bracket {
+  width: 960px;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font-size: 12px;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.match-container {
+  border-bottom: 10px solid #151b27;
+  z-index: 999
+}
+
+.competidor-name {
+  font-weight: bold;
+}
+
+.competidor-academia {
+  font-weight: lighter;
 }
