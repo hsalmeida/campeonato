@@ -3,7 +3,6 @@
 
 	.controller('GradeController', 
 			['$scope', function($scope){
-			  console.log('carregou');
   }]);
   
 })();

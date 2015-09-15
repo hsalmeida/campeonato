@@ -73,7 +73,7 @@ campeonato
           $scope.exCategoria.$remove().then(function(){
             Categorias.all().then(function(categorias){
               $scope.dialogClass = 'close';
-              $scope.competidores = categorias;
+              $scope.categorias = categorias;
             });
           });
         }
@@ -142,7 +142,6 @@ campeonato
           $scope.categoria.$save().then(function(){
             $state.go('categorias');
           });
-
         };
 
       };

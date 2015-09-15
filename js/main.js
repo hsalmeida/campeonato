@@ -64,5 +64,10 @@ var campeonato = angular.module('campeonato', [
 			url: "/grade",
 			templateUrl: "views/grade.html",
 			controller: "GradeController"
+		})
+		.state('telao', {
+			url: "/telao",
+			templateUrl: "views/telao/telao.html",
+			controller: "TelaoController"
 		});
 });
