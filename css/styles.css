@@ -91,3 +91,16 @@
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+.match-container {
+  border-bottom: 10px solid #151b27;
+  z-index: 999
+}
+
+.competidor-name {
+  font-weight: bold;
+}
+
+.competidor-academia {
+  font-weight: lighter;
+}

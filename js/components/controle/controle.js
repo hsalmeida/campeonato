@@ -14,7 +14,6 @@ campeonato
         function getQuantidadePartidas(len) {
             if(powerOfTwo(len)) {
                 var ret = quantidadeRounds[len];
-                console.log(ret);
                 return ret;
             } else {
                 len++;
@@ -98,8 +97,8 @@ campeonato
 
             });
             */
-            var margin = {top: 20, right: 120, bottom: 20, left: 120},
-                width = 960 - margin.right - margin.left, halfWidth = width / 2,
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
+                width = 1200 - margin.right - margin.left, halfWidth = width / 2,
                 height = 800 - margin.top - margin.bottom;
 
             var tree = d3.layout.tree()
@@ -121,11 +120,13 @@ campeonato
                 .projection(function(d) { return [d.y, d.x]; });
             */
 
+            var scale = .85;
+
             var svg = d3.select("#elimination-bracket").append("svg")
                 .attr("width", width + margin.right + margin.left)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")scale(" + scale + ")");
 
             Categorias.all().then(function(categorias){
                 var nos = [];
@@ -139,7 +140,6 @@ campeonato
                 });
 
                 //quantidade de nos
-                console.log(nos);
                 var len = nos.length;
                 //verifico se a chave é perfeita ou pode gerar baias futuras ou iniciais.
                 var chavePerfeita = powerOfTwo(len);
@@ -211,9 +211,6 @@ campeonato
                         }
                     }
                 }
-
-                console.log(partidas);
-
                 //var json = angular.toJson(partidas[0][0]);
                 var json = partidas[0][0];
                 json.x0 = height / 2;
@@ -250,16 +247,32 @@ campeonato
                     .attr("class", "node")
                     .attr("transform", function(d) { return "translate(" + d.y0 + "," + d.x0 + ")"; });
 
+                /*
                 node.append("circle")
                     .attr("r", 4.5);
+                */
+                node.append("rect")
+                    .attr("y", -25)
+                    .attr("x", 0)
+                    .attr("height", 50)
+                    .attr("width", 175)
+                    .attr("fill", "#ABABAB")
+                    .attr("class", "match-container");
 
                 node.append("text")
                     //.attr("dx", function(d) { return d.children ? -8 : 8; })
-                    .attr("dy", -8)
-                    .attr("text-anchor", "middle")
+                    .attr("dx", 4)
+                    .attr("dy", -4)
+                    .attr("text-anchor", "left")
+                    .attr("class", "competidor-name")
                     .text(function(d) { return d.name; });
 
-
+                node.append("text")
+                    .attr("dx", 4)
+                    .attr("dy", 12)
+                    .attr("text-anchor", "left")
+                    .attr("class", "competidor-academia")
+                    .text("Academia");
 
             });
 
