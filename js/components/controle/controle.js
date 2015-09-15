@@ -196,7 +196,8 @@ campeonato
                     var lenPartidas = partidas.length;
                     var lenUltimaPartida = partidas[(lenPartidas - 1)].length;
                     var difNosLenPartidas = len - lenUltimaPartida;
-                    if(!even) {
+                    //comentei para pensar melhor depois .. para impares o algoritmo tambem funciona, parcialmente.
+                    //if(!even) {
                         //par
                         //mais simples e coloca as baias na proxima luta.
                         nos.reverse();
@@ -209,7 +210,7 @@ campeonato
                             partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoMovido);
                             partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoNovo);
                         }
-                    }
+                    //}
                 }
                 //var json = angular.toJson(partidas[0][0]);
                 var json = partidas[0][0];
