@@ -50,53 +50,17 @@ campeonato
                 });
                 $scope.categorias = categorias;
             });
+            */
+
+            Categorias.all().then(function(categorias){
+                $scope.categorias = categorias;
+            });
 
             Competidores.all().then(function(competidores){
                 $scope.competidores = competidores;
-
-                var arr = angular.copy(competidores);
-
-                var comp = [];
-
-                var prime = arr.length % 2;
-
-                while(arr.length) {
-                    comp.push(arr.shift());
-                    comp.push(arr.pop());
-                }
-
-                if(prime) {
-                    comp.pop();
-                }
-
-                $scope.comp = comp;
-
-                var data = {};
-
-                var teams = [];
-
-                var nomes = angular.copy(comp);
-
-                while(nomes.length) {
-                    var array = [];
-                    var nome1 = nomes.shift();
-                    if(nome1) {
-                        array.push(nome1.nome);
-                    }
-                    var nome2 = nomes.shift()
-                    if(nome2) {
-                        array.push(nome2.nome);
-                    }
-
-                    teams.push(array);
-                }
-
-                data.teams = teams;
-
-
-
             });
-            */
+            /*
+
             var margin = {top: 10, right: 10, bottom: 10, left: 10},
                 width = 1200 - margin.right - margin.left, halfWidth = width / 2,
                 height = 800 - margin.top - margin.bottom;
@@ -115,10 +79,8 @@ campeonato
                 return {x : d.x, y : l};
             };
 
-            /*
             var diagonal = d3.svg.diagonal()
                 .projection(function(d) { return [d.y, d.x]; });
-            */
 
             var scale = .85;
 
@@ -248,10 +210,9 @@ campeonato
                     .attr("class", "node")
                     .attr("transform", function(d) { return "translate(" + d.y0 + "," + d.x0 + ")"; });
 
-                /*
                 node.append("circle")
                     .attr("r", 4.5);
-                */
+
                 node.append("rect")
                     .attr("y", -25)
                     .attr("x", 0)
@@ -275,7 +236,7 @@ campeonato
                     .attr("class", "competidor-academia")
                     .text("Academia");
 
-            });
+             });*/
 
         };
 

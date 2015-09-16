@@ -104,3 +104,25 @@
 .competidor-academia {
   font-weight: lighter;
 }
+
+.cockpit-nome-competidor {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.cockpit-valor-competidor {
+  font-size: 24px;
+  word-wrap: break-word;
+}
+
+.cockpit-competidor {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}

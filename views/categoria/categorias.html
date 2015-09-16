@@ -36,14 +36,14 @@
           <a ui-sref="viewCategoria({id:categoria._id.$oid})">
             {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
           </a>
-        <span class="pull-right">
-          <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})" >
-            <span class="glyphicon glyphicon-pencil"></span>
-          </button>
-          <button class="btn btn-lg btn-warning">
-            <span class="glyphicon glyphicon-trash" ng-click="open(categoria)"></span>
-          </button>
-        </span>
+          <span class="pull-right">
+            <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})" >
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button class="btn btn-lg btn-warning">
+              <span class="glyphicon glyphicon-trash" ng-click="open(categoria)"></span>
+            </button>
+          </span>
         </h4>
         <p class="list-group-item-text">
           Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos - {{parseSexo(categoria.sexo)}}<br />

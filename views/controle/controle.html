@@ -5,11 +5,121 @@
         <li class="active">Controle das Chaves</li>
     </ol>
 
-    <div ng-repeat="categoria in categorias">
-        <h2>{{categoria.nome}} - {{categoria.formato}}</h2>
-        <h3>competidores</h3>
-        <div ng-repeat="competidor in categoria.competidores">
-            {{competidor.nome}}
+    <h3 class="page-header">Controle do Telão</h3>
+
+    <div class="row">
+        <!-- esquerda, lista das categorias -->
+        <div class="col-md-6">
+
+            <div class="list-group list-categorias">
+                <div class="list-group-item active">
+                    <h4 class="list-group-item-heading">
+                        Categorias
+                    </h4>
+                    <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Busca por nome" aria-describedby="basic-addon1">
+                </div>
+                <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:ativa">
+                    <h4 class="list-group-item-heading">
+                        {{categoria.formato}} - {{categoria.nome}} - {{categoria.peso}}
+                        <span class="pull-right">
+                            <button class="btn btn-lg btn-primary">
+                                <span class="glyphicon glyphicon-play"></span>
+                            </button>
+                            <button class="btn btn-lg btn-warning">
+                                <span class="glyphicon glyphicon-stop"></span>
+                            </button>
+                        </span>
+                    </h4>
+                    <p class="list-group-item-text">
+                        {{categoria.graduacao}}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- fim esquerda, lista das categorias -->
+
+        <!-- direita, categoria selecionada atual -->
+        <div class="col-md-6">
+
+            <div class="list-group list-categorias">
+                <div class="list-group-item active">
+                    <h4 class="list-group-item-heading">
+                        Chaves da Categoria
+                    </h4>
+                </div>
+                <div class="list-group-item" ng-repeat="competidor in competidores">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <h4>#1</h4>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="row cockpit-competidor">
+                                <div class="col-xs-5">
+                                    <label class="cockpit-nome-competidor">
+                                        {{competidor.nome}}
+                                    </label>
+                                    <div class="row cockpit-valor-competidor">
+                                        <div class="col-xs-6">
+                                            <span>2</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span class="glyphicon glyphicon-ok blue"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <label>X</label>
+                                </div>
+                                <div class="col-xs-5">
+                                    <label class="cockpit-nome-competidor">
+                                        {{competidor.nome}}
+                                    </label>
+                                    <div class="row cockpit-valor-competidor">
+                                        <div class="col-xs-6">
+                                            <span>0</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span class="glyphicon glyphicon-remove red"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 pull-right">
+                            <button class="btn btn-lg btn-primary">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </button>
+                            <button class="btn btn-lg btn-warning">
+                                <span class="glyphicon glyphicon-blackboard"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- fim direita, categoria selecionada atual -->
+    </div>
+
+
+    <!-- dialog -->
+    <div class="modal" ng-class="dialogClass">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Chave #</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma exclusao da categoria?</p>
+                    <h3>{{exCategoria.nome}}</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default">Ok</button>
+                    <button type="button" ng-click="dialogClass = 'close'" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
         </div>
     </div>
 
