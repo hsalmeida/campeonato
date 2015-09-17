@@ -1,21 +1,14 @@
 campeonato
     .controller('CategoriasController',
-    ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', function($scope, Categorias, Competidores, $stateParams, $state){
+    ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas', function($scope, Categorias, Competidores, $stateParams, $state, Listas){
 
-      $scope.listaGraduacoes =
-          ['Branca','Ponta Amarela',
-            'Amarela','Ponta Verde',
-            'Verde','Ponta Azul','Azul',
-            'Ponta Vermelha','Vermelha',
-            'Ponta Preta','1º Dan', '2º Dan',
-            '3º Dan', '4º Dan', '5º Dan', '6º Dan'];
+      $scope.listaGraduacoes = Listas.listaGraduacoes;
 
-      $scope.listaImagens = ['10.png','9.png','8.png','7.png','6.png','5.png','4.png','3.png','2.png','1.png',
-        'd1.png', 'd2.png', 'd3.png', 'd4.png', 'd5.png', 'd6.png'];
+      $scope.listaImagens = Listas.listaImagens;
 
-      $scope.listaFormatos = ['Luta', 'Forma'];
+      $scope.listaFormatos = Listas.listaFormatos;
 
-      $scope.objSexo = {"m" : "Masculino", "f" : "Feminino", "i" : "Indiferente"};
+      $scope.objSexo = Listas.objSexo;
 
       function buildCategoria($scope, buildDefault, categoria){
         $scope.range = true;
@@ -145,6 +138,7 @@ campeonato
         };
 
       };
+
 
       $scope.parseSexo = function(sexo) {
         return $scope.objSexo[sexo];

@@ -1,10 +1,29 @@
 campeonato
-.controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state',
-    function($scope, Categorias, Competidores, $stateParams, $state) {
+.controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas',
+    function($scope, Categorias, Competidores, $stateParams, $state, Listas) {
 
-        var quantidadeRounds = {
-            "1" : 0, "2" : 1, "4" : 2, "8" : 3, "16" : 4, "32" : 5,
-            "64" : 6, "128" : 7
+        var quantidadeRounds = Listas.quantidadeRounds;
+
+        $scope.listaGraduacoes = Listas.listaGraduacoes;
+
+        $scope.listaImagens = Listas.listaImagens;
+
+        $scope.listaFormatos = Listas.listaFormatos;
+
+        $scope.objSexo = Listas.objSexo;
+
+        $scope.parseSexo = function(sexo) {
+            return $scope.objSexo[sexo];
+        };
+
+        $scope.parseEstado = function(nomeEstado){
+            if(nomeEstado) {
+                return '- ' + nomeEstado + ' /';
+            }
+            return '';
+        };
+        $scope.parseGraduacao = function(graduacao) {
+            return $scope.listaGraduacoes[ graduacao ];
         };
 
         function powerOfTwo(numero) {
@@ -54,6 +73,11 @@ campeonato
 
             Categorias.all().then(function(categorias){
                 $scope.categorias = categorias;
+                categorias.forEach(function(categoria){
+                   if(categoria.ativa) {
+                       $scope.categoriaAtiva = categoria.nome;
+                   }
+                });
             });
 
             Competidores.all().then(function(competidores){

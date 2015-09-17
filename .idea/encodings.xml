@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/js/components/admin/admin.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/js/components/controle/controle.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/js/components/grade/grade.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/js/components/services/services.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/js/components/telao/telao.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/js/main.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/admin/admin.html" charset="UTF-8" />

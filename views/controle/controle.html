@@ -19,19 +19,24 @@
                     <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Busca por nome" aria-describedby="basic-addon1">
                 </div>
                 <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:ativa">
-                    <h4 class="list-group-item-heading">
-                        {{categoria.formato}} - {{categoria.nome}} - {{categoria.peso}}
+                    <h5 class="list-group-item-heading">
+                        {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
                         <span class="pull-right">
-                            <button class="btn btn-lg btn-primary">
+                            <button class="btn btn-lg btn-primary" ng-show="!categoria.ativa">
                                 <span class="glyphicon glyphicon-play"></span>
                             </button>
-                            <button class="btn btn-lg btn-warning">
+                            <button class="btn btn-lg btn-warning" ng-show="categoria.ativa">
                                 <span class="glyphicon glyphicon-stop"></span>
                             </button>
                         </span>
-                    </h4>
+                    </h5>
                     <p class="list-group-item-text">
-                        {{categoria.graduacao}}
+                        Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos - {{parseSexo(categoria.sexo)}}<br />
+                        Graduação de
+                        <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[0] - 1] }}"/>
+                        {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
+                        <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
+                        {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
                     </p>
                 </div>
             </div>
@@ -45,7 +50,7 @@
             <div class="list-group list-categorias">
                 <div class="list-group-item active">
                     <h4 class="list-group-item-heading">
-                        Chaves da Categoria
+                        Chaves da Categoria: {{categoriaAtiva}}
                     </h4>
                 </div>
                 <div class="list-group-item" ng-repeat="competidor in competidores">
