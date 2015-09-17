@@ -1,21 +1,14 @@
 campeonato
 	.controller('CompetidoresController', 
-		['$scope', 'Competidores', '$stateParams', '$state', function($scope, Competidores, $stateParams, $state){
+		['$scope', 'Competidores', '$stateParams', '$state', 'Listas', function($scope, Competidores, $stateParams, $state, Listas){
 
-          $scope.listaFormatos = ['Luta', 'Forma', 'Ambas (Forma e Luta)'];
+          $scope.listaFormatos = Listas.listaFormatosFull;
 
-          $scope.objSexo = {"m" : "Masculino", "f" : "Feminino"};
+          $scope.objSexo = Listas.objSexo;
 
-          $scope.listaGraduacoes =
-              ['Branca','Ponta Amarela',
-                'Amarela','Ponta Verde',
-                'Verde','Ponta Azul','Azul',
-                'Ponta Vermelha','Vermelha',
-                'Ponta Preta','1º Dan', '2º Dan',
-                '3º Dan', '4º Dan', '5º Dan', '6º Dan'];
+          $scope.listaGraduacoes = Listas.listaGraduacoes;
 
-          $scope.listaImagens = ['10.png','9.png','8.png','7.png','6.png','5.png','4.png','3.png','2.png','1.png',
-            'd1.png', 'd2.png', 'd3.png', 'd4.png', 'd5.png', 'd6.png'];
+          $scope.listaImagens = Listas.listaImagens;
 
           function buildCompetidor($scope){
             $.getJSON('js/countries.json', function( data ){
@@ -120,6 +113,7 @@ campeonato
             }
             return '';
           };
+
           $scope.parseGraduacao = function(graduacao) {
             return $scope.listaGraduacoes[ graduacao ];
           };
