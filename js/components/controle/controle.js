@@ -71,7 +71,7 @@ campeonato
             });
             */
 
-            Categorias.all().then(function(categorias){
+            Categorias.all({ sort: {ativa: -1} }).then(function(categorias){
                 $scope.categorias = categorias;
                 categorias.forEach(function(categoria){
                    if(categoria.ativa) {
@@ -83,6 +83,10 @@ campeonato
             Competidores.all().then(function(competidores){
                 $scope.competidores = competidores;
             });
+
+            $scope.open = function() {
+                $scope.dialogClass = 'open';
+            };
             /*
 
             var margin = {top: 10, right: 10, bottom: 10, left: 10},

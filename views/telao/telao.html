@@ -1,4 +1,109 @@
 <div ng-controller="TelaoController" ng-init="initTelao()">
+    <div class="text-center">
+        <h4 class="page-header">{{categoriaAtivada.nome}}</h4>
+    </div>
     <div id="elimination-bracket">
+    </div>
+
+    <!-- dialog -->
+    <div class="modal" ng-class="dialogClass">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="line-separator-card">
+
+                </div>
+                <div class="modal-header text-center bg-red pos-relative">
+                    <h4 class="modal-title white">Luta - Adulto Médio - 60 a 80kg</h4>
+                    <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-center text-uppercase">
+                        <div class="col-xs-5 text-right">
+                            <h4>
+                                Competidor Compete Competindo
+                            </h4>
+                        </div>
+                        <div class="col-xs-2 bg-red">
+                            <h3 class="white">
+                                VS
+                            </h3>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h4>
+                                Competidor Compete Competindo
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <h5>Arena Fight Vila da Penha</h5>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h6 class="white text-uppercase">
+                                academia
+                            </h6>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h5>Monte Sinai</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <h2>2</h2>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h6 class="white text-uppercase">
+                                placar
+                            </h6>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h2>0</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <h5>60kg</h5>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h4 class="white text-uppercase">
+                                peso
+                            </h4>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h5>65kg</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <h5>21</h5>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h4 class="white text-uppercase">
+                                idade
+                            </h4>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h5>24</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <img ng-src="img/ranks/{{ listaImagens[0] }}"/>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <label class="white text-uppercase">
+                                graduação
+                            </label>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <img ng-src="img/ranks/{{ listaImagens[1] }}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>

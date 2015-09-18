@@ -126,3 +126,28 @@
 .blue {
   color: blue;
 }
+
+.white {
+  color: white;
+}
+
+.margin-top-bottom-11 {
+  margin-top: 11.5px;
+  margin-bottom: 11.5px;
+}
+
+.bg-red {
+  background-color: red;
+}
+
+.line-separator-card{
+  min-height: 100%;
+  background-color: red;
+  position: absolute;
+  width: 2px;
+  left: 50%;
+}
+
+.pos-relative {
+  position: relative;
+}

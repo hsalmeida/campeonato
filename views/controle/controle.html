@@ -18,7 +18,7 @@
                     </h4>
                     <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Busca por nome" aria-describedby="basic-addon1">
                 </div>
-                <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:ativa">
+                <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext ">
                     <h5 class="list-group-item-heading">
                         {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
                         <span class="pull-right">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="col-xs-3 pull-right">
-                            <button class="btn btn-lg btn-primary">
+                            <button class="btn btn-lg btn-primary" ng-click="open()">
                                 <span class="glyphicon glyphicon-cog"></span>
                             </button>
                             <button class="btn btn-lg btn-warning">
@@ -112,17 +112,56 @@
     <div class="modal" ng-class="dialogClass">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Chave #</h4>
+                <div class="modal-header text-center">
+                    <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title">Chave #1</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Confirma exclusao da categoria?</p>
-                    <h3>{{exCategoria.nome}}</h3>
+                    <div class="row text-center">
+                        <div class="col-xs-5">
+                            Competidor Compete Competindo
+                        </div>
+                        <div class="col-xs-2">
+                            <h3>
+                                X
+                            </h3>
+                        </div>
+                        <div class="col-xs-5">
+                            Competidor Compete Competindo
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-xs-5">
+                            <input class="form-control input-lg text-center" type="number" placeholder="Valor"/>
+                        </div>
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-5">
+                            <input class="form-control input-lg text-center" type="number" placeholder="Valor"/>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-xs-5 margin-top-bottom-11">
+                            <input ng-value="0" type="radio" name="optradio">
+                        </div>
+                        <div class="col-xs-2">
+                            <h4>
+                                Vitória
+                            </h4>
+                        </div>
+                        <div class="col-xs-5 margin-top-bottom-11">
+                            <input ng-value="1" type="radio" name="optradio">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default">Ok</button>
-                    <button type="button" ng-click="dialogClass = 'close'" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">
+                        Ok
+                    </button>
+                    <button type="button" ng-click="dialogClass = 'close'" class="btn btn-danger" data-dismiss="modal">
+                        Cancelar
+                    </button>
                 </div>
             </div>
         </div>
