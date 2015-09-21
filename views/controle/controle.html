@@ -22,10 +22,10 @@
                     <h5 class="list-group-item-heading">
                         {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
                         <span class="pull-right">
-                            <button class="btn btn-lg btn-primary" ng-show="!categoria.ativa">
+                            <button class="btn btn-lg btn-primary" ng-show="!categoria.ativa" ng-click="playCategoria(categoria)">
                                 <span class="glyphicon glyphicon-play"></span>
                             </button>
-                            <button class="btn btn-lg btn-warning" ng-show="categoria.ativa">
+                            <button class="btn btn-lg btn-warning" ng-show="categoria.ativa" ng-click="stopCategoria(categoria)">
                                 <span class="glyphicon glyphicon-stop"></span>
                             </button>
                         </span>
@@ -37,6 +37,8 @@
                         {{ listaGraduacoes[categoria.graduacao[0] - 1] }} ate
                         <img ng-src="img/ranks/{{ listaImagens[categoria.graduacao[1] - 1] }}"/>
                         {{ listaGraduacoes[categoria.graduacao[1] - 1] }}
+                        <br />
+                        Quantidade de Compertidores: {{categoria.quantidadeCompetidores}}
                     </p>
                 </div>
             </div>
@@ -50,7 +52,7 @@
             <div class="list-group list-categorias">
                 <div class="list-group-item active">
                     <h4 class="list-group-item-heading">
-                        Chaves da Categoria: {{categoriaAtiva}}
+                        Chaves da Categoria: {{categoriaAtiva.nome}}
                     </h4>
                 </div>
                 <div class="list-group-item" ng-repeat="competidor in competidores">

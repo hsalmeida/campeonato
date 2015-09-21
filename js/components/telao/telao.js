@@ -1,6 +1,6 @@
 campeonato
-    .controller('TelaoController', ['$scope', 'Categorias', 'Competidores', 'Chaves', '$stateParams', '$state', '$timeout', 'Listas',
-        function($scope, Categorias, Competidores, Chaves, $stateParams, $state, $timeout, Listas) {
+    .controller('TelaoController', ['$scope', 'Categorias', 'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas',
+        function($scope, Categorias, Competidores, Chaves, $stateParams, $state, $interval, Listas) {
 
             $scope.dialogClass = "open";
 
@@ -246,22 +246,26 @@ campeonato
                     .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")scale(" + scale + ")");
 
-                $timeout(function(){
+                $interval(function(){
                     var query = {
                         "ativa" : true
                     }
                     Categorias.query(query).then(function(categoria) {
-                        if ($scope.categoriaAtivada) {
-                            if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
-                                $scope.categoriaAtivada.atualizacao === categoria.atualizacao) {
-                                return;
+                        categoria = categoria[0];
+                        if(categoria) {
+                            if ($scope.categoriaAtivada) {
+                                if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
+                                    $scope.categoriaAtivada.atualizacao === categoria.atualizacao) {
+                                    return;
+                                }
+                            }
+                            if (categoria) {
+                                $scope.categoriaAtivada = categoria;
+                                if($scope.categoriaAtivada) {
+                                    updateBrackets($scope.categoriaAtivada);
+                                }
                             }
                         }
-                        if (categoria) {
-                            $scope.categoriaAtivada = categoria[0];
-                            updateBrackets($scope.categoriaAtivada);
-                        }
-
                     });
                 }, 10000);
 

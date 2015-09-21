@@ -75,14 +75,49 @@ campeonato
                 $scope.categorias = categorias;
                 categorias.forEach(function(categoria){
                    if(categoria.ativa) {
-                       $scope.categoriaAtiva = categoria.nome;
+                       $scope.categoriaAtiva = categoria;
                    }
+                   var query = {
+                        "graduacao" : {
+                            "$gte" : categoria.graduacao[0],
+                            "$lte" : categoria.graduacao[1]
+                        },
+                        "idade" : {
+                            "$gte" : categoria.idade[0],
+                            "$lte" : categoria.idade[1]
+                        },
+                        "peso" : {
+                            "$gte" : categoria.peso[0],
+                            "$lte" : categoria.peso[1]
+                        },
+                        "formato" : {
+                            "$in" : [categoria.formato, 2]
+                        }
+                    };
+                    Competidores.query(query).then(function(competidores){
+                        categoria.competidores = competidores;
+                        categoria.quantidadeCompetidores = competidores.length;
+                    });
                 });
             });
 
-            Competidores.all().then(function(competidores){
-                $scope.competidores = competidores;
-            });
+            $scope.playCategoria = function(categoria) {
+                $scope.categoriaAtiva.ativa = false;
+                $scope.categoriaAtiva.$saveOrUpdate().then(function (){
+                    categoria.ativa = true;
+                    categoria.atualizacao = Date.now();
+                    categoria.$saveOrUpdate().then(function (){
+                        $state.go('controle');
+                    });
+                });
+            };
+
+            $scope.stopCategoria = function(categoria) {
+                categoria.ativa = false;
+                categoria.$saveOrUpdate().then(function (){
+                    $state.go('controle');
+                });
+            };
 
             $scope.open = function() {
                 $scope.dialogClass = 'open';
