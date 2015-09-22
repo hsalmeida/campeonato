@@ -1,8 +1,8 @@
 campeonato
     .controller('TelaoController', ['$scope', 'Categorias', 'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas',
-        function($scope, Categorias, Competidores, Chaves, $stateParams, $state, $interval, Listas) {
+        function ($scope, Categorias, Competidores, Chaves, $stateParams, $state, $interval, Listas) {
 
-            $scope.dialogClass = "open";
+            $scope.dialogClass = "";
 
             var quantidadeRounds = Listas.quantidadeRounds;
 
@@ -14,6 +14,8 @@ campeonato
 
             $scope.objSexo = Listas.objSexo;
 
+            var globalRodadas;
+
             var margin = {top: 10, right: 10, bottom: 10, left: 10},
                 width = 1200 - margin.right - margin.left, halfWidth = width / 2,
                 height = 800 - margin.top - margin.bottom;
@@ -22,19 +24,23 @@ campeonato
                 .size([height, width]);
 
             var diagonal = d3.svg.line().interpolate('step')
-                .x(function (d) { return d.x; })
-                .y(function (d) { return d.y; });
+                .x(function (d) {
+                    return d.x;
+                })
+                .y(function (d) {
+                    return d.y;
+                });
 
-            var calcLeft = function(d){
+            var calcLeft = function (d) {
                 var l = d.y;
-                l = d.y-halfWidth;
+                l = d.y - halfWidth;
                 l = halfWidth - l;
-                return {x : d.x, y : l};
+                return {x: d.x, y: l};
             };
 
             var quantidadeRounds = {
-                "1" : 0, "2" : 1, "4" : 2, "8" : 3, "16" : 4, "32" : 5,
-                "64" : 6, "128" : 7
+                "1": 0, "2": 1, "4": 2, "8": 3, "16": 4, "32": 5,
+                "64": 6, "128": 7
             };
 
             var svg;
@@ -44,7 +50,7 @@ campeonato
             }
 
             function getQuantidadePartidas(len) {
-                if(powerOfTwo(len)) {
+                if (powerOfTwo(len)) {
                     var ret = quantidadeRounds[len];
                     return ret;
                 } else {
@@ -55,43 +61,42 @@ campeonato
 
             function updateBrackets(categoriaAtivada) {
                 //nao possui chaves
-                console.log(categoriaAtivada);
-                console.log(categoriaAtivada.chaves);
-
-                if(!categoriaAtivada.chaves) {
+                if (!categoriaAtivada.chaves) {
                     var nos = [];
 
                     var query = {
-                        "graduacao" : {
-                            "$gte" : categoriaAtivada.graduacao[0],
-                            "$lte" : categoriaAtivada.graduacao[1]
+                        "graduacao": {
+                            "$gte": categoriaAtivada.graduacao[0],
+                            "$lte": categoriaAtivada.graduacao[1]
                         },
-                        "idade" : {
-                            "$gte" : categoriaAtivada.idade[0],
-                            "$lte" : categoriaAtivada.idade[1]
+                        "idade": {
+                            "$gte": categoriaAtivada.idade[0],
+                            "$lte": categoriaAtivada.idade[1]
                         },
-                        "peso" : {
-                            "$gte" : categoriaAtivada.peso[0],
-                            "$lte" : categoriaAtivada.peso[1]
+                        "peso": {
+                            "$gte": categoriaAtivada.peso[0],
+                            "$lte": categoriaAtivada.peso[1]
                         },
-                        "formato" : {
-                            "$in" : [categoriaAtivada.formato, 2]
+                        "formato": {
+                            "$in": [categoriaAtivada.formato, 2]
                         }
                     };
-                    Competidores.query(query, { sort: {academia: 1} }).then(function(competidores){
+                    Competidores.query(query, {sort: {academia: 1}}).then(function (competidores) {
 
-                        competidores.forEach(function( competidor ){
+                        competidores.forEach(function (competidor) {
                             var comp = angular.copy(competidor);
                             var no = {
-                                nome : comp.nome,
+                                nome: comp.nome,
                                 academia: comp.academia,
-                                children : []
+                                children: []
                             }
                             nos.push(no);
                         });
 
                         //quantidade de nos
                         var len = nos.length;
+                        var rodadas = len;
+                        globalRodadas = rodadas;
                         //verifico se a chave é perfeita ou pode gerar baias futuras ou iniciais.
                         var chavePerfeita = powerOfTwo(len);
                         //pego a quantidade de nos, menos 1, e vejo a quantidade de partidas,
@@ -102,19 +107,19 @@ campeonato
                         var even = nos.length % 2;
                         var partidas = [];
                         var loopPartidas = 0;
-                        console.log(qtdPartidas);
+
                         for (var i = 0; i < qtdPartidas; i++) {
                             var partida = [];
                             //partida vencedora.
-                            if(i === 0) {
-                                partida.push({"nome": "Campeão", "academia": ""});
+                            if (i === 0) {
+                                partida.push({"nome": "Campeão", "academia": "", "rodadas" : rodadas, "partidas": qtdPartidas});
                                 partidas.push(partida);
                                 loopPartidas = 1;
                             } else {
                                 loopPartidas = loopPartidas * 2;
-                                for(var j = 0; j < loopPartidas; j++) {
+                                for (var j = 0; j < loopPartidas; j++) {
                                     //ultimo item da qtdPartidas
-                                    if(i === (qtdPartidas - 1)) {
+                                    if (i === (qtdPartidas - 1)) {
                                         partida.push({"nome": nos[j].nome, "academia": nos[j].academia});
                                     } else {
                                         //ainda esta no loop de qtdPartidas
@@ -125,15 +130,18 @@ campeonato
                             }
                         }
                         //loop nas partidas, lembrando que é multidimensional;
-                        for(var a = 0; a < partidas.length; a++) {
+                        for (var a = 0; a < partidas.length; a++) {
                             var loopPai = partidas[a].length;
                             var pais = partidas[a];
                             var idx = 0;
-                            for(var b = 0; b < loopPai; b++) {
-                                if(partidas[(a + 1)]) {
+                            for (var b = 0; b < loopPai; b++) {
+                                if (partidas[(a + 1)]) {
+                                    globalRodadas--;
                                     var filho1 = partidas[(a + 1)][idx];
+                                    filho1.rodada = globalRodadas;
                                     idx++;
                                     var filho2 = partidas[(a + 1)][idx];
+                                    filho2.rodada = globalRodadas;
                                     idx++;
                                     pais[b].children = [];
                                     pais[b].children.push(filho1);
@@ -142,43 +150,52 @@ campeonato
                             }
                         }
                         //possui baia
-                        if(!chavePerfeita) {
+                        if (!chavePerfeita) {
                             //verificar se foi par o impar a quantidade.
                             //quando par, tenho que criar uma nova chave e impar adiciono somente o competidor.
                             var lenPartidas = partidas.length;
                             var lenUltimaPartida = partidas[(lenPartidas - 1)].length;
                             var difNosLenPartidas = len - lenUltimaPartida;
+                            globalRodadas--;
                             //comentei para pensar melhor depois .. para impares o algoritmo tambem funciona, parcialmente.
                             //if(!even) {
                             //par
                             //mais simples e coloca as baias na proxima luta.
                             nos.reverse();
-                            for(var z = 0; z < difNosLenPartidas; z++) {
+                            for (var z = 0; z < difNosLenPartidas; z++) {
                                 var nomeOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome;
                                 var academiaOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia;
+
                                 partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome = "Vencedor";
                                 partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia = "";
-                                var filhoMovido = {"nome" : nomeOriginal, "academia": academiaOriginal};
-                                var filhoNovo = {"nome" : nos[z].nome, "academia": nos[z].academia};
+
+                                var filhoMovido = {"nome": nomeOriginal, "academia": academiaOriginal, "rodada" : globalRodadas};
+                                var filhoNovo = {"nome": nos[z].nome, "academia": nos[z].academia, "rodada" : globalRodadas};
+
                                 partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children = [];
                                 partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoMovido);
                                 partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoNovo);
+
+                                console.log(globalRodadas);
+
+                                globalRodadas--;
+
                             }
                             //}
                         }
-                        categoriaAtivada.chaves = partidas[0][0];
-
-                        montarArvore(categoriaAtivada.chaves);
+                        categoriaAtivada.arvore = partidas[0][0];
+                        montarArvore(categoriaAtivada.arvore);
                     });
 
                 } else {
-                    montarArvore(categoriaAtivada.chaves);
+                    montarArvore(categoriaAtivada.arvore);
                 }
 
             }
 
-            function montarArvore(chaves) {
-                var json = chaves;
+            function montarArvore(arvore) {
+                console.log(JSON.stringify(arvore));
+                var json = arvore;
 
                 json.x0 = height / 2;
                 json.y0 = width / 2;
@@ -186,7 +203,7 @@ campeonato
                 var nodes = tree.nodes(json).reverse(),
                     links = tree.links(nodes);
 
-                nodes.forEach(function(d) {
+                nodes.forEach(function (d) {
                     var p = calcLeft(d);
                     d.x0 = p.x;
                     d.y0 = p.y;
@@ -212,14 +229,18 @@ campeonato
                     .data(nodes)
                     .enter().append("g")
                     .attr("class", "node")
-                    .attr("transform", function(d) { return "translate(" + d.y0 + "," + d.x0 + ")"; });
+                    .attr("transform", function (d) {
+                        return "translate(" + d.y0 + "," + d.x0 + ")";
+                    });
 
                 node.append("rect")
                     .attr("y", -25)
                     .attr("x", 0)
                     .attr("height", 50)
                     .attr("width", 175)
-                    .attr("fill", "#ABABAB")
+                    .attr("fill", function (d) {
+                        return d.vencedor && d.vencedor === true ? "#DD4B5E" : "#ABABAB";
+                    })
                     .attr("class", "match-container");
 
                 node.append("text")
@@ -228,17 +249,31 @@ campeonato
                     .attr("dy", -4)
                     .attr("text-anchor", "left")
                     .attr("class", "competidor-name")
-                    .text(function(d) { return d.nome; });
+                    .text(function (d) {
+                        return d.nome;
+                    });
 
                 node.append("text")
                     .attr("dx", 4)
                     .attr("dy", 12)
                     .attr("text-anchor", "left")
                     .attr("class", "competidor-academia")
-                    .text(function(d) { return d.academia; });
+                    .text(function (d) {
+                        return d.academia;
+                    });
+
+                node.append("text")
+                    .attr("dx", -25)
+                    .attr("dy", 5)
+                    .attr("text-anchor", "left")
+                    .attr("class", "competidor-rodada")
+                    .text(function (d) {
+                        return d.rodada ? "#" + d.rodada : "";
+                    });
+
             }
 
-            $scope.initTelao = function(){
+            $scope.initTelao = function () {
 
                 var scale = .85;
 
@@ -248,20 +283,14 @@ campeonato
                     .append("g")
                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")scale(" + scale + ")");
 
-                $interval(function(){
+                $interval(function () {
                     var query = {
-                        "ativa" : true
+                        "ativa": true
                     }
-                    Categorias.query(query).then(function(categoria) {
+                    Categorias.query(query).then(function (categoria) {
                         categoria = categoria[0];
-                        if(categoria) {
+                        if (categoria) {
                             if ($scope.categoriaAtivada) {
-                                //alguns logs
-                                console.log($scope.categoriaAtivada._id.$oid);
-                                console.log(categoria._id.$oid);
-
-                                console.log($scope.categoriaAtivada.atualizacao);
-                                console.log(categoria.atualizacao);
 
                                 if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
                                     $scope.categoriaAtivada.atualizacao === categoria.atualizacao) {
@@ -270,7 +299,7 @@ campeonato
                             }
 
                             $scope.categoriaAtivada = categoria;
-                            if($scope.categoriaAtivada) {
+                            if ($scope.categoriaAtivada) {
                                 updateBrackets($scope.categoriaAtivada);
                             }
 

@@ -105,6 +105,11 @@
   font-weight: lighter;
 }
 
+.competidor-rodada {
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .cockpit-nome-competidor {
   font-size: 14px;
   word-wrap: break-word;

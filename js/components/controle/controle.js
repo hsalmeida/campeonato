@@ -41,6 +41,38 @@ campeonato
         }
 
 
+        function initQuery(){
+            Categorias.all({ sort: {ativa: -1} }).then(function(categorias){
+                $scope.categorias = categorias;
+                categorias.forEach(function(categoria){
+                    if(categoria.ativa) {
+                        $scope.categoriaAtiva = categoria;
+                    }
+                    var query = {
+                        "graduacao" : {
+                            "$gte" : categoria.graduacao[0],
+                            "$lte" : categoria.graduacao[1]
+                        },
+                        "idade" : {
+                            "$gte" : categoria.idade[0],
+                            "$lte" : categoria.idade[1]
+                        },
+                        "peso" : {
+                            "$gte" : categoria.peso[0],
+                            "$lte" : categoria.peso[1]
+                        },
+                        "formato" : {
+                            "$in" : [categoria.formato, 2]
+                        }
+                    };
+                    Competidores.query(query).then(function(competidores){
+                        categoria.competidores = competidores;
+                        categoria.quantidadeCompetidores = competidores.length;
+                    });
+                });
+            });
+        }
+
 
         $scope.initControle = function(){
             /*
@@ -71,45 +103,26 @@ campeonato
             });
             */
 
-            Categorias.all({ sort: {ativa: -1} }).then(function(categorias){
-                $scope.categorias = categorias;
-                categorias.forEach(function(categoria){
-                   if(categoria.ativa) {
-                       $scope.categoriaAtiva = categoria;
-                   }
-                   var query = {
-                        "graduacao" : {
-                            "$gte" : categoria.graduacao[0],
-                            "$lte" : categoria.graduacao[1]
-                        },
-                        "idade" : {
-                            "$gte" : categoria.idade[0],
-                            "$lte" : categoria.idade[1]
-                        },
-                        "peso" : {
-                            "$gte" : categoria.peso[0],
-                            "$lte" : categoria.peso[1]
-                        },
-                        "formato" : {
-                            "$in" : [categoria.formato, 2]
-                        }
-                    };
-                    Competidores.query(query).then(function(competidores){
-                        categoria.competidores = competidores;
-                        categoria.quantidadeCompetidores = competidores.length;
-                    });
-                });
-            });
+            initQuery();
 
             $scope.playCategoria = function(categoria) {
-                $scope.categoriaAtiva.ativa = false;
-                $scope.categoriaAtiva.$saveOrUpdate().then(function (){
-                    categoria.ativa = true;
-                    categoria.atualizacao = Date.now();
-                    categoria.$saveOrUpdate().then(function (){
-                        $state.go('controle');
-                    });
+
+                categoria.ativa = true;
+                categoria.atualizacao = Date.now();
+                //verifica se possui chave
+                if(!categoria.chaves) {
+
+                }
+                categoria.$saveOrUpdate().then(function (){
+                    if($scope.categoriaAtiva) {
+                        $scope.categoriaAtiva.ativa = false;
+                        $scope.categoriaAtiva.$saveOrUpdate().then(function (){
+                        });
+                    }
+                    initQuery();
+                    $state.go('controle');
                 });
+
             };
 
             $scope.stopCategoria = function(categoria) {
