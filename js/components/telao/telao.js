@@ -55,6 +55,9 @@ campeonato
 
             function updateBrackets(categoriaAtivada) {
                 //nao possui chaves
+                console.log(categoriaAtivada);
+                console.log(categoriaAtivada.chaves);
+
                 if(!categoriaAtivada.chaves) {
                     var nos = [];
 
@@ -76,7 +79,7 @@ campeonato
                         }
                     };
                     Competidores.query(query, { sort: {academia: 1} }).then(function(competidores){
-                        console.log(competidores);
+
                         competidores.forEach(function( competidor ){
                             var comp = angular.copy(competidor);
                             var no = {
@@ -99,6 +102,7 @@ campeonato
                         var even = nos.length % 2;
                         var partidas = [];
                         var loopPartidas = 0;
+                        console.log(qtdPartidas);
                         for (var i = 0; i < qtdPartidas; i++) {
                             var partida = [];
                             //partida vencedora.
@@ -175,11 +179,9 @@ campeonato
 
             function montarArvore(chaves) {
                 var json = chaves;
-                console.log("json");
-                console.log(json);
+
                 json.x0 = height / 2;
                 json.y0 = width / 2;
-                console.log(json);
 
                 var nodes = tree.nodes(json).reverse(),
                     links = tree.links(nodes);
@@ -254,17 +256,24 @@ campeonato
                         categoria = categoria[0];
                         if(categoria) {
                             if ($scope.categoriaAtivada) {
+                                //alguns logs
+                                console.log($scope.categoriaAtivada._id.$oid);
+                                console.log(categoria._id.$oid);
+
+                                console.log($scope.categoriaAtivada.atualizacao);
+                                console.log(categoria.atualizacao);
+
                                 if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
                                     $scope.categoriaAtivada.atualizacao === categoria.atualizacao) {
                                     return;
                                 }
                             }
-                            if (categoria) {
-                                $scope.categoriaAtivada = categoria;
-                                if($scope.categoriaAtivada) {
-                                    updateBrackets($scope.categoriaAtivada);
-                                }
+
+                            $scope.categoriaAtivada = categoria;
+                            if($scope.categoriaAtivada) {
+                                updateBrackets($scope.categoriaAtivada);
                             }
+
                         }
                     });
                 }, 10000);
