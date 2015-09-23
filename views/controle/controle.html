@@ -55,16 +55,17 @@
                         Chaves da Categoria: {{listaFormatos[categoriaAtiva.formato]}} -  {{categoriaAtiva.nome}}
                     </h4>
                 </div>
-                <div class="list-group-item" ng-repeat="competidor in competidores">
+
+                <div class="list-group-item" ng-repeat="chave in categoriaAtiva.chaves | filter:filtroChave | orderBy:'rodada'">
                     <div class="row">
                         <div class="col-xs-2">
-                            <h4>#1</h4>
+                            <h4>#{{chave.rodada}}</h4>
                         </div>
                         <div class="col-xs-7">
                             <div class="row cockpit-competidor">
                                 <div class="col-xs-5">
                                     <label class="cockpit-nome-competidor">
-                                        {{competidor.nome}}
+                                        {{chave.competidor1.nome}}
                                     </label>
                                     <div class="row cockpit-valor-competidor">
                                         <div class="col-xs-6">
@@ -80,7 +81,7 @@
                                 </div>
                                 <div class="col-xs-5">
                                     <label class="cockpit-nome-competidor">
-                                        {{competidor.nome}}
+                                        {{chave.competidor2.nome}}
                                     </label>
                                     <div class="row cockpit-valor-competidor">
                                         <div class="col-xs-6">

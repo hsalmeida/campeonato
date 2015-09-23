@@ -38,11 +38,6 @@ campeonato
                 return {x: d.x, y: l};
             };
 
-            var quantidadeRounds = {
-                "1": 0, "2": 1, "4": 2, "8": 3, "16": 4, "32": 5,
-                "64": 6, "128": 7
-            };
-
             var svg;
 
             function powerOfTwo(numero) {
@@ -61,131 +56,7 @@ campeonato
 
             function updateBrackets(categoriaAtivada) {
                 //nao possui chaves
-                if (!categoriaAtivada.chaves) {
-                    var nos = [];
-
-                    var query = {
-                        "graduacao": {
-                            "$gte": categoriaAtivada.graduacao[0],
-                            "$lte": categoriaAtivada.graduacao[1]
-                        },
-                        "idade": {
-                            "$gte": categoriaAtivada.idade[0],
-                            "$lte": categoriaAtivada.idade[1]
-                        },
-                        "peso": {
-                            "$gte": categoriaAtivada.peso[0],
-                            "$lte": categoriaAtivada.peso[1]
-                        },
-                        "formato": {
-                            "$in": [categoriaAtivada.formato, 2]
-                        }
-                    };
-                    Competidores.query(query, {sort: {academia: 1}}).then(function (competidores) {
-
-                        competidores.forEach(function (competidor) {
-                            var comp = angular.copy(competidor);
-                            var no = {
-                                nome: comp.nome,
-                                academia: comp.academia,
-                                children: []
-                            }
-                            nos.push(no);
-                        });
-
-                        //quantidade de nos
-                        var len = nos.length;
-                        var rodadas = len;
-                        globalRodadas = rodadas;
-                        //verifico se a chave é perfeita ou pode gerar baias futuras ou iniciais.
-                        var chavePerfeita = powerOfTwo(len);
-                        //pego a quantidade de nos, menos 1, e vejo a quantidade de partidas,
-                        //partidas informa os pulos nos nós.
-                        var qtdPartidas = getQuantidadePartidas(len);
-                        //para saber se a quantidade de competidores é par, faço mod de 2.
-                        //isso vai me dizer se tem um competidor na baia.
-                        var even = nos.length % 2;
-                        var partidas = [];
-                        var loopPartidas = 0;
-
-                        for (var i = 0; i < qtdPartidas; i++) {
-                            var partida = [];
-                            //partida vencedora.
-                            if (i === 0) {
-                                partida.push({"nome": "Campeão", "academia": "", "rodadas" : rodadas, "partidas": qtdPartidas});
-                                partidas.push(partida);
-                                loopPartidas = 1;
-                            } else {
-                                loopPartidas = loopPartidas * 2;
-                                for (var j = 0; j < loopPartidas; j++) {
-                                    //ultimo item da qtdPartidas
-                                    if (i === (qtdPartidas - 1)) {
-                                        partida.push({"nome": nos[j].nome, "academia": nos[j].academia});
-                                    } else {
-                                        //ainda esta no loop de qtdPartidas
-                                        partida.push({"nome": "Vencedor", "academia": ""});
-                                    }
-                                }
-                                partidas.push(partida);
-                            }
-                        }
-                        //loop nas partidas, lembrando que é multidimensional;
-                        for (var a = 0; a < partidas.length; a++) {
-                            var loopPai = partidas[a].length;
-                            var pais = partidas[a];
-                            var idx = 0;
-                            for (var b = 0; b < loopPai; b++) {
-                                if (partidas[(a + 1)]) {
-                                    globalRodadas--;
-                                    var filho1 = partidas[(a + 1)][idx];
-                                    filho1.rodada = globalRodadas;
-                                    idx++;
-                                    var filho2 = partidas[(a + 1)][idx];
-                                    filho2.rodada = globalRodadas;
-                                    idx++;
-                                    pais[b].children = [];
-                                    pais[b].children.push(filho1);
-                                    pais[b].children.push(filho2);
-                                }
-                            }
-                        }
-                        //possui baia
-                        if (!chavePerfeita) {
-                            //verificar se foi par o impar a quantidade.
-                            //quando par, tenho que criar uma nova chave e impar adiciono somente o competidor.
-                            var lenPartidas = partidas.length;
-                            var lenUltimaPartida = partidas[(lenPartidas - 1)].length;
-                            var difNosLenPartidas = len - lenUltimaPartida;
-                            globalRodadas--;
-                            //comentei para pensar melhor depois .. para impares o algoritmo tambem funciona, parcialmente.
-                            //if(!even) {
-                            //par
-                            //mais simples e coloca as baias na proxima luta.
-                            nos.reverse();
-                            for (var z = 0; z < difNosLenPartidas; z++) {
-                                var nomeOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome;
-                                var academiaOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia;
-
-                                partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome = "Vencedor";
-                                partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia = "";
-
-                                var filhoMovido = {"nome": nomeOriginal, "academia": academiaOriginal, "rodada" : globalRodadas};
-                                var filhoNovo = {"nome": nos[z].nome, "academia": nos[z].academia, "rodada" : globalRodadas};
-
-                                partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children = [];
-                                partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoMovido);
-                                partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoNovo);
-
-                                console.log(globalRodadas);
-
-                                globalRodadas--;
-
-                            }
-                            //}
-                        }
-                        categoriaAtivada.arvore = partidas[0][0];
-                        montarArvore(categoriaAtivada.arvore);
-                    });
+                if (!categoriaAtivada.arvore) {
 
                 } else {
                     montarArvore(categoriaAtivada.arvore);
@@ -194,7 +65,6 @@ campeonato
             }
 
             function montarArvore(arvore) {
-                console.log(JSON.stringify(arvore));
                 var json = arvore;
 
                 json.x0 = height / 2;
