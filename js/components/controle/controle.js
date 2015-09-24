@@ -87,6 +87,9 @@ campeonato
                 var partidas = [];
                 var loopPartidas = 0;
 
+                qtdPartidas = qtdPartidas === 2 ? 3 : qtdPartidas;
+
+
                 for (var i = 0; i < qtdPartidas; i++) {
                     var partida = [];
                     //partida vencedora.
@@ -184,8 +187,16 @@ campeonato
                 var chave = {};
                 chave.rodada = children[0].rodada;
                 chave.final = false;
-                chave.competidor1 = {"nome": children[0].nome};
-                chave.competidor2 = {"nome": children[1].nome};
+                chave.competidor1 = {
+                    "nome": children[0].nome,
+                    "pontuacao": 0,
+                    "vencedor": false
+                };
+                chave.competidor2 = {
+                    "nome": children[1].nome,
+                    "pontuacao": 0,
+                    "vencedor": false
+                };
                 chaveGlobal.push(chave);
 
                 criarChavesRecus(children[0].children);
@@ -199,8 +210,13 @@ campeonato
                 categorias.forEach(function(categoria){
                     if(categoria.ativa) {
                         $scope.categoriaAtiva = categoria;
-                        criarChave($scope.categoriaAtiva);
-                        $scope.categoriaAtiva.chaves = chaveGlobal;
+
+                        //if(!$scope.categoriaAtiva.chaves || $scope.categoriaAtiva.chaves.length === 0) {
+                            criarChave($scope.categoriaAtiva);
+                            $scope.categoriaAtiva.chaves = [];
+                            $scope.categoriaAtiva.chaves = chaveGlobal;
+                        //}
+
                     }
                     var query = {
                         "graduacao" : {
@@ -241,9 +257,9 @@ campeonato
                 categoria.ativa = true;
                 categoria.atualizacao = Date.now();
                 //verifica se possui chave
-                if(!categoria.arvore) {
+                //if(!categoria.arvore || !categoria.arvore.children) {
                     criarArvore(categoria);
-                }
+                //}
                 categoria.$saveOrUpdate().then(function (){
                     if($scope.categoriaAtiva) {
                         $scope.categoriaAtiva.ativa = false;
