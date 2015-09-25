@@ -279,8 +279,23 @@ campeonato
                 });
             };
 
-            $scope.open = function() {
+            $scope.open = function(chave) {
                 $scope.dialogClass = 'open';
+
+                chave.competidorVencedor = 0;
+
+                if(chave.competidor1.vencedor) {
+                    chave.competidorVencedor = 1
+                }
+                if(chave.competidor2.vencedor) {
+                    chave.competidorVencedor = 2;
+                }
+
+                $scope.chave = chave;
+            };
+
+            $scope.cancel = function(){
+
             };
             /*
 

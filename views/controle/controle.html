@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="col-xs-3 pull-right">
-                            <button class="btn btn-lg btn-primary" ng-click="open()">
+                            <button class="btn btn-lg btn-primary" ng-click="open(chave)">
                                 <span class="glyphicon glyphicon-cog"></span>
                             </button>
                             <button class="btn btn-lg btn-warning">
@@ -121,12 +121,12 @@
                     <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">
                         ×
                     </button>
-                    <h4 class="modal-title">Chave #1</h4>
+                    <h4 class="modal-title">Chave #{{chave.rodada}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row text-center">
                         <div class="col-xs-5">
-                            Competidor Compete Competindo
+                            {{chave.competidor1.nome}}
                         </div>
                         <div class="col-xs-2">
                             <h3>
@@ -134,21 +134,21 @@
                             </h3>
                         </div>
                         <div class="col-xs-5">
-                            Competidor Compete Competindo
+                            {{chave.competidor2.nome}}
                         </div>
                     </div>
                     <div class="row text-center">
                         <div class="col-xs-5">
-                            <input class="form-control input-lg text-center" type="number" placeholder="Valor"/>
+                            <input class="form-control input-lg text-center" ng-model="chave.competidor1.pontuacao" type="number" placeholder="Valor"/>
                         </div>
                         <div class="col-xs-2"></div>
                         <div class="col-xs-5">
-                            <input class="form-control input-lg text-center" type="number" placeholder="Valor"/>
+                            <input class="form-control input-lg text-center" ng-model="chave.competidor2.pontuacao" type="number" placeholder="Valor"/>
                         </div>
                     </div>
                     <div class="row text-center">
                         <div class="col-xs-5 margin-top-bottom-11">
-                            <input ng-value="0" type="radio" name="optradio">
+                            <input ng-value="1" ng-model="chave.competidorVencedor" type="radio" name="optradio">
                         </div>
                         <div class="col-xs-2">
                             <h4>
@@ -156,12 +156,12 @@
                             </h4>
                         </div>
                         <div class="col-xs-5 margin-top-bottom-11">
-                            <input ng-value="1" type="radio" name="optradio">
+                            <input ng-value="2" ng-model="chave.competidorVencedor" type="radio" name="optradio">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" ng-click="" class="btn btn-primary">
                         Ok
                     </button>
                     <button type="button" ng-click="dialogClass = 'close'" class="btn btn-danger" data-dismiss="modal">
