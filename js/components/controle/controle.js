@@ -35,23 +35,8 @@ campeonato
         }
 
         function getQuantidadePartidas(len) {
-            if(powerOfTwo(len)) {
-                var ret = quantidadeRounds[len];
-                return ret;
-            } else {
-                len++;
-                return getQuantidadePartidas(len);
-            }
-        }
-
-        function powerOfTwo(numero) {
-            return !(numero == 0) && !(numero & (numero - 1))
-        }
-
-        function getQuantidadePartidas(len) {
             if (powerOfTwo(len)) {
-                var ret = quantidadeRounds[len];
-                return ret;
+                return quantidadeRounds[len];
             } else {
                 len++;
                 return getQuantidadePartidas(len);
@@ -68,7 +53,7 @@ campeonato
                         nome: comp.nome,
                         academia: comp.academia,
                         children: []
-                    }
+                    };
                     nos.push(no);
                 });
                 //quantidade de nos
