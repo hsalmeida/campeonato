@@ -18,14 +18,18 @@
                     </h4>
                     <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Busca por nome" aria-describedby="basic-addon1">
                 </div>
-                <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext ">
+                <div class="list-group-item"
+                     ng-class="categoria.ativa ? 'list-group-item-success' : ''"
+                     ng-repeat="categoria in categorias | filter:searchtext ">
                     <h5 class="list-group-item-heading">
                         {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
                         <span class="pull-right">
-                            <button class="btn btn-lg btn-primary" ng-show="!categoria.ativa" ng-click="playCategoria(categoria)">
+                            <button class="btn btn-lg btn-primary" ng-show="!categoria.ativa" ng-click="playCategoria(categoria)"
+                                    tooltip-placement="top" tooltip="Iniciar e Editar Chaves">
                                 <span class="glyphicon glyphicon-play"></span>
                             </button>
-                            <button class="btn btn-lg btn-warning" ng-show="categoria.ativa" ng-click="stopCategoria(categoria)">
+                            <button class="btn btn-lg btn-warning" ng-show="categoria.ativa" ng-click="stopCategoria(categoria)"
+                                    tooltip-placement="top" tooltip="Parar edição de Chaves">
                                 <span class="glyphicon glyphicon-stop"></span>
                             </button>
                         </span>
@@ -56,7 +60,9 @@
                     </h4>
                 </div>
 
-                <div class="list-group-item" ng-repeat="chave in categoriaAtiva.chaves | filter:filtroChave | orderBy:'rodada'">
+                <div class="list-group-item"
+                     ng-class="chave.vencedor ? 'list-group-item-success' : ''"
+                     ng-repeat="chave in categoriaAtiva.chaves | filter:filtroChave | orderBy:'rodada'">
                     <div class="row">
                         <div class="col-xs-2">
                             <h4>#{{chave.rodada}}</h4>
@@ -97,10 +103,12 @@
                             </div>
                         </div>
                         <div class="col-xs-3 pull-right">
-                            <button class="btn btn-lg btn-primary" ng-click="open(chave)">
+                            <button class="btn btn-lg btn-primary" ng-click="open(chave)"
+                                    tooltip-placement="top" tooltip="Editar chave">
                                 <span class="glyphicon glyphicon-cog"></span>
                             </button>
-                            <button class="btn btn-lg btn-warning">
+                            <button class="btn btn-lg btn-warning"
+                                    tooltip-placement="top" tooltip="Mostrar no Telão">
                                 <span class="glyphicon glyphicon-blackboard"></span>
                             </button>
                         </div>
@@ -161,10 +169,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" ng-click="" class="btn btn-primary">
+                    <button type="button" ng-click="salvarChave(chave)" class="btn btn-primary">
                         Ok
                     </button>
-                    <button type="button" ng-click="dialogClass = 'close'" class="btn btn-danger" data-dismiss="modal">
+                    <button type="button" ng-click="cancelar()" class="btn btn-danger" data-dismiss="modal">
                         Cancelar
                     </button>
                 </div>

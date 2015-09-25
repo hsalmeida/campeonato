@@ -7,7 +7,8 @@
   <div>
     <h3 class="page-header">
       Lista de Categorias
-      <button class="btn btn-lg btn-danger" ui-sref="newCategoria">
+      <button class="btn btn-lg btn-danger" ui-sref="newCategoria"
+              tooltip-placement="top" tooltip="Nova categoria">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
     </h3>
@@ -37,10 +38,12 @@
             {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
           </a>
           <span class="pull-right">
-            <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})" >
+            <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})"
+                    tooltip-placement="top" tooltip="Editar">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
-            <button class="btn btn-lg btn-warning">
+            <button class="btn btn-lg btn-warning"
+                    tooltip-placement="top" tooltip="Remover">
               <span class="glyphicon glyphicon-trash" ng-click="open(categoria)"></span>
             </button>
           </span>
