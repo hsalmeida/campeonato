@@ -90,7 +90,7 @@ campeonato
                                 partida.push({"nome": nos[j].nome, "academia": nos[j].academia, vencedor: false});
                             } else {
                                 //ainda esta no loop de qtdPartidas
-                                partida.push({"nome": "Vencedor", "academia": "", vencedor: false});
+                                partida.push({"nome": "Vencedor " + j, "academia": "", vencedor: false});
                             }
                         }
                         partidas.push(partida);
@@ -107,9 +107,11 @@ campeonato
                             var filho1 = partidas[(a + 1)][idx];
                             filho1.rodada = globalRodadas;
                             idx++;
+                            filho1.pai = {"nome" : pais[b].nome, "rodada" : pais[b].rodada};
                             var filho2 = partidas[(a + 1)][idx];
                             filho2.rodada = globalRodadas;
                             idx++;
+                            filho2.pai = {"nome" : pais[b].nome, "rodada" : pais[b].rodada};
                             pais[b].children = [];
                             pais[b].children.push(filho1);
                             pais[b].children.push(filho2);
@@ -230,6 +232,29 @@ campeonato
             });
         }
 
+        var recursiveNode = [];
+        function atualizarArvore(chave) {
+            recursiveNode = [];
+            localizarNo($scope.categoriaAtiva.arvore, chave.rodada);
+            console.log(recursiveNode);
+        }
+
+        function localizarNo(no, rodada) {
+
+            if(no.rodada !== undefined && no.rodada === rodada) {
+                recursiveNode.push(no);
+            } else {
+                if(angular.isArray(no)) {
+                    for (var i = 0; i < no.length; i++) {
+                        localizarNo(no[i], rodada);
+                    }
+                } else {
+                    if(no.children) {
+                        localizarNo(no.children, rodada);
+                    }
+                }
+            }
+        }
 
         $scope.initControle = function(){
 
@@ -287,6 +312,8 @@ campeonato
             };
 
             $scope.salvarChave = function(chave) {
+
+                atualizarArvore(chave);
 
                 $scope.dialogClass = 'close'
             };
