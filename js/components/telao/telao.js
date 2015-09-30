@@ -65,6 +65,7 @@ campeonato
             }
 
             function montarArvore(arvore) {
+
                 var json = arvore;
 
                 json.x0 = height / 2;
@@ -94,16 +95,16 @@ campeonato
                     })
                     .attr("class", "link");
 
-
-                var node = svg.selectAll("g.node")
-                    .data(nodes)
-                    .enter().append("g")
+                //declaro.
+                var node = svg.selectAll("g.node").data(nodes);
+                //entro nos nos nos nos
+                var nodeEnter =  node.enter().append("g")
                     .attr("class", "node")
                     .attr("transform", function (d) {
                         return "translate(" + d.y0 + "," + d.x0 + ")";
                     });
 
-                node.append("rect")
+                nodeEnter.append("rect")
                     .attr("y", -25)
                     .attr("x", 0)
                     .attr("height", 50)
@@ -113,7 +114,7 @@ campeonato
                     })
                     .attr("class", "match-container");
 
-                node.append("text")
+                nodeEnter.append("text")
                     //.attr("dx", function(d) { return d.children ? -8 : 8; })
                     .attr("dx", 4)
                     .attr("dy", -4)
@@ -123,7 +124,7 @@ campeonato
                         return d.nome;
                     });
 
-                node.append("text")
+                nodeEnter.append("text")
                     .attr("dx", 4)
                     .attr("dy", 12)
                     .attr("text-anchor", "left")
@@ -132,7 +133,7 @@ campeonato
                         return d.academia;
                     });
 
-                node.append("text")
+                nodeEnter.append("text")
                     .attr("dx", -25)
                     .attr("dy", 5)
                     .attr("text-anchor", "left")
@@ -140,6 +141,32 @@ campeonato
                     .text(function (d) {
                         return d.rodada ? "#" + d.rodada : "";
                     });
+
+                nodeEnter.append("rect")
+                    .attr("y", -25)
+                    .attr("x", 175)
+                    .attr("height", 50)
+                    .attr("width", 50)
+                    .attr("fill", "#28303f");
+
+                nodeEnter.append("text")
+                    .attr("dx", 195)
+                    .attr("dy", 5)
+                    .attr("text-anchor", "left")
+                    .attr("fill", "#8f9198")
+                    .attr("style", "font-size: 16px")
+                    .text(function (d) {
+                        return d.pontuacao ? d.pontuacao : "0";
+                    });
+
+                var nodeUpdate = node.transition()
+                    .duration(500)
+                    .attr("transform", function (d) {
+                        return "translate(" + d.y0 + "," + d.x0 + ")";
+                    });
+
+                nodeUpdate.select("text")
+                    .style("fill-opacity", 1);
 
             }
 
@@ -161,7 +188,8 @@ campeonato
                         categoria = categoria[0];
                         if (categoria) {
                             if ($scope.categoriaAtivada) {
-
+                                console.log(categoria._id.$oid);
+                                console.log(categoria.atualizacao);
                                 if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
                                     $scope.categoriaAtivada.atualizacao === categoria.atualizacao) {
                                     return;
@@ -169,6 +197,7 @@ campeonato
                             }
 
                             $scope.categoriaAtivada = categoria;
+                            console.log("atualizar");
                             if ($scope.categoriaAtivada) {
                                 updateBrackets($scope.categoriaAtivada);
                             }

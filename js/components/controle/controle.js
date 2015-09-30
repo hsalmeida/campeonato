@@ -135,11 +135,31 @@ campeonato
                         var nomeOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome;
                         var academiaOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia;
 
-                        partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome = "Vencedor";
+                        partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome = "Vencedor " + z;
                         partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia = "";
 
-                        var filhoMovido = {"nome": nomeOriginal, "academia": academiaOriginal, "rodada" : globalRodadas, vencedor: false};
-                        var filhoNovo = {"nome": nos[z].nome, "academia": nos[z].academia, "rodada" : globalRodadas, vencedor: false};
+                        var filhoMovido = {
+                            "nome": nomeOriginal,
+                            "academia": academiaOriginal,
+                            "rodada" : globalRodadas,
+                            vencedor: false,
+                            "pai" : {
+                                "nome" : partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome,
+                                "rodada" : partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].rodada
+                            }
+                        };
+                        //filho1.pai = {"nome" : pais[b].nome, "rodada" : pais[b].rodada};
+
+                        var filhoNovo = {
+                            "nome": nos[z].nome,
+                            "academia": nos[z].academia,
+                            "rodada": globalRodadas,
+                            vencedor: false,
+                            "pai": {
+                                "nome": partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome,
+                                "rodada": partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].rodada
+                            }
+                        };
 
                         partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children = [];
                         partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].children.push(filhoMovido);
@@ -154,6 +174,15 @@ campeonato
                 categoria.chaves = [];
 
             }
+        }
+
+        function buscaVencedor(children) {
+            for(var i = 0; i < children.length; i++) {
+                if(children[i].vencedor) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         function criarChave(categoria) {
@@ -175,16 +204,16 @@ campeonato
                 var chave = {};
                 chave.rodada = children[0].rodada;
                 chave.final = false;
-                chave.vencedor = false;
+                chave.vencedor = buscaVencedor(children);
                 chave.competidor1 = {
                     "nome": children[0].nome,
-                    "pontuacao": 0,
-                    "vencedor": false
+                    "pontuacao": children[0].pontuacao ? children[0].pontuacao : 0,
+                    "vencedor": children[0].vencedor ? children[0].vencedor : false,
                 };
                 chave.competidor2 = {
                     "nome": children[1].nome,
-                    "pontuacao": 0,
-                    "vencedor": false
+                    "pontuacao": children[1].pontuacao ? children[1].pontuacao : 0,
+                    "vencedor": children[1].vencedor ? children[1].vencedor : false,
                 };
                 chaveGlobal.push(chave);
 
@@ -235,22 +264,60 @@ campeonato
         var recursiveNode = [];
         function atualizarArvore(chave) {
             recursiveNode = [];
-            localizarNo($scope.categoriaAtiva.arvore, chave.rodada);
+            var vencedor = {};
+            //atualiza o no principal
+            localizarNo($scope.categoriaAtiva.arvore, chave.rodada, chave);
             console.log(recursiveNode);
+            for(var i = 0; i < recursiveNode.length; i++) {
+                if(recursiveNode[i].vencedor) {
+                    vencedor = recursiveNode[i];
+                }
+            }
+            //atualizar o pai, a proxima partida. ou o resultado final.
+            localizarPai($scope.categoriaAtiva.arvore, vencedor.pai, vencedor);
         }
 
-        function localizarNo(no, rodada) {
-
-            if(no.rodada !== undefined && no.rodada === rodada) {
-                recursiveNode.push(no);
+        function localizarPai(no, pai, vencedor) {
+            if(no.rodada !== undefined && no.rodada === pai.rodada) {
+                //atualizo o pai.
+                if(no.nome === pai.nome) {
+                    no.nome = vencedor.nome;
+                    no.academia = vencedor.academia;
+                }
             } else {
                 if(angular.isArray(no)) {
                     for (var i = 0; i < no.length; i++) {
-                        localizarNo(no[i], rodada);
+                        localizarPai(no[i], pai, vencedor);
                     }
                 } else {
                     if(no.children) {
-                        localizarNo(no.children, rodada);
+                        localizarPai(no.children, pai, vencedor);
+                    }
+                }
+            }
+        }
+
+        function localizarNo(no, rodada, chave) {
+
+            if(no.rodada !== undefined && no.rodada === rodada) {
+                recursiveNode.push(no);
+                //atualizo ambos competidores.
+                if(no.nome === chave.competidor1.nome) {
+                    no.vencedor = chave.competidor1.vencedor;
+                    no.pontuacao = chave.competidor1.pontuacao;
+                }
+                if(no.nome === chave.competidor2.nome) {
+                    no.vencedor = chave.competidor2.vencedor;
+                    no.pontuacao = chave.competidor2.pontuacao;
+                }
+            } else {
+                if(angular.isArray(no)) {
+                    for (var i = 0; i < no.length; i++) {
+                        localizarNo(no[i], rodada, chave);
+                    }
+                } else {
+                    if(no.children) {
+                        localizarNo(no.children, rodada, chave);
                     }
                 }
             }
@@ -313,11 +380,41 @@ campeonato
 
             $scope.salvarChave = function(chave) {
 
-                atualizarArvore(chave);
+                console.log(chave);
 
-                $scope.dialogClass = 'close'
+                var possuiVencedor = false;
+
+                if(chave.competidorVencedor === 1 ) {
+                    chave.competidor1.vencedor = true;
+                    chave.competidor2.vencedor = false;
+                    possuiVencedor = true;
+                }
+                if(chave.competidorVencedor === 2) {
+                    chave.competidor1.vencedor = false;
+                    chave.competidor2.vencedor = true;
+                    possuiVencedor = true;
+                }
+
+                if(possuiVencedor) {
+
+                    chave.vencedor = true;
+
+                    for (var i = 0; i < $scope.categoriaAtiva.chaves.length; i++) {
+                        if ($scope.categoriaAtiva.chaves[i].rodada === chave.rodada) {
+                            $scope.categoriaAtiva.chaves[i] = chave;
+                        }
+                    }
+
+                    atualizarArvore(chave);
+
+                    $scope.categoriaAtiva.atualizacao = Date.now();
+
+                    $scope.categoriaAtiva.$saveOrUpdate().then(function () {
+                        $scope.dialogClass = 'close';
+                    });
+                } else {
+                    $scope.dialogClass = 'close';
+                }
             };
-
         };
-
     }]);
