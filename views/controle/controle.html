@@ -22,7 +22,7 @@
                      ng-class="categoria.ativa ? 'list-group-item-success' : ''"
                      ng-repeat="categoria in categorias | filter:searchtext ">
                     <h5 class="list-group-item-heading">
-                        {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
+                        {{listaFormatos[categoria.formato]}} - {{categoria.nome}} <span ng-show="categoria.formato === 0">de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg</span>
                         <span class="pull-right">
                             <button class="btn btn-lg btn-primary" ng-show="!categoria.ativa" ng-click="playCategoria(categoria)"
                                     tooltip-placement="top" tooltip="Iniciar e Editar Chaves">
