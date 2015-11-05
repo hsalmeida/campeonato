@@ -35,7 +35,7 @@
       <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:predicate:reverse ">
         <h4 class="list-group-item-heading">
           <a ui-sref="viewCategoria({id:categoria._id.$oid})">
-            {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
+            {{listaFormatos[categoria.formato]}} - {{categoria.nome}} <span ng-show="categoria.formato === 0">de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg</span>
           </a>
           <span class="pull-right">
             <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})"

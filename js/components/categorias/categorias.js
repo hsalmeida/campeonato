@@ -84,6 +84,14 @@ campeonato
         Categorias.getById($stateParams.id).then(function(categorias){
           $scope.categoria = categorias;
 
+          var peso = {};
+          if($scope.categoria.formato === 0) {
+            peso = {
+              "$gte" : $scope.categoria.peso[0],
+              "$lte" : $scope.categoria.peso[1]
+            };
+          }
+
           var query = {
             "graduacao" : {
               "$gte" : $scope.categoria.graduacao[0],
@@ -93,10 +101,7 @@ campeonato
               "$gte" : $scope.categoria.idade[0],
               "$lte" : $scope.categoria.idade[1]
             },
-            "peso" : {
-              "$gte" : $scope.categoria.peso[0],
-              "$lte" : $scope.categoria.peso[1]
-            },
+            "peso" : peso,
             "formato" : {
               "$in" : [$scope.categoria.formato, 2]
             }
@@ -137,6 +142,7 @@ campeonato
         $scope.categoria.peso = [];
         $scope.categoria.formato = 0;
         $scope.categoria.sexo = "m";
+        $scope.showPeso = true;
 
         $scope.addCategoria = function (){
           $scope.categoria.$save().then(function(){
