@@ -10,6 +10,13 @@ campeonato
 
       $scope.objSexo = Listas.objSexo;
 
+      $scope.formatoClick = function(formato){
+        $scope.showPeso = true;
+        if(formato === 1) {
+          $scope.showPeso = false;
+        }
+      }
+
       function buildCategoria($scope, buildDefault, categoria){
         $scope.range = true;
 
