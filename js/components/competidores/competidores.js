@@ -10,6 +10,20 @@ campeonato
 
           $scope.listaImagens = Listas.listaImagens;
 
+          $scope.nascimentoFn = function() {
+            var idade = _calculateAge($scope.competidor.nascimento);
+            if(idade) {
+              $scope.competidor.idade = idade;
+            }
+          }
+
+          function _calculateAge(birthday) { // birthday is a date
+            var ageDifMs = new Date(2015, 10, 7) - birthday.getTime();
+            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+          }
+
+
           function buildCompetidor($scope){
             $.getJSON('js/countries.json', function( data ){
               $scope.paises = data;
@@ -45,11 +59,12 @@ campeonato
           $scope.competidor.academia = "";
           $scope.competidor.pais = {"name": "Brasil","code": "BR","continent": "South America","filename": "brasil"};
           $scope.competidor.estado = {"name": "Rio de Janeiro","code": "RJ"};
-          $scope.competidor.idade = 20;
+          $scope.competidor.idade = 25;
           $scope.competidor.sexo = "m";
           $scope.competidor.graduacao = 1;
           $scope.competidor.peso = 36.6;
           $scope.competidor.formato = 0;
+          $scope.competidor.nascimento = new Date(1990, 0, 1);
 
           $scope.addCompetidor = function (){
             $scope.competidor.$save().then(function (){
