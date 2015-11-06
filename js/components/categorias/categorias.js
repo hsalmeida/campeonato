@@ -108,8 +108,6 @@ campeonato
             }
           };
 
-
-
           Competidores.query(query).then(function(competidores){
             $scope.competidores = competidores;
           });

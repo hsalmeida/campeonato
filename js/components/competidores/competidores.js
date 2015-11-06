@@ -65,6 +65,7 @@ campeonato
           $scope.competidor.peso = 36.6;
           $scope.competidor.formato = 0;
           $scope.competidor.nascimento = new Date(1990, 0, 1);
+          $scope.competidor.tipo = 0;
 
           $scope.addCompetidor = function (){
             $scope.competidor.$save().then(function (){
@@ -102,7 +103,11 @@ campeonato
             $scope.predicate = predicate;
           };
 
-          Competidores.all().then(function(competidores){
+          var query = {
+            "tipo" : 0
+          };
+
+          Competidores.query(query).then(function(competidores){
             $scope.competidores = competidores;
           });
 
@@ -113,7 +118,7 @@ campeonato
 
           $scope.delete = function() {
             $scope.exCompetidor.$remove().then(function(){
-              Competidores.all().then(function(competidores){
+              Competidores.query(query).then(function(competidores){
                 $scope.dialogClass = 'close';
                 $scope.competidores = competidores;
               });

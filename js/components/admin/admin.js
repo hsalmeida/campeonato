@@ -3,7 +3,7 @@
 
 	.controller('AdminController', 
 			['$scope', function($scope){
-			  console.log('carregou');
+			  console.log('admin');
   }]);
   
 })();

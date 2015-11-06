@@ -5,6 +5,9 @@ campeonato
     .factory('Categorias', function($mongolabResourceHttp) {
         return $mongolabResourceHttp('categorias');
     })
+    .factory('Equipes', function($mongolabResourceHttp){
+        return $mongolabResourceHttp('competidores');
+    })
     .factory('Chaves', function($mongolabResourceHttp) {
         return $mongolabResourceHttp('chaves');
     })

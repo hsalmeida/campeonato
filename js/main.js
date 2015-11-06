@@ -69,5 +69,25 @@ var campeonato = angular.module('campeonato', [
 			url: "/telao",
 			templateUrl: "views/telao/telao.html",
 			controller: "TelaoController"
+		})
+		.state('equipes', {
+			url: "/equipes",
+			templateUrl: "views/equipes/equipes.html",
+			controller: 'EquipesController'
+		})
+		.state('viewEquipe', {
+			url: "/equipes/:id/view",
+			templateUrl: "views/equipes/equipe-view.html",
+			controller: 'EquipesController'
+		})
+		.state('newEquipe', {
+			url: "/equipes/new",
+			templateUrl: "views/equipes/equipe-add.html",
+			controller: 'EquipesController'
+		})
+		.state('editEquipe', {
+			url: "/equipes/:id/edit",
+			templateUrl: "views/equipes/equipe-edit.html",
+			controller: 'EquipesController'
 		});
 });

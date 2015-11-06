@@ -1,0 +1,11 @@
+<div data-ng-controller="CompetidoresController" data-ng-init="init()">
+  <ol class="breadcrumb">
+    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="admin">Admin</a></li>
+    <li><a ui-sref="competidores">Competidores</a></li>
+    <li class="active">Cadastrando Competidor</li>
+  </ol>
+  <form class="form-horizontal" role="form" ng-submit="addCompetidor()">
+    <div ng-include="'views/competidor/competidor-form.html'"></div>
+  </form>
+</div>
