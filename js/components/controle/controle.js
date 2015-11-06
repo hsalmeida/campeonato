@@ -236,6 +236,15 @@ campeonato
                         //}
 
                     }
+
+                    var peso = {};
+                    if(categoria.formato === 0) {
+                        peso = {
+                            "$gte" : categoria.peso[0],
+                            "$lte" : categoria.peso[1]
+                        };
+                    }
+
                     var query = {
                         "graduacao" : {
                             "$gte" : categoria.graduacao[0],
@@ -245,10 +254,7 @@ campeonato
                             "$gte" : categoria.idade[0],
                             "$lte" : categoria.idade[1]
                         },
-                        "peso" : {
-                            "$gte" : categoria.peso[0],
-                            "$lte" : categoria.peso[1]
-                        },
+                        "peso" : peso,
                         "formato" : {
                             "$in" : [categoria.formato, 2]
                         }
