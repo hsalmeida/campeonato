@@ -1,45 +1,25 @@
-<div ng-controller="CompetidoresController" ng-init="viewInit()">
+<div ng-controller="EquipesController" ng-init="viewInit()">
   <ol class="breadcrumb">
     <li><a ui-sref="home">Home</a></li>
     <li><a ui-sref="admin">Admin</a></li>
-    <li><a ui-sref="competidores">Competidores</a></li>
-    <li class="active">Visualizando {{competidor.nome}}</li>
+    <li><a ui-sref="equipes">Equipes</a></li>
+    <li class="active">Visualizando {{equipe.nome}}</li>
   </ol>
-  <h3>{{competidor.nome}}</h3>
+  <h3>{{equipe.nome}}</h3>
   <div class="table-responsive">
     <table class="table">
       <tr>
         <td>Academia</td>
-        <td>{{competidor.academia}}</td>
+        <td>{{equipe.academia}}</td>
       </tr>
       <tr>
         <td>Estado/Pais</td>
-        <td>{{competidor.estado.name}} {{competidor.pais.name}}</td>
-      </tr>
-      <tr>
-        <td>Idade</td>
-        <td>{{competidor.idade}} anos</td>
-      </tr>
-      <tr>
-        <td>Sexo</td>
-        <td>{{parseSexo(competidor.sexo)}}</td>
-      </tr>
-      <tr>
-        <td>Graduação</td>
-        <td><img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}</td>
-      </tr>
-      <tr>
-        <td>Peso</td>
-        <td>{{competidor.peso}}Kg</td>
-      </tr>
-      <tr>
-        <td>Disputa</td>
-        <td>{{listaFormatos[competidor.formato]}}</td>
+        <td>{{equipe.estado.name}} {{equipe.pais.name}}</td>
       </tr>
     </table>
   </div>
   <div>
-    <a class="btn btn-lg btn-primary" ui-sref="editCompetidor({id:competidor._id.$oid})">
+    <a class="btn btn-lg btn-primary" ui-sref="editEquipe({id:equipe._id.$oid})">
       <span class="glyphicon glyphicon-pencil"></span>
     </a>
   </div>

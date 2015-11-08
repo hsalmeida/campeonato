@@ -1,11 +1,11 @@
-<div data-ng-controller="CompetidoresController" data-ng-init="init()">
+<div data-ng-controller="EquipesController" data-ng-init="init()">
   <ol class="breadcrumb">
     <li><a ui-sref="home">Home</a></li>
     <li><a ui-sref="admin">Admin</a></li>
-    <li><a ui-sref="competidores">Competidores</a></li>
-    <li class="active">Cadastrando Competidor</li>
+    <li><a ui-sref="equipes">Equipes</a></li>
+    <li class="active">Cadastrando Equipe</li>
   </ol>
-  <form class="form-horizontal" role="form" ng-submit="addCompetidor()">
-    <div ng-include="'views/competidor/competidor-form.html'"></div>
+  <form class="form-horizontal" role="form" ng-submit="addEquipe()">
+    <div ng-include="'views/equipes/equipe-form.html'"></div>
   </form>
 </div>

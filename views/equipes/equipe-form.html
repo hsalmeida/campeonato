@@ -2,7 +2,7 @@
 <div class="competidor-form">
   <div class="form-group">
     <label>Nome:</label>
-    <input type="text" ng-model="competidor.nome" class="form-control" placeholder="Nome e Sobrenome" aria-describedby="basic-addon1">
+    <input type="text" ng-model="competidor.nome" class="form-control" placeholder="Nome da equipe" aria-describedby="basic-addon1">
   </div>
 
   <div class="form-group">
@@ -25,55 +25,11 @@
             ng-disabled="competidor.pais.code != 'BR'" 
             ng-model="competidor.estado" 
             ng-options="estado.name for estado in estados track by estado.code"></select>
-    
   </div>
 
-  <div class="form-group">
-    <label>Data de Nascimento:</label>
-    <input type="date" ng-model="competidor.nascimento" ng-change="nascimentoFn()"/>
-  </div>
 
-  <div class="form-group">
-    <label>Idade:</label>
-    <input type="number" readonly ng-model="competidor.idade" class="form-control" placeholder="Idade" aria-describedby="basic-addon2">
-  </div>
-
-  <div class="form-group">
-    <label for="sel1">Sexo:</label>
-    <select ng-model="competidor.sexo" class="form-control" id="sel1">
-      <option value="m">Masculino</option>
-      <option value="f">Feminino</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Graduação <img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{ listaGraduacoes[competidor.graduacao - 1] }} </label>
-    
-    <span slider id="graduacaoSlider"
-      ng-model="competidor.graduacao" 
-      min="graduacaoOption.min" 
-      step="graduacaoOption.step" 
-      max="graduacaoOption.max" 
-      value="valorGraduacao"
-      tooltip="hide">
-    </span>
-  </div>
-  
-  <div class="form-group">
-    <label>Peso:</label>
-    <input type="number" step="any" ng-model="competidor.peso" class="form-control" placeholder="Peso (exemplo 36,6)" aria-describedby="basic-addon2">
-  
-  </div>
-  
-  <div class="form-group">
-    <label>Categorias:</label>
-    <br/>
-    <label class="radio-inline"><input ng-model="competidor.formato" ng-value="0" type="radio" name="optradio">Luta</label>
-    <label class="radio-inline"><input ng-model="competidor.formato" ng-value="1" type="radio" name="optradio">Forma</label>
-    <label class="radio-inline"><input ng-model="competidor.formato" ng-value="2" type="radio" name="optradio">Ambas (Forma e Luta)</label>
-  </div>
 
   <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
-  <button type="button" ui-sref="competidores" class="btn btn-lg btn-warning">Cancelar</button>
+  <button type="button" ui-sref="equipes" class="btn btn-lg btn-warning">Cancelar</button>
   
 </div>

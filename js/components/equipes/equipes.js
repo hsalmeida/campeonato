@@ -84,8 +84,8 @@ campeonato
             };
 
             $scope.viewInit = function(){
-                Competidores.getById($stateParams.id).then(function(competidor){
-                    $scope.competidor = competidor;
+                Equipes.getById($stateParams.id).then(function(equipe){
+                    $scope.equipe = equipe;
                 });
             };
             $scope.initList = function(){
