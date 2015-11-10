@@ -85,6 +85,14 @@ var campeonato = angular.module('campeonato', [
 				requiredlogin : true
 			}
 		})
+		.state('app', {
+			url: "/app",
+			templateUrl: "views/appcontrol/app.html",
+			controller: 'AppController',
+			data : {
+				requiredlogin : true
+			}
+		})
 		.state('categorias', {
 			url: "/categorias",
 			templateUrl: "views/categoria/categorias.html",
@@ -171,6 +179,14 @@ var campeonato = angular.module('campeonato', [
 			controller: "TelaoController",
 			data : {
 				requiredlogin : false
+			}
+		})
+		.state('teloes', {
+			url: "/teloes",
+			templateUrl: "views/telao/teloes.html",
+			controller: "TelaoController",
+			data : {
+				requiredlogin : true
 			}
 		})
 		.state('equipes', {

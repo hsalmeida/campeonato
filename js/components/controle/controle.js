@@ -208,12 +208,12 @@ campeonato
                 chave.competidor1 = {
                     "nome": children[0].nome,
                     "pontuacao": children[0].pontuacao ? children[0].pontuacao : 0,
-                    "vencedor": children[0].vencedor ? children[0].vencedor : false,
+                    "vencedor": children[0].vencedor ? children[0].vencedor : false
                 };
                 chave.competidor2 = {
                     "nome": children[1].nome,
                     "pontuacao": children[1].pontuacao ? children[1].pontuacao : 0,
-                    "vencedor": children[1].vencedor ? children[1].vencedor : false,
+                    "vencedor": children[1].vencedor ? children[1].vencedor : false
                 };
                 chaveGlobal.push(chave);
 

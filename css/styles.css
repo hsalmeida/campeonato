@@ -96,7 +96,7 @@ body {
 .node circle {
   fill: #fff;
   stroke: steelblue;
-  stroke-width: 1.5px;
+  stroke-width: 2px;
 }
 
 .node {
@@ -106,7 +106,7 @@ body {
 .link {
   fill: none;
   stroke: #ccc;
-  stroke-width: 1.5px;
+  stroke-width: 2px;
 }
 
 .match-container {
@@ -154,8 +154,8 @@ body {
 }
 
 .margin-top-bottom-11 {
-  margin-top: 11.5px;
-  margin-bottom: 11.5px;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .bg-red {

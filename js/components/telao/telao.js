@@ -2,6 +2,11 @@ campeonato
     .controller('TelaoController', ['$scope', 'Categorias', 'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas',
         function ($scope, Categorias, Competidores, Chaves, $stateParams, $state, $interval, Listas) {
 
+            $scope.initTeloes = function(){
+                $scope.teloes = [0, 1, 2];
+            };
+
+
             $scope.dialogClass = "";
 
             var quantidadeRounds = Listas.quantidadeRounds;
@@ -46,8 +51,7 @@ campeonato
 
             function getQuantidadePartidas(len) {
                 if (powerOfTwo(len)) {
-                    var ret = quantidadeRounds[len];
-                    return ret;
+                    return quantidadeRounds[len];
                 } else {
                     len++;
                     return getQuantidadePartidas(len);
@@ -183,7 +187,7 @@ campeonato
                 $interval(function () {
                     var query = {
                         "ativa": true
-                    }
+                    };
                     Categorias.query(query).then(function (categoria) {
                         categoria = categoria[0];
                         if (categoria) {

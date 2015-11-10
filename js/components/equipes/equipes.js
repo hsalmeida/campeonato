@@ -16,7 +16,7 @@ campeonato
                 if(idade) {
                     $scope.competidor.idade = idade;
                 }
-            }
+            };
 
             function _calculateAge(birthday) { // birthday is a date
                 var ageDifMs = new Date(2015, 10, 7) - birthday.getTime();
@@ -43,7 +43,7 @@ campeonato
                 };
                 $scope.closeAddCompetidor = function(){
                     $scope.dialogAddClass = 'close';
-                }
+                };
                 $scope.openAddCompetidor = function(equipe) {
                     console.log('open');
                     var array = [];
@@ -56,7 +56,7 @@ campeonato
                         "nome" : {
                             "$nin" : array
                         }
-                    }
+                    };
                     Competidores.query(notIn).then(function(competidores) {
                         $scope.competidoresExtras = competidores;
                     });

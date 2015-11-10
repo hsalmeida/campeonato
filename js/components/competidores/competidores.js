@@ -11,11 +11,8 @@ campeonato
           $scope.listaImagens = Listas.listaImagens;
 
           $scope.nascimentoFn = function() {
-            var idade = _calculateAge($scope.competidor.nascimento);
-            if(idade) {
-              $scope.competidor.idade = idade;
-            }
-          }
+            $scope.competidor.idade = _calculateAge($scope.competidor.nascimento);
+          };
 
           function _calculateAge(birthday) { // birthday is a date
             if(birthday) {

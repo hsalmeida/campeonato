@@ -13,7 +13,7 @@
   </div>
   
   <div class="form-group">
-    <label>Pais:</label>
+    <label for="country">Pais:</label>
     <select id="country" class="form-control"
             ng-model="equipe.pais"
             ng-options="pais.name for pais in paises track by pais.code"
@@ -22,7 +22,7 @@
   </div>
   
   <div class="form-group">
-    <label>Estado:</label>
+    <label for="estado">Estado:</label>
     <select id="estado" class="form-control"
             ng-disabled="equipe.pais.code != 'BR'"
             ng-model="equipe.estado"

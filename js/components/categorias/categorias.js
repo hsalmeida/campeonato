@@ -11,11 +11,8 @@ campeonato
       $scope.objSexo = Listas.objSexo;
 
       $scope.formatoClick = function(formato){
-        $scope.showPeso = true;
-        if(formato === 1) {
-          $scope.showPeso = false;
-        }
-      }
+        $scope.showPeso = formato === 1 ? false : true;
+      };
 
       function buildCategoria($scope, buildDefault, categoria){
         $scope.range = true;
@@ -154,7 +151,7 @@ campeonato
 
       $scope.parseSexo = function(sexo) {
         return $scope.objSexo[sexo];
-      }
+      };
 
       $scope.parseEstado = function(nomeEstado){
         if(nomeEstado) {

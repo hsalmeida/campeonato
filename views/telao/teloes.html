@@ -1,0 +1,27 @@
+<div ng-controller="TelaoController" ng-init="initTeloes()">
+    <ol class="breadcrumb">
+        <li><a ui-sref="welcome">Home</a></li>
+        <li class="active">Controle de Telões</li>
+    </ol>
+    <h3 class="page-header">Lista de Telões</h3>
+
+    <div class="list-group list-competidores">
+        <div class="list-group-item" ng-repeat="telao in teloes ">
+            <h4 class="list-group-item-heading">
+                <a ui-sref="telao" target="_blank">
+                    ver telao 1
+                </a>
+          <span class="pull-right">
+            <button class="btn btn-lg btn-primary" ui-sref="controle"
+                    tooltip-placement="top" tooltip="Controlar Telao">
+                <span class="glyphicon glyphicon-cog"></span>
+            </button>
+          </span>
+            </h4>
+            <p class="list-group-item-text">
+                ativo
+            </p>
+        </div>
+    </div>
+
+</div>
