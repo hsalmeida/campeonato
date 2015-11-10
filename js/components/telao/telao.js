@@ -1,9 +1,43 @@
 campeonato
-    .controller('TelaoController', ['$scope', 'Categorias', 'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas',
-        function ($scope, Categorias, Competidores, Chaves, $stateParams, $state, $interval, Listas) {
+    .controller('TelaoController', ['$scope','App', 'Categorias',
+        'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas', '$cookies',
+        function ($scope, App, Categorias, Competidores,
+                  Chaves, $stateParams, $state, $interval, Listas, $cookies) {
 
             $scope.initTeloes = function(){
-                $scope.teloes = [0, 1, 2];
+
+                var nomeCampeonato = $cookies.get('nomeCampeonatoKey');
+                var query = {
+                    "nome" : nomeCampeonato ? nomeCampeonato : "Campeonato Teste"
+                };
+
+                App.query(query).then(function(campeonato){
+                    $scope.campeonato = campeonato[0];
+                    $scope.teloes = [];
+
+                    var query = {
+                      "ativa" : true
+                    };
+                    var options = {
+                        "s" : {
+                            "telao" : 1
+                        }
+                    }
+                    Categorias.query(query, options).then(function(categorias){
+                        var telao = {};
+
+                        for(var idxtelao = 0; idxtelao <= $scope.campeonato.teloes; idxtelao++) {
+                            telao.numero = idxtelao;
+                            if(categorias[idxtelao]) {
+                                telao.ativo = true;
+                                telao.categoria = categorias[idxtelao].nome;
+                            } else {
+                                telao.ativo = false;
+                            }
+                            $scope.teloes.push(telao);
+                        }
+                    });
+                });
             };
 
 

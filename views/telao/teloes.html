@@ -8,18 +8,20 @@
     <div class="list-group list-competidores">
         <div class="list-group-item" ng-repeat="telao in teloes ">
             <h4 class="list-group-item-heading">
-                <a ui-sref="telao" target="_blank">
-                    ver telao 1
+                <a ui-sref="telao({id:telao.numero})" target="_blank">
+                    ver telao {{telao.numero}}
                 </a>
           <span class="pull-right">
-            <button class="btn btn-lg btn-primary" ui-sref="controle"
+            <button class="btn btn-lg btn-primary" ui-sref="controle({})"
                     tooltip-placement="top" tooltip="Controlar Telao">
                 <span class="glyphicon glyphicon-cog"></span>
             </button>
           </span>
             </h4>
             <p class="list-group-item-text">
-                ativo
+                <label ng-show="telao.ativo">Ativo</label>
+                <label ng-show="!telao.ativo">Inativo</label>
+                <label ng-show="categoria"> - Categora Ativada: {{categoria.nome}}</label>
             </p>
         </div>
     </div>
