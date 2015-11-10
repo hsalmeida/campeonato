@@ -1,14 +1,60 @@
 var campeonato = angular.module('campeonato', [
-	'ui.router','ngResource', 'admin', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp', 'ui.bootstrap'
+	'ui.router','ngResource', 'admin', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp', 'ui.bootstrap',
+		'ngCookies'
 ])
-.run(function ($rootScope) {
+.controller('HomeController', ['$scope', '$rootScope', 'Users', '$state', '$cookies',
+	function($scope, $rootScope, Users, $state, $cookies){
+
+	var angularCookieUsrObj = $cookies.getObject('angularCookieKeyUsrObj');
+	if(angularCookieUsrObj) {
+		$rootScope.currentUser = angularCookieUsrObj;
+	}
+
+	if($rootScope.currentUser && $rootScope.currentUser.remember) {
+		$scope._email = $rootScope.currentUser.email;
+		$scope._remem = $rootScope.currentUser.remember;
+	}
+
+	function assignCurrentUser (user) {
+		$rootScope.currentUser = user;
+		return user;
+	}
+
+	$scope.submit = function(email, pass, remember) {
+		var query = {
+			"email" : email,
+			"password" : pass
+		};
+		Users.query(query).then(function(user){
+			$scope.notFound = false;
+			if(user[0]){
+				var curUser = user[0];
+				console.log(remember);
+				curUser.remember = remember;
+				assignCurrentUser(curUser);
+				if(remember) {
+					$cookies.putObject('angularCookieKeyUsrObj', curUser);
+				}
+				$state.go('welcome');
+			} else {
+				$scope.notFound = true;
+			}
+		});
+	};
+}])
+.run(function ($rootScope, $state, $cookies) {
 
 	$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-		var requireLogin = toState.data.requireLogin;
 
+		var requireLogin = toState.data.requiredlogin;
+		//ver se esta no cookie
+		var angularCookieUsrObj = $cookies.getObject('angularCookieKeyUsrObj');
+		if(angularCookieUsrObj) {
+			$rootScope.currentUser = angularCookieUsrObj;
+		}
 		if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
 			event.preventDefault();
-			// get me a login modal!
+			$state.go('home');
 		}
 	});
 })

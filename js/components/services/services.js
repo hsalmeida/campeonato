@@ -1,4 +1,7 @@
 campeonato
+    .factory('Users', function($mongolabResourceHttp){
+        return $mongolabResourceHttp('users');
+    })
     .factory('Competidores', function($mongolabResourceHttp){
         return $mongolabResourceHttp('competidores');
     })
