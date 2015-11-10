@@ -2,18 +2,20 @@
 <div class="competidor-form">
   <div class="form-group">
     <label>Nome:</label>
-    <input type="text" ng-model="competidor.nome" class="form-control" placeholder="Nome da equipe" aria-describedby="basic-addon1">
+    <input type="text" ng-model="equipe.nome" class="form-control"
+           placeholder="Nome da equipe" aria-describedby="basic-addon1">
   </div>
 
   <div class="form-group">
     <label>Academia:</label>
-    <input type="text" ng-model="competidor.academia" class="form-control" placeholder="Academia" aria-describedby="basic-addon1">
+    <input type="text" ng-model="equipe.academia" class="form-control"
+           placeholder="Academia" aria-describedby="basic-addon1">
   </div>
   
   <div class="form-group">
     <label>Pais:</label>
     <select id="country" class="form-control"
-            ng-model="competidor.pais" 
+            ng-model="equipe.pais"
             ng-options="pais.name for pais in paises track by pais.code"
             ng-change="paisChangeFn()"></select>
     
@@ -22,14 +24,76 @@
   <div class="form-group">
     <label>Estado:</label>
     <select id="estado" class="form-control"
-            ng-disabled="competidor.pais.code != 'BR'" 
-            ng-model="competidor.estado" 
+            ng-disabled="equipe.pais.code != 'BR'"
+            ng-model="equipe.estado"
             ng-options="estado.name for estado in estados track by estado.code"></select>
   </div>
 
+  <div class="form-group list-group list-competidores">
+    <h4 class="page-header">
+      Competidores na Equipe
+      <button class="btn btn-lg btn-danger"
+              ng-click="openAddCompetidor(equipe)" tooltip-placement="top" tooltip="Adicionar competidor">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </h4>
+    <div class="list-group-item" ng-repeat="competidor in equipe.competidores">
+      <h4 class="list-group-item-heading">
+        <label>
+          {{competidor.nome}} - {{competidor.idade}} anos
+        </label>
+        <span class="pull-right">
+          <button class="btn btn-lg btn-warning"
+                  ng-click="open(equipe)"
+                  tooltip-placement="top"
+                  tooltip="Remover competidor">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </span>
+      </h4>
+      <p class="list-group-item-text">
+        {{competidor.academia}}
+        {{parseEstado(competidor.estado.name)}}
+        {{competidor.pais.name}} - {{parseSexo(competidor.sexo)}} - {{competidor.peso}}Kg<br/>
+        <img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
+      </p>
+    </div>
+  </div>
 
+  <div class="modal fade" id="myModal" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true" ng-class="dialogAddClass">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="closeAddCompetidor()" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Adicionar Competidor</h4>
+        </div>
+        <div class="modal-body">
+          <div class="pre-scrollable">
+            <div class="list-group-item" ng-repeat="competidor in competidoresExtras | orderBy:nome  ">
+              <label class="list-group-item-heading">
+                <input type="checkbox" id="{{competidor._id.$oid}}">
+                <label for="{{competidor._id.$oid}}"><h4>{{competidor.nome}} - {{competidor.idade}} anos</h4></label>
+              </label>
+              <p class="list-group-item-text">
+                {{competidor.academia}}
+                {{parseEstado(competidor.estado.name)}}
+                {{competidor.pais.name}} - {{parseSexo(competidor.sexo)}} - {{competidor.peso}}Kg<br/>
+                <img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
+                - {{listaFormatos[competidor.formato]}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" ng-click="closeAddCompetidor()" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" ng-click="delete()">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
-  <button type="button" ui-sref="equipes" class="btn btn-lg btn-warning">Cancelar</button>
+  <button type="submit" class="btn btn-lg btn-primary" tooltip="Salvar">Salvar</button>
+  <button type="button" ui-sref="equipes" class="btn btn-lg btn-warning" tooltip="Cancelar">Cancelar</button>
   
 </div>

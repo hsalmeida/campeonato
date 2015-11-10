@@ -29,7 +29,7 @@ var campeonato = angular.module('campeonato', [
 			$scope.notFound = false;
 			if(user[0]){
 				var curUser = user[0];
-				console.log(remember);
+
 				curUser.remember = remember;
 				assignCurrentUser(curUser);
 				if(remember) {

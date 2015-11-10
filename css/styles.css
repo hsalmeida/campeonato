@@ -86,6 +86,7 @@ body {
 
 .open {
   display: block !important;
+  background: rgba(0,0,0,0.5);
 }
 
 #elimination-bracket {

@@ -1,6 +1,7 @@
 campeonato
     .controller('EquipesController',
-        ['$scope', 'Equipes', '$stateParams', '$state', 'Listas', function($scope, Equipes, $stateParams, $state, Listas){
+        ['$scope', 'Equipes', 'Competidores', '$stateParams', '$state', 'Listas',
+            function($scope, Equipes, Competidores, $stateParams, $state, Listas){
 
             $scope.listaFormatos = Listas.listaFormatosFull;
 
@@ -24,6 +25,8 @@ campeonato
             }
 
 
+
+
             function buildCompetidor($scope){
                 $.getJSON('js/countries.json', function( data ){
                     $scope.paises = data;
@@ -33,51 +36,65 @@ campeonato
                     $scope.estados = data;
                 });
 
-                $scope.graduacaoOption = {
-                    min: 1,
-                    max: 16,
-                    step: 1
-                };
-                $scope.valorGraduacao = 1;
-
-
                 $scope.paisChangeFn = function() {
-
-                    if($scope.competidor.pais.code != 'BR') {
-                        $scope.competidor.estado = {};
+                    if($scope.equipe.pais.code != 'BR') {
+                        $scope.equipe.estado = {};
                     }
                 };
+                $scope.closeAddCompetidor = function(){
+                    $scope.dialogAddClass = 'close';
+                }
+                $scope.openAddCompetidor = function(equipe) {
+                    console.log('open');
+                    var array = [];
+                    if(equipe && equipe.competidores) {
+                        equipe.competidores.forEach(function(competidor){
+                            array.push(competidor.nome);
+                        });
+                    }
+                    var notIn = {
+                        "nome" : {
+                            "$nin" : array
+                        }
+                    }
+                    Competidores.query(notIn).then(function(competidores) {
+                        $scope.competidoresExtras = competidores;
+                    });
+
+                    $scope.dialogAddClass = 'open in';
+                }
             }
 
             $scope.init = function() {
 
                 buildCompetidor($scope);
 
-                $scope.competidor = new Competidores();
+                $scope.equipe = new Equipes();
 
-                $scope.competidor.nome = "";
-                $scope.competidor.academia = "";
-                $scope.competidor.sexo = "m";
-                $scope.competidor.graduacao = 1;
-                $scope.competidor.formato = 0;
-                $scope.competidor.tipo = 1;
+                $scope.equipe.nome = "";
+                $scope.equipe.academia = "";
+                $scope.equipe.sexo = "m";
+                $scope.equipe.graduacao = 1;
+                $scope.equipe.formato = 0;
+                $scope.equipe.tipo = 1;
 
                 $scope.addCompetidor = function (){
-                    $scope.competidor.$save().then(function (){
+                    $scope.equipe.$save().then(function (){
                         $state.go('competidores');
                     });
                 };
+
             };
 
             $scope.initEdit = function(){
 
                 buildCompetidor($scope);
-                Competidores.getById($stateParams.id).then(function(competidor){
-                    $scope.competidor = competidor;
+                Competidores.getById($stateParams.id).then(function(equipe){
+                    $scope.equipe = equipe;
                 });
 
                 $scope.editCompetidor = function (){
-                    $scope.competidor.$saveOrUpdate().then(function(){
+                    $scope.equipe.$saveOrUpdate().then(function(){
                         $state.go('competidores');
                     });
                 };
@@ -106,13 +123,13 @@ campeonato
                     $scope.equipes = equipes;
                 });
 
-                $scope.open = function(competidor) {
-                    $scope.dialogClass = 'open';
-                    $scope.exCompetidor = competidor;
+                $scope.open = function(equipe) {
+                    $scope.dialogClass = 'open in';
+                    $scope.exEquipe = equipe;
                 };
 
                 $scope.delete = function() {
-                    $scope.exCompetidor.$remove().then(function(){
+                    $scope.exEquipe.$remove().then(function(){
                         Competidores.query(query).then(function(equipes){
                             $scope.dialogClass = 'close';
                             $scope.equipes = equipes;

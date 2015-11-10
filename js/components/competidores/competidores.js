@@ -1,5 +1,5 @@
 campeonato
-	.controller('CompetidoresController', 
+	.controller('CompetidoresController',
 		['$scope', 'Competidores', '$stateParams', '$state', 'Listas', function($scope, Competidores, $stateParams, $state, Listas){
 
           $scope.listaFormatos = Listas.listaFormatosFull;
@@ -18,9 +18,13 @@ campeonato
           }
 
           function _calculateAge(birthday) { // birthday is a date
-            var ageDifMs = new Date(2015, 10, 7) - birthday.getTime();
-            var ageDate = new Date(ageDifMs); // miliseconds from epoch
-            return Math.abs(ageDate.getUTCFullYear() - 1970);
+            if(birthday) {
+              var ageDifMs = new Date(2015, 10, 7) - birthday.getTime();
+              var ageDate = new Date(ageDifMs); // miliseconds from epoch
+              return Math.abs(ageDate.getUTCFullYear() - 1970);
+            } else {
+              return Math.abs(new Date().getUTCFullYear() - 1970);
+            }
           }
 
 
@@ -50,7 +54,7 @@ campeonato
           }
 
         $scope.init = function() {
-          
+
           buildCompetidor($scope);
 
           $scope.competidor = new Competidores();
@@ -112,7 +116,7 @@ campeonato
           });
 
           $scope.open = function(competidor) {
-            $scope.dialogClass = 'open';
+            $scope.dialogClass = 'open in';
             $scope.exCompetidor = competidor;
           };
 

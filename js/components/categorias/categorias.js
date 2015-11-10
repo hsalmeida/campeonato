@@ -66,7 +66,7 @@ campeonato
 
         $scope.open = function(categoria) {
           console.log('open');
-          $scope.dialogClass = 'open';
+          $scope.dialogClass = 'open in';
           $scope.exCategoria = categoria;
         };
 

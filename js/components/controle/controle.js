@@ -365,7 +365,7 @@ campeonato
             };
 
             $scope.open = function(chave) {
-                $scope.dialogClass = 'open';
+                $scope.dialogClass = 'open in';
 
                 chave.competidorVencedor = 0;
 
