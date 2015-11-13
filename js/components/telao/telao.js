@@ -19,22 +19,23 @@ campeonato
                       "ativa" : true
                     };
                     var options = {
-                        "s" : {
+                        "sort" : {
                             "telao" : 1
                         }
                     }
                     Categorias.query(query, options).then(function(categorias){
-                        var telao = {};
-
                         for(var idxtelao = 0; idxtelao <= $scope.campeonato.teloes; idxtelao++) {
-                            telao.numero = idxtelao;
+                            var telaoId = Number(idxtelao + 1);
+                            var telao = {};
+                            telao.numero = telaoId;
                             if(categorias[idxtelao]) {
                                 telao.ativo = true;
-                                telao.categoria = categorias[idxtelao].nome;
+                                telao.categoria = categorias[idxtelao];
                             } else {
                                 telao.ativo = false;
                             }
                             $scope.teloes.push(telao);
+                            telaoId++;
                         }
                     });
                 });
@@ -220,7 +221,8 @@ campeonato
 
                 $interval(function () {
                     var query = {
-                        "ativa": true
+                        "ativa": true,
+                        "telao" : Number($stateParams.id)
                     };
                     Categorias.query(query).then(function (categoria) {
                         categoria = categoria[0];

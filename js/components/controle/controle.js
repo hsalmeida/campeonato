@@ -222,8 +222,27 @@ campeonato
             }
         }
 
-        function initQuery(){
-            Categorias.all({ sort: {ativa: -1} }).then(function(categorias){
+        function initQuery(idTelao){
+            $scope.numeroTelao = idTelao;
+            var telao = {
+                "$or" : [
+                    {
+                        "$and" : [{
+                            "ativa" : true,
+                            "telao" : Number(idTelao)
+                        }]
+                    },
+                    {
+                        "ativa" : {
+                            "$exists" : false
+                        }
+                    },
+                    {
+                        "ativa" : false
+                    }
+                ]
+            };
+            Categorias.query(telao, { sort: {ativa: -1} }).then(function(categorias){
                 $scope.categorias = categorias;
                 categorias.forEach(function(categoria){
                     if(categoria.ativa) {
@@ -331,7 +350,7 @@ campeonato
 
         $scope.initControle = function(){
 
-            initQuery();
+            initQuery($stateParams.id);
 
             $scope.filtroChave = function(chave){
                 return !chave.final;

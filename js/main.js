@@ -158,7 +158,7 @@ var campeonato = angular.module('campeonato', [
 			}
 		})
 		.state('controle', {
-			url: "/controle",
+			url: "/controle/:id/view",
 			templateUrl: "views/controle/controle.html",
 			controller: 'ControleController',
 			data : {
@@ -174,7 +174,7 @@ var campeonato = angular.module('campeonato', [
 			}
 		})
 		.state('telao', {
-			url: "/telao",
+			url: "/telao/:id/view",
 			templateUrl: "views/telao/telao.html",
 			controller: "TelaoController",
 			data : {
