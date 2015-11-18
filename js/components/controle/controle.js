@@ -359,6 +359,7 @@ campeonato
             $scope.playCategoria = function(categoria) {
 
                 categoria.ativa = true;
+                categoria.telao = Number($stateParams.id);
                 categoria.atualizacao = Date.now();
                 //verifica se possui chave
                 //if(!categoria.arvore || !categoria.arvore.children) {
@@ -371,7 +372,7 @@ campeonato
                         });
                     }
                     initQuery();
-                    $state.go('controle');
+                    $state.go('controle', {id:$stateParams.id});
                 });
 
             };
@@ -379,7 +380,7 @@ campeonato
             $scope.stopCategoria = function(categoria) {
                 categoria.ativa = false;
                 categoria.$saveOrUpdate().then(function (){
-                    $state.go('controle');
+                    $state.go('controle', {id:$stateParams.id});
                 });
             };
 

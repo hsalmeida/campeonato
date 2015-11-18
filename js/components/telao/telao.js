@@ -28,12 +28,14 @@ campeonato
                             var telaoId = Number(idxtelao + 1);
                             var telao = {};
                             telao.numero = telaoId;
-                            if(categorias[idxtelao]) {
-                                telao.ativo = true;
-                                telao.categoria = categorias[idxtelao];
-                            } else {
-                                telao.ativo = false;
+                            telao.ativo = false;
+                            for(var index = 0; index < categorias.length; index++) {
+                                if(telaoId === categorias[index].telao){
+                                    telao.ativo = true;
+                                    telao.categoria = categorias[index];
+                                }
                             }
+
                             $scope.teloes.push(telao);
                             telaoId++;
                         }
@@ -244,7 +246,7 @@ campeonato
 
                         }
                     });
-                }, 10000);
+                }, 5000);
 
                 /*
                  Categorias.all().then(function(categorias){
