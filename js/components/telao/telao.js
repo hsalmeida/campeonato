@@ -213,13 +213,13 @@ campeonato
 
             $scope.initTelao = function () {
 
-                var scale = .85;
+                var scale = .8;
 
                 svg = d3.select("#elimination-bracket").append("svg")
                     .attr("width", width + margin.right + margin.left)
                     .attr("height", height + margin.top + margin.bottom)
                     .append("g")
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")scale(" + scale + ")");
+                    .attr("transform", "translate(" + (margin.left + margin.right) + "," + margin.top + ")scale(" + scale + ")");
 
                 $interval(function () {
                     var query = {
