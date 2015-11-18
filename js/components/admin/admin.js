@@ -1,9 +1,6 @@
-(function(){
-	var app = angular.module('admin', [])
+campeonato
+		.controller('AdminController',['$scope', '$rootScope', function($scope, $rootScope){
+			if($rootScope.currentUser) {
 
-	.controller('AdminController', 
-			['$scope', function($scope){
-			  console.log('admin');
-  }]);
-  
-})();
+			}
+		}]);

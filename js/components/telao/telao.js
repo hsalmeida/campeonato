@@ -24,7 +24,7 @@ campeonato
                         }
                     }
                     Categorias.query(query, options).then(function(categorias){
-                        for(var idxtelao = 0; idxtelao <= $scope.campeonato.teloes; idxtelao++) {
+                        for(var idxtelao = 0; idxtelao < $scope.campeonato.teloes; idxtelao++) {
                             var telaoId = Number(idxtelao + 1);
                             var telao = {};
                             telao.numero = telaoId;

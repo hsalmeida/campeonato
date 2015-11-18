@@ -1,5 +1,5 @@
 var campeonato = angular.module('campeonato', [
-	'ui.router','ngResource', 'admin', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp', 'ui.bootstrap',
+	'ui.router','ngResource', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp', 'ui.bootstrap',
 		'ngCookies'
 ])
 .controller('HomeController', ['$scope', '$rootScope', 'Users', '$state', '$cookies',
@@ -17,6 +17,7 @@ var campeonato = angular.module('campeonato', [
 
 	function assignCurrentUser (user) {
 		$rootScope.currentUser = user;
+		$cookies.put("nomeCampeonatoKey", user.campeonato);
 		return user;
 	}
 
@@ -80,7 +81,7 @@ var campeonato = angular.module('campeonato', [
 		.state('admin', {
 			url: "/admin",
 			templateUrl: "views/admin/admin.html",
-			controller: 'AdminController',
+			//controller: 'AdminController',
 			data : {
 				requiredlogin : true
 			}
