@@ -107,6 +107,10 @@ campeonato
 
             function montarArvore(arvore) {
 
+                d3.select("#elimination-bracket").select("svg").remove();
+
+                desenharSVG();
+
                 var json = arvore;
 
                 json.x0 = height / 2;
@@ -200,7 +204,7 @@ campeonato
                         return d.pontuacao ? d.pontuacao : "0";
                     });
 
-                var nodeUpdate = node.transition()
+                var nodeUpdate = nodeEnter.transition()
                     .duration(500)
                     .attr("transform", function (d) {
                         return "translate(" + d.y0 + "," + d.x0 + ")";
@@ -208,18 +212,20 @@ campeonato
 
                 nodeUpdate.select("text")
                     .style("fill-opacity", 1);
-
             }
 
-            $scope.initTelao = function () {
-
+            function desenharSVG(){
                 var scale = .8;
-
                 svg = d3.select("#elimination-bracket").append("svg")
                     .attr("width", width + margin.right + margin.left)
                     .attr("height", height + margin.top + margin.bottom)
                     .append("g")
                     .attr("transform", "translate(" + (margin.left + margin.right) + "," + margin.top + ")scale(" + scale + ")");
+            }
+
+            $scope.initTelao = function () {
+
+                desenharSVG();
 
                 $interval(function () {
                     var query = {
@@ -230,8 +236,6 @@ campeonato
                         categoria = categoria[0];
                         if (categoria) {
                             if ($scope.categoriaAtivada) {
-                                console.log(categoria._id.$oid);
-                                console.log(categoria.atualizacao);
                                 if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
                                     $scope.categoriaAtivada.atualizacao === categoria.atualizacao) {
                                     return;
