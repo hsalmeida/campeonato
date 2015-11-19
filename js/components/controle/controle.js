@@ -256,14 +256,6 @@ campeonato
 
                     }
 
-                    var peso = {};
-                    if(categoria.formato === 0) {
-                        peso = {
-                            "$gte" : categoria.peso[0],
-                            "$lte" : categoria.peso[1]
-                        };
-                    }
-
                     var query = {
                         "graduacao" : {
                             "$gte" : categoria.graduacao[0],
@@ -273,11 +265,24 @@ campeonato
                             "$gte" : categoria.idade[0],
                             "$lte" : categoria.idade[1]
                         },
-                        "peso" : peso,
                         "formato" : {
                             "$in" : [categoria.formato, 2]
                         }
                     };
+
+                    if(categoria.sexo !== "i") {
+                        query.sexo = categoria.sexo;
+                    }
+
+                    var peso = {};
+                    if(categoria.formato === 0) {
+                        peso = {
+                            "$gte" : categoria.peso[0],
+                            "$lte" : categoria.peso[1]
+                        };
+                        query.peso = peso;
+                    }
+
                     Competidores.query(query).then(function(competidores){
                         categoria.competidores = competidores;
                         categoria.quantidadeCompetidores = competidores.length;
@@ -292,7 +297,7 @@ campeonato
             var vencedor = {};
             //atualiza o no principal
             localizarNo($scope.categoriaAtiva.arvore, chave.rodada, chave);
-            console.log(recursiveNode);
+            //console.log(recursiveNode);
             for(var i = 0; i < recursiveNode.length; i++) {
                 if(recursiveNode[i].vencedor) {
                     vencedor = recursiveNode[i];
@@ -406,8 +411,6 @@ campeonato
 
             $scope.salvarChave = function(chave) {
 
-                console.log(chave);
-
                 var possuiVencedor = false;
 
                 if(chave.competidorVencedor === 1 ) {
@@ -437,6 +440,7 @@ campeonato
 
                     $scope.categoriaAtiva.$saveOrUpdate().then(function () {
                         $scope.dialogClass = 'close';
+                        $state.go('controle', {id:$stateParams.id});
                     });
                 } else {
                     $scope.dialogClass = 'close';

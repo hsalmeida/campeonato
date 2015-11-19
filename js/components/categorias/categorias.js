@@ -82,14 +82,6 @@ campeonato
         Categorias.getById($stateParams.id).then(function(categorias){
           $scope.categoria = categorias;
 
-          var peso = {};
-          if($scope.categoria.formato === 0) {
-            peso = {
-              "$gte" : $scope.categoria.peso[0],
-              "$lte" : $scope.categoria.peso[1]
-            };
-          }
-
           var query = {
             "graduacao" : {
               "$gte" : $scope.categoria.graduacao[0],
@@ -99,11 +91,23 @@ campeonato
               "$gte" : $scope.categoria.idade[0],
               "$lte" : $scope.categoria.idade[1]
             },
-            "peso" : peso,
             "formato" : {
               "$in" : [$scope.categoria.formato, 2]
             }
           };
+
+          if($scope.categoria.sexo !== "i") {
+            query.sexo = $scope.categoria.sexo;
+          }
+
+          var peso = {};
+          if($scope.categoria.formato === 0) {
+            peso = {
+              "$gte" : $scope.categoria.peso[0],
+              "$lte" : $scope.categoria.peso[1]
+            };
+            query.peso = peso;
+          }
 
           Competidores.query(query).then(function(competidores){
             $scope.competidores = competidores;
