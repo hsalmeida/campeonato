@@ -29,6 +29,23 @@
             ng-options="estado.name for estado in estados track by estado.code"></select>
   </div>
 
+  <div class="form-group">
+    <label for="sel1">Sexo:</label>
+    <select class="form-control" ng-model="equipe.sexo" id="sel1">
+      <option value="m">Masculino</option>
+      <option value="f">Feminino</option>
+      <option value="i">Indiferente</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Categorias:</label>
+    <br/>
+    <label class="radio-inline"><input ng-model="equipe.formato" ng-value="0" type="radio" name="optradio">Luta</label>
+    <label class="radio-inline"><input ng-model="equipe.formato" ng-value="1" type="radio" name="optradio">Forma</label>
+    <label class="radio-inline"><input ng-model="equipe.formato" ng-value="2" type="radio" name="optradio">Ambas (Forma e Luta)</label>
+  </div>
+
   <div class="form-group list-group list-competidores">
     <h4 class="page-header">
       Competidores na Equipe

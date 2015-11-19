@@ -77,10 +77,12 @@ campeonato
                 $scope.equipe.graduacao = 1;
                 $scope.equipe.formato = 0;
                 $scope.equipe.tipo = 1;
+                $scope.equipe.pais = {"name": "Brasil","code": "BR","continent": "South America","filename": "brasil"};
+                $scope.equipe.estado = {"name": "Rio de Janeiro","code": "RJ"};
 
-                $scope.addCompetidor = function (){
+                $scope.addEquipe = function (){
                     $scope.equipe.$save().then(function (){
-                        $state.go('competidores');
+                        $state.go('equipes');
                     });
                 };
 
