@@ -79,6 +79,7 @@ campeonato
 
           buildCompetidor($scope);
           Competidores.getById($stateParams.id).then(function(competidor){
+            competidor.nascimento = new Date(competidor.nascimento);
             $scope.competidor = competidor;
           });
 
