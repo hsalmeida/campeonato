@@ -49,7 +49,7 @@
   <div class="form-group list-group list-competidores">
     <h4 class="page-header">
       Competidores na Equipe
-      <button class="btn btn-lg btn-danger"
+      <button type="button" class="btn btn-lg btn-danger"
               ng-click="openAddCompetidor(equipe)" tooltip-placement="top" tooltip="Adicionar competidor">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
@@ -60,8 +60,9 @@
           {{competidor.nome}} - {{competidor.idade}} anos
         </label>
         <span class="pull-right">
-          <button class="btn btn-lg btn-warning"
-                  ng-click="open(equipe)"
+          <button type="button"
+                  class="btn btn-lg btn-warning"
+                  ng-click="removeCompetidor(competidor)"
                   tooltip-placement="top"
                   tooltip="Remover competidor">
             <span class="glyphicon glyphicon-trash"></span>
@@ -86,7 +87,8 @@
           <h4 class="modal-title">Adicionar Competidor</h4>
         </div>
         <div class="modal-body">
-          <p>Selecionado: {{(competidoresExtras | filter:{selecionado:true}).length}}</p>
+          <p>Quantidade de Competidores já adicionados: {{(equipe.competidores | filter:{selecionado:true}).length}}</p>
+          <p>Quantidade de Competidores selecionados: {{(competidoresExtras | filter:{selecionado:true}).length}}</p>
           <div class="pre-scrollable">
             <div class="list-group-item" ng-repeat="competidor in competidoresExtras | orderBy:nome  ">
               <label class="list-group-item-heading">
@@ -111,7 +113,7 @@
     </div>
   </div>
 
-  <button type="button" ui-sref="equipes" class="btn btn-lg btn-warning" tooltip="Cancelar">Cancelar</button>
-  <button type="submit" class="btn btn-lg btn-primary" tooltip="Salvar">Salvar</button>
+  <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
+  <button type="button" ui-sref="equipes" class="btn btn-lg btn-warning">Cancelar</button>
 
 </div>

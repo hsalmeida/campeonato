@@ -16,7 +16,11 @@
 
   <div class="list-group list-competidores">
     <div class="list-group-item active">
-      <input type="text" ng-model="searchtext.nome" class="form-control search-bar" placeholder="Buscar pelo nome" aria-describedby="basic-addon1">
+      <input type="text"
+             ng-model="searchtext.nome"
+             class="form-control search-bar"
+             placeholder="Buscar pelo nome"
+             aria-describedby="basic-addon1">
     </div>
     <div class="list-group-item">
       <label class="control-label">Ordenar por:&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -42,9 +46,16 @@
         </span>
       </h4>
       <p class="list-group-item-text">
-        {{equipe.academia}} - {{parseEstado(equipe.estado.name)}} - {{equipe.pais.name}}
-        <br/>
+        {{equipe.academia}} {{parseEstado(equipe.estado.name)}} {{equipe.pais.name}}
       </p>
+      <ul class="list-group">
+        <li class="list-group-item active">Competidores na equipe</li>
+        <li class="list-group-item" ng-repeat="competidor in equipe.competidores">
+          {{competidor.nome}} -
+          {{competidor.idade}} anos -
+          <img ng-src="img/ranks/{{ listaImagens[competidor.graduacao - 1] }}"/> {{parseGraduacao(competidor.graduacao - 1)}}
+        </li>
+      </ul>
     </div>
   </div>
   <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-class="dialogClass">

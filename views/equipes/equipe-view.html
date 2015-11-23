@@ -16,6 +16,22 @@
         <td>Estado/Pais</td>
         <td>{{equipe.estado.name}} {{equipe.pais.name}}</td>
       </tr>
+      <tr>
+        <td>Sexo</td>
+        <td>{{parseSexo(equipe.sexo)}}</td>
+      </tr>
+      <tr>
+        <td>Disputa</td>
+        <td>{{listaFormatos[equipe.formato]}}</td>
+      </tr>
+      <tr>
+        <td>Competidores</td>
+        <td>
+          <ul style="list-style: none; padding-left: 0;">
+            <li ng-repeat="competidor in equipe.competidores">{{competidor.nome}}</li>
+          </ul>
+        </td>
+      </tr>
     </table>
   </div>
   <div>

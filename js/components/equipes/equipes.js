@@ -62,10 +62,27 @@ campeonato
                             d.selecionado = false;
                         })
                         $scope.competidoresExtras = competidores;
+                        $scope.dialogAddClass = 'open in';
                     });
-
-                    $scope.dialogAddClass = 'open in';
                 };
+
+                $scope.confirmarAdd = function(){
+                    $scope.competidoresExtras.forEach(function(competidor){
+                        if(competidor.selecionado) {
+                            $scope.equipe.competidores.push(competidor);
+                        }
+                    });
+                    $scope.closeAddCompetidor();
+                };
+
+                $scope.removeCompetidor = function(competidor){
+                    for(var i = 0; i < $scope.equipe.competidores.length; i++) {
+                        if($scope.equipe.competidores[i]._id.$oid === competidor._id.$oid) {
+                            $scope.equipe.competidores.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
             }
 
             $scope.init = function() {
@@ -82,13 +99,14 @@ campeonato
                 $scope.equipe.tipo = 1;
                 $scope.equipe.pais = {"name": "Brasil","code": "BR","continent": "South America","filename": "brasil"};
                 $scope.equipe.estado = {"name": "Rio de Janeiro","code": "RJ"};
+                $scope.equipe.competidores = [];
 
                 $scope.addEquipe = function (){
-                    /*
+                    console.log('salvar');
                     $scope.equipe.$save().then(function (){
                         $state.go('equipes');
                     });
-                    */
+
                 };
 
             };
@@ -100,9 +118,9 @@ campeonato
                     $scope.equipe = equipe;
                 });
 
-                $scope.editCompetidor = function (){
+                $scope.editEquipe = function (){
                     $scope.equipe.$saveOrUpdate().then(function(){
-                        $state.go('competidores');
+                        $state.go('equipes');
                     });
                 };
             };
