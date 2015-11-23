@@ -86,10 +86,11 @@
           <h4 class="modal-title">Adicionar Competidor</h4>
         </div>
         <div class="modal-body">
+          <p>Selecionado: {{(competidoresExtras | filter:{selecionado:true}).length}}</p>
           <div class="pre-scrollable">
             <div class="list-group-item" ng-repeat="competidor in competidoresExtras | orderBy:nome  ">
               <label class="list-group-item-heading">
-                <input type="checkbox" id="{{competidor._id.$oid}}">
+                <input type="checkbox" ng-model="competidor.selecionado" id="{{competidor._id.$oid}}">
                 <label for="{{competidor._id.$oid}}"><h4>{{competidor.nome}} - {{competidor.idade}} anos</h4></label>
               </label>
               <p class="list-group-item-text">

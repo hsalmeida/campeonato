@@ -58,11 +58,14 @@ campeonato
                         }
                     };
                     Competidores.query(notIn).then(function(competidores) {
+                        competidores.forEach(function(d){
+                            d.selecionado = false;
+                        })
                         $scope.competidoresExtras = competidores;
                     });
 
                     $scope.dialogAddClass = 'open in';
-                }
+                };
             }
 
             $scope.init = function() {
@@ -81,9 +84,11 @@ campeonato
                 $scope.equipe.estado = {"name": "Rio de Janeiro","code": "RJ"};
 
                 $scope.addEquipe = function (){
+                    /*
                     $scope.equipe.$save().then(function (){
                         $state.go('equipes');
                     });
+                    */
                 };
 
             };
