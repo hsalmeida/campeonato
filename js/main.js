@@ -2,8 +2,8 @@ var campeonato = angular.module('campeonato', [
 	'ui.router','ngResource', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp', 'ui.bootstrap',
 		'ngCookies'
 ])
-.controller('HomeController', ['$scope', '$rootScope', 'Users', '$state', '$cookies',
-	function($scope, $rootScope, Users, $state, $cookies){
+.controller('HomeController', ['$scope', '$rootScope', 'Users', 'App', '$state', '$cookies',
+	function($scope, $rootScope, Users, App, $state, $cookies){
 
 	var angularCookieUsrObj = $cookies.getObject('angularCookieKeyUsrObj');
 	if(angularCookieUsrObj) {
@@ -36,6 +36,14 @@ var campeonato = angular.module('campeonato', [
 				if(remember) {
 					$cookies.putObject('angularCookieKeyUsrObj', curUser);
 				}
+				var appQuery = {
+					"nome": user.campeonato
+				}
+				App.query(appQuery).then(function(apps){
+					if(apps[0]){
+						$cookies.putObject("CampeonatoObject", apps[0]);
+					}
+				});
 				$state.go('welcome');
 			} else {
 				$scope.notFound = true;
@@ -95,7 +103,7 @@ var campeonato = angular.module('campeonato', [
 			}
 		})
 		.state('categorias', {
-			url: "/categorias",
+			url: "/categorias/:tipo",
 			templateUrl: "views/categoria/categorias.html",
 			controller: 'CategoriasController',
 			data : {
@@ -111,7 +119,7 @@ var campeonato = angular.module('campeonato', [
 			}
 		})
 		.state('newCategoria', {
-			url: "/categorias/new",
+			url: "/categorias/:tipo/new",
 			templateUrl: "views/categoria/categoria-add.html",
 			controller: 'CategoriasController',
 			data : {

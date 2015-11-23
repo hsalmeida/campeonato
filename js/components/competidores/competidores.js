@@ -1,6 +1,6 @@
 campeonato
 	.controller('CompetidoresController',
-		['$scope', 'Competidores', '$stateParams', '$state', 'Listas', function($scope, Competidores, $stateParams, $state, Listas){
+		['$scope', 'Competidores', '$stateParams', '$state', 'Listas', '$cookies', function($scope, Competidores, $stateParams, $state, Listas, $cookies){
 
           $scope.listaFormatos = Listas.listaFormatosFull;
 
@@ -16,7 +16,8 @@ campeonato
 
           function _calculateAge(birthday) { // birthday is a date
             if(birthday) {
-              var ageDifMs = new Date(2015, 10, 7) - birthday.getTime();
+              var dataCampeonato = new Date($cookies.getObject("CampeonatoObject").data);
+              var ageDifMs = dataCampeonato - birthday.getTime();
               var ageDate = new Date(ageDifMs); // miliseconds from epoch
               return Math.abs(ageDate.getUTCFullYear() - 1970);
             } else {

@@ -11,8 +11,10 @@ campeonato
       $scope.objSexo = Listas.objSexo;
 
       $scope.formatoClick = function(formato){
-        $scope.showPeso = formato === 1 ? false : true;
+        $scope.showPeso = formato !== 1;
       };
+
+      $scope.tipo = Number($stateParams.tipo);
 
       function buildCategoria($scope, buildDefault, categoria){
         $scope.range = true;
@@ -45,6 +47,7 @@ campeonato
           $scope.valorPeso = categoria.peso;
         }
 
+
       }
 
       $scope.initList = function(){
@@ -57,19 +60,21 @@ campeonato
           $scope.predicate = predicate;
         };
 
-        Categorias.all().then(function(categorias){
+        var query = {"tipo" : Number($stateParams.tipo)};
+
+        Categorias.query(query).then(function(categorias){
           $scope.categorias = categorias;
         });
 
         $scope.open = function(categoria) {
-          console.log('open');
+
           $scope.dialogClass = 'open in';
           $scope.exCategoria = categoria;
         };
 
         $scope.delete = function() {
           $scope.exCategoria.$remove().then(function(){
-            Categorias.all().then(function(categorias){
+            Categorias.query(query).then(function(categorias){
               $scope.dialogClass = 'close';
               $scope.categorias = categorias;
             });
@@ -125,7 +130,7 @@ campeonato
 
         $scope.updateCategoria = function (){
           $scope.categoria.$saveOrUpdate().then(function(){
-            $state.go('categorias');
+            $state.go('categorias',{"tipo":$stateParams.tipo});
           });
         };
       };
@@ -142,11 +147,12 @@ campeonato
         $scope.categoria.peso = [];
         $scope.categoria.formato = 0;
         $scope.categoria.sexo = "m";
+        $scope.categoria.tipo = Number($stateParams.tipo);
         $scope.showPeso = true;
 
         $scope.addCategoria = function (){
           $scope.categoria.$save().then(function(){
-            $state.go('categorias');
+            $state.go('categorias',{"tipo":$stateParams.tipo});
           });
         };
 

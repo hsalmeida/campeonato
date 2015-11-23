@@ -24,9 +24,6 @@ campeonato
                 return Math.abs(ageDate.getUTCFullYear() - 1970);
             }
 
-
-
-
             function buildCompetidor($scope){
                 $.getJSON('js/countries.json', function( data ){
                     $scope.paises = data;

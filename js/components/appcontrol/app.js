@@ -1,6 +1,6 @@
 campeonato
-    .controller('AppController',['$scope', 'App', '$rootScope', 'Users', '$cookies',
-        function($scope, App, $rootScope, Users, $cookies){
+    .controller('AppController',['$scope', 'App', '$rootScope', 'Users', '$cookies', '$state',
+        function($scope, App, $rootScope, Users, $cookies, $state){
         $scope.init = function(){
             $scope.newPassword = "";
             $scope.confirmPassword = "";
@@ -8,6 +8,8 @@ campeonato
             $scope.saveUserError = false;
             $scope.saveUserErrorMsg = "";
             $scope.saveAppSuccess = false;
+            $scope.saveAppError = false;
+            $scope.saveAppErrorMsg = "";
 
             var nomeCampeonato = $cookies.get('nomeCampeonatoKey');
             var query = {
@@ -16,6 +18,8 @@ campeonato
 
             App.query(query).then(function(campeonato){
                 $scope.campeonato = campeonato[0];
+                $scope.campeonato.data = new Date(campeonato[0].data);
+                $scope.novoNome = $scope.campeonato.nome;
                 Users.getById($scope.currentUser._id.$oid).then(function(user){
                     $scope.currentUser = user;
                 })
@@ -23,6 +27,42 @@ campeonato
 
             $scope.updateApp = function(){
                 $scope.saveAppSuccess = true;
+                $scope.saveAppErrorMsg = "";
+                $scope.saveAppError = false;
+                console.log($scope.campeonato);
+                if(!$scope.campeonato.data) {
+                    $scope.saveAppSuccess = false;
+                    $scope.saveAppError = true;
+                    $scope.saveAppErrorMsg = "Informe a data do evento";
+                }
+                if(!$scope.novoNome) {
+                    $scope.saveAppSuccess = false;
+                    $scope.saveAppError = true;
+                    $scope.saveAppErrorMsg = "Informe um nome para o evento";
+                }
+                if($scope.saveAppSuccess) {
+                    var nomeQuery = {
+                        campeonato : $scope.campeonato.nome
+                    };
+                    Users.query(nomeQuery).then(function(usuarios){
+                        usuarios.forEach(function(usuario){
+                            usuario.campeonato = $scope.novoNome;
+                            usuario.$saveOrUpdate().then(function(){
+                               console.log('atualizou user');
+                            });
+                        });
+
+                        $scope.campeonato.nome = $scope.novoNome;
+                        $scope.campeonato.$saveOrUpdate().then(function(){
+                            //atualizar o campeonato por toda app.
+                            $cookies.put("nomeCampeonatoKey", $scope.campeonato.nome);
+                            $cookies.putObject("CampeonatoObject", $scope.campeonato);
+                            $state.go('app');
+                        });
+
+                    });
+
+                }
             };
 
             $scope.updateUser = function(){
