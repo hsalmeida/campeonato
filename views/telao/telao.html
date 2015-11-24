@@ -1,0 +1,102 @@
+<div ng-controller="TelaoController" ng-init="initTelao()">
+    <div class="text-center">
+        <h4 class="page-header">{{listaFormatos[categoriaAtivada.formato]}} - {{categoriaAtivada.nome}} <span ng-show="categoriaAtivada.formato === 0">de {{categoriaAtivada.peso[0]}} ate {{categoriaAtivada.peso[1]}} Kg</span></h4>
+    </div>
+    <div id="elimination-bracket">
+    </div>
+
+    <!-- dialog -->
+    <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-class="dialogClass">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="line-separator-card">
+
+                </div>
+                <div class="modal-header text-center bg-red pos-relative">
+                    <h4 class="modal-title white">
+                        {{listaFormatos[categoriaAtivada.formato]}} - {{categoriaAtivada.nome}} de {{categoriaAtivada.peso[0]}} ate {{categoriaAtivada.peso[1]}} Kg
+                    </h4>
+                    <button type="button" class="close" ng-click="dialogClass = ''" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-center text-uppercase">
+                        <div class="col-xs-5 text-right">
+                            <h2>
+                                Sabom Super Chute Direito
+                            </h2>
+                        </div>
+                        <div class="col-xs-2 bg-red">
+                            <h3 class="white">
+                                VS
+                            </h3>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h2>
+                                Sabom Super Chute Esquerdo
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="categoriaAtivada.formato === 0">
+                        <div class="col-xs-5 text-right">
+                            <h5>60kg</h5>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h4 class="white text-uppercase">
+                                peso
+                            </h4>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h5>65kg</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <h4>
+                                21
+                            </h4>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h4 class="white text-uppercase">
+                                idade
+                            </h4>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h4>
+                                24
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <img ng-src="img/ranks/{{ listaImagens[0] }}"/>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <label class="white text-uppercase">
+                                graduação
+                            </label>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <img ng-src="img/ranks/{{ listaImagens[1] }}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <h5>Arena Fight Vila da Penha</h5>
+                        </div>
+                        <div class="col-xs-2 text-center bg-red">
+                            <h6 class="white text-uppercase">
+                                academia
+                            </h6>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <h5>Monte Sinai</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

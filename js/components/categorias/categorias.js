@@ -1,21 +1,20 @@
 campeonato
     .controller('CategoriasController',
-    ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', function($scope, Categorias, Competidores, $stateParams, $state){
+    ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas', function($scope, Categorias, Competidores, $stateParams, $state, Listas){
 
-      $scope.listaGraduacoes =
-          ['Branca','Ponta Amarela',
-            'Amarela','Ponta Verde',
-            'Verde','Ponta Azul','Azul',
-            'Ponta Vermelha','Vermelha',
-            'Ponta Preta','1º Dan', '2º Dan',
-            '3º Dan', '4º Dan', '5º Dan', '6º Dan'];
+      $scope.listaGraduacoes = Listas.listaGraduacoes;
 
-      $scope.listaImagens = ['10.png','9.png','8.png','7.png','6.png','5.png','4.png','3.png','2.png','1.png',
-        'd1.png', 'd2.png', 'd3.png', 'd4.png', 'd5.png', 'd6.png'];
+      $scope.listaImagens = Listas.listaImagens;
 
-      $scope.listaFormatos = ['Luta', 'Forma'];
+      $scope.listaFormatos = Listas.listaFormatos;
 
-      $scope.objSexo = {"m" : "Masculino", "f" : "Feminino", "i" : "Indiferente"};
+      $scope.objSexo = Listas.objSexo;
+
+      $scope.formatoClick = function(formato){
+        $scope.showPeso = formato !== 1;
+      };
+
+      $scope.tipo = Number($stateParams.tipo);
 
       function buildCategoria($scope, buildDefault, categoria){
         $scope.range = true;
@@ -48,6 +47,7 @@ campeonato
           $scope.valorPeso = categoria.peso;
         }
 
+
       }
 
       $scope.initList = function(){
@@ -60,20 +60,23 @@ campeonato
           $scope.predicate = predicate;
         };
 
-        Categorias.all().then(function(categorias){
+        var query = {"tipo" : Number($stateParams.tipo)};
+
+        Categorias.query(query).then(function(categorias){
           $scope.categorias = categorias;
         });
 
         $scope.open = function(categoria) {
-          $scope.dialogClass = 'open';
+
+          $scope.dialogClass = 'open in';
           $scope.exCategoria = categoria;
         };
 
         $scope.delete = function() {
           $scope.exCategoria.$remove().then(function(){
-            Categorias.all().then(function(categorias){
-              $scope.dialogClass = 'close';
-              $scope.competidores = categorias;
+            Categorias.query(query).then(function(categorias){
+              $scope.dialogClass = '';
+              $scope.categorias = categorias;
             });
           });
         }
@@ -93,16 +96,23 @@ campeonato
               "$gte" : $scope.categoria.idade[0],
               "$lte" : $scope.categoria.idade[1]
             },
-            "peso" : {
-              "$gte" : $scope.categoria.peso[0],
-              "$lte" : $scope.categoria.peso[1]
-            },
             "formato" : {
               "$in" : [$scope.categoria.formato, 2]
             }
           };
 
+          if($scope.categoria.sexo !== "i") {
+            query.sexo = $scope.categoria.sexo;
+          }
 
+          var peso = {};
+          if($scope.categoria.formato === 0) {
+            peso = {
+              "$gte" : $scope.categoria.peso[0],
+              "$lte" : $scope.categoria.peso[1]
+            };
+            query.peso = peso;
+          }
 
           Competidores.query(query).then(function(competidores){
             $scope.competidores = competidores;
@@ -120,7 +130,7 @@ campeonato
 
         $scope.updateCategoria = function (){
           $scope.categoria.$saveOrUpdate().then(function(){
-            $state.go('categorias');
+            $state.go('categorias',{"tipo":$stateParams.tipo});
           });
         };
       };
@@ -137,19 +147,21 @@ campeonato
         $scope.categoria.peso = [];
         $scope.categoria.formato = 0;
         $scope.categoria.sexo = "m";
+        $scope.categoria.tipo = Number($stateParams.tipo);
+        $scope.showPeso = true;
 
         $scope.addCategoria = function (){
           $scope.categoria.$save().then(function(){
-            $state.go('categorias');
+            $state.go('categorias',{"tipo":$stateParams.tipo});
           });
-
         };
 
       };
 
+
       $scope.parseSexo = function(sexo) {
         return $scope.objSexo[sexo];
-      }
+      };
 
       $scope.parseEstado = function(nomeEstado){
         if(nomeEstado) {

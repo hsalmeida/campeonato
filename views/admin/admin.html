@@ -1,23 +1,39 @@
 <div>
   <ol class="breadcrumb">
-    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="welcome">Home</a></li>
     <li class="active">Administração</li>
   </ol>
   <div class="row">
     <!-- competidores -->
     <div class="col-xs-6 col-md-3">
       <a ui-sref="competidores" class="thumbnail">
-        <img ng-src="http://placehold.it/200x200?text=Competidores"
+        <img ng-src="http://placehold.it/200x200/0000FF/FFFFFF?text=경쟁"
              alt="Competidores">
         <label>Competidores</label>
       </a>
     </div>
     <!-- categorias -->
     <div class="col-xs-6 col-md-3">
-      <a ui-sref="categorias" class="thumbnail">
-        <img ng-src="http://placehold.it/200x200?text=Categorias"
+      <a ui-sref="categorias({tipo:0})" class="thumbnail">
+        <img ng-src="http://placehold.it/200x200/FF0000/000000?text=분류"
              alt="Categorias">
         <label>Categorias</label>
+      </a>
+    </div>
+    <!-- equipes -->
+    <div class="col-xs-6 col-md-3">
+      <a ui-sref="equipes" class="thumbnail">
+        <img ng-src="http://placehold.it/200x200/FFFFFF/000000?text=하는 팀"
+             alt="Equipes">
+        <label>Equipes</label>
+      </a>
+    </div>
+    <!-- categorias de equipes -->
+    <div class="col-xs-6 col-md-3">
+      <a ui-sref="categorias({tipo:1})" class="thumbnail">
+        <img ng-src="http://placehold.it/200x200/000000/FFFFFF?text=분류 하는 팀"
+             alt="Categorias de Equipes">
+        <label>Categoria de Equipes</label>
       </a>
     </div>
   </div>

@@ -1,0 +1,72 @@
+<div ng-controller="AppController" ng-init="init()">
+    <ol class="breadcrumb">
+        <li><a ui-sref="welcome">Home</a></li>
+        <li><a ui-sref="admin">Admin</a></li>
+        <li class="active">Controle da Aplicação</li>
+    </ol>
+    <div>
+        <h3 class="page-header">Gerenciando {{campeonato.nome}}</h3>
+
+        <div class="row">
+            <!-- esquerda, lista dos campeonatos -->
+            <div class="col-md-6">
+                <form class="form-horizontal" role="form" ng-submit="updateApp()">
+                    <div class="form-group">
+                        <label>Nome do Campeonato</label>
+                        <input type="text" ng-model="novoNome" class="form-control" placeholder="Nome do Campeonato" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataEvento">Data do Campeonato:</label>
+                        <input type="date" id="dataEvento" ng-model="campeonato.data"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de Telões:</label>
+                        <input type="number" ng-model="campeonato.teloes" class="form-control" min="1" max="10" placeholder="Telões" aria-describedby="basic-addon1">
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
+                    <button type="button" ui-sref="welcome" class="btn btn-lg btn-warning">Cancelar</button>
+
+                    <div class="text-warning" ng-show="saveAppError">
+                        <label>{{saveAppErrorMsg}}</label>
+                    </div>
+
+                    <div class="text-success" ng-show="saveAppSuccess">
+                        <label>Salvo com sucesso</label>
+                    </div>
+                </form>
+
+            </div>
+            <!-- direita, user -->
+            <div class="col-md-6">
+                <form class="form-horizontal" role="form" ng-submit="updateUser()">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="text" ng-model="currentUser.email" class="form-control" placeholder="Email" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="form-group">
+                        <label>Nova Senha:</label>
+                        <input type="password" ng-model="newPassword" class="form-control" placeholder="Nova senha" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Senha:</label>
+                        <input type="password" ng-model="confirmPassword" class="form-control" placeholder="Confirmar senha" aria-describedby="basic-addon1">
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
+                    <button type="button" ui-sref="welcome" class="btn btn-lg btn-warning">Cancelar</button>
+
+                    <div class="text-warning" ng-show="saveUserError">
+                        <label>{{saveUserErrorMsg}}</label>
+                    </div>
+
+                    <div class="text-success" ng-show="saveUserSuccess">
+                        <label>{{saveUserErrorMsg}}</label>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

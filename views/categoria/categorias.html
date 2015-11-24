@@ -1,13 +1,14 @@
 <div ng-controller="CategoriasController" ng-init="initList()">
   <ol class="breadcrumb">
-    <li><a ui-sref="home">Home</a></li>
+    <li><a ui-sref="welcome">Home</a></li>
     <li><a ui-sref="admin">Admin</a></li>
     <li class="active">Categorias</li>
   </ol>
   <div>
     <h3 class="page-header">
-      Lista de Categorias
-      <button class="btn btn-lg btn-danger" ui-sref="newCategoria">
+      Lista de Categorias <span ng-show="tipo === 1">de Equipes</span>
+      <button class="btn btn-lg btn-danger" ui-sref="newCategoria({tipo:tipo})"
+              tooltip-placement="top" tooltip="Nova categoria">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
     </h3>
@@ -26,7 +27,7 @@
           <input type="radio" name="optradio" ng-click="order('sexo')">Sexo
           <span class="sortorder" ng-show="predicate === 'sexo'" ng-class="{reverse:reverse}"></span>
         </label>
-        <label class="checkbox-inline">
+        <label class="checkbox-inline" ng-show="tipo === 0">
           <input type="radio" name="optradio" ng-click="order('graduacao')">Graduação
           <span class="sortorder" ng-show="predicate === 'graduacao'" ng-class="{reverse:reverse}"></span>
         </label>
@@ -34,16 +35,20 @@
       <div class="list-group-item" ng-repeat="categoria in categorias | filter:searchtext | orderBy:predicate:reverse ">
         <h4 class="list-group-item-heading">
           <a ui-sref="viewCategoria({id:categoria._id.$oid})">
-            {{listaFormatos[categoria.formato]}} - {{categoria.nome}} de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg
+            {{listaFormatos[categoria.formato]}} - {{categoria.nome}} <span ng-show="categoria.formato === 0">de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg</span>
           </a>
-        <span class="pull-right">
-          <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})" >
-            <span class="glyphicon glyphicon-pencil"></span>
-          </button>
-          <button class="btn btn-lg btn-warning">
-            <span class="glyphicon glyphicon-trash" ng-click="open(categoria)"></span>
-          </button>
-        </span>
+          <span class="pull-right">
+            <button class="btn btn-lg btn-primary" ui-sref="editCategoria({id:categoria._id.$oid})"
+                    tooltip-placement="top" tooltip="Editar">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button class="btn btn-lg btn-warning"
+                    ng-click="open(categoria)"
+                    tooltip-placement="top"
+                    tooltip="Remover">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </span>
         </h4>
         <p class="list-group-item-text">
           Idade de {{categoria.idade[0]}} ate {{categoria.idade[1]}} anos - {{parseSexo(categoria.sexo)}}<br />
@@ -56,11 +61,11 @@
       </div>
     </div>
   </div>
-  <div class="modal" ng-class="dialogClass">
+  <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-class="dialogClass">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" ng-click="dialogClass = 'close'" data-dismiss="modal" aria-hidden="true">×</button>
+          <button type="button" class="close" ng-click="dialogClass = ''" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="modal-title">Confimar Exclusão</h4>
         </div>
         <div class="modal-body">
@@ -68,7 +73,7 @@
           <h3>{{exCategoria.nome}}</h3>
         </div>
         <div class="modal-footer">
-          <button type="button" ng-click="dialogClass = 'close'" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="button" ng-click="dialogClass = ''" class="btn btn-default" data-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-danger" ng-click="delete()">Confirmar</button>
         </div>
       </div>

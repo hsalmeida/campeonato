@@ -1,3 +1,19 @@
+body {
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+  background-color: #FFF;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 .principia {
   margin: 25px;
 }
@@ -69,17 +85,20 @@
 }
 
 .open {
-  display: block !important;
+  opacity: 1;
+  visibility: visible;
+  display: block;
+  background: rgba(0,0,0,0.5);
 }
 
 #elimination-bracket {
-  width: 960px;
+  width: 1200px;
 }
 
 .node circle {
   fill: #fff;
   stroke: steelblue;
-  stroke-width: 1.5px;
+  stroke-width: 2px;
 }
 
 .node {
@@ -89,7 +108,7 @@
 .link {
   fill: none;
   stroke: #ccc;
-  stroke-width: 1.5px;
+  stroke-width: 2px;
 }
 
 .match-container {
@@ -103,4 +122,63 @@
 
 .competidor-academia {
   font-weight: lighter;
+}
+
+.competidor-rodada {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.cockpit-nome-competidor {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.cockpit-valor-competidor {
+  font-size: 24px;
+  word-wrap: break-word;
+}
+
+.cockpit-competidor {
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
+
+.white {
+  color: white;
+}
+
+.margin-top-bottom-11 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.bg-red {
+  background-color: red;
+}
+
+.line-separator-card{
+  min-height: 100%;
+  background-color: red;
+  position: absolute;
+  width: 2px;
+  left: 50%;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+@media (min-width: 768px){
+  .modal-dialog {
+    width: 900px;
+    margin: 30px auto;
+  }
 }

@@ -1,0 +1,30 @@
+<div ng-controller="TelaoController" ng-init="initTeloes()">
+    <ol class="breadcrumb">
+        <li><a ui-sref="welcome">Home</a></li>
+        <li class="active">Controle de Telões</li>
+    </ol>
+    <h3 class="page-header">Lista de Telões</h3>
+
+    <div class="list-group list-competidores">
+        <div class="list-group-item" ng-repeat="telao in teloes ">
+            <h4 class="list-group-item-heading">
+                <label ng-show="!telao.ativo">Telão {{telao.numero}}</label>
+                <a ng-show="telao.ativo" ui-sref="telao({id:telao.numero})" target="_blank">
+                    Ver telão {{telao.numero}}
+                </a>
+          <span class="pull-right">
+            <button class="btn btn-lg btn-primary" ui-sref="controle({id:telao.numero})"
+                    tooltip-placement="top" tooltip="Controlar Telao">
+                <span class="glyphicon glyphicon-cog"></span>
+            </button>
+          </span>
+            </h4>
+            <p class="list-group-item-text">
+                <label ng-show="telao.ativo">Ativo</label>
+                <label ng-show="!telao.ativo">Inativo</label>
+                <label ng-show="telao.categoria.ativa"> - Categora Ativada: {{telao.categoria.nome}}</label>
+            </p>
+        </div>
+    </div>
+
+</div>

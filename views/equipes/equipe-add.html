@@ -1,0 +1,11 @@
+<div data-ng-controller="EquipesController" data-ng-init="init()">
+  <ol class="breadcrumb">
+    <li><a ui-sref="welcome">Home</a></li>
+    <li><a ui-sref="admin">Admin</a></li>
+    <li><a ui-sref="equipes">Equipes</a></li>
+    <li class="active">Cadastrando Equipe</li>
+  </ol>
+  <form class="form-horizontal" role="form" ng-submit="addEquipe()">
+    <div ng-include="'views/equipes/equipe-form.html'"></div>
+  </form>
+</div>
