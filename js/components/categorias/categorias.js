@@ -75,7 +75,7 @@ campeonato
         $scope.delete = function() {
           $scope.exCategoria.$remove().then(function(){
             Categorias.query(query).then(function(categorias){
-              $scope.dialogClass = 'close';
+              $scope.dialogClass = '';
               $scope.categorias = categorias;
             });
           });

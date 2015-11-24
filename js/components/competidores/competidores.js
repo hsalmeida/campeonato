@@ -122,7 +122,7 @@ campeonato
           $scope.delete = function() {
             $scope.exCompetidor.$remove().then(function(){
               Competidores.query(query).then(function(competidores){
-                $scope.dialogClass = 'close';
+                $scope.dialogClass = '';
                 $scope.competidores = competidores;
               });
             });

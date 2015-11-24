@@ -85,7 +85,9 @@ body {
 }
 
 .open {
-  display: block !important;
+  opacity: 1;
+  visibility: visible;
+  display: block;
   background: rgba(0,0,0,0.5);
 }
 

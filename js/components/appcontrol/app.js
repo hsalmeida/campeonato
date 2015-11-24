@@ -1,6 +1,7 @@
 campeonato
     .controller('AppController',['$scope', 'App', '$rootScope', 'Users', '$cookies', '$state',
         function($scope, App, $rootScope, Users, $cookies, $state){
+
         $scope.init = function(){
             $scope.newPassword = "";
             $scope.confirmPassword = "";

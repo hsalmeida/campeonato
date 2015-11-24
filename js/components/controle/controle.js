@@ -406,7 +406,7 @@ campeonato
             };
 
             $scope.cancelar = function(){
-                $scope.dialogClass = 'close'
+                $scope.dialogClass = ''
             };
 
             $scope.salvarChave = function(chave) {
@@ -439,11 +439,11 @@ campeonato
                     $scope.categoriaAtiva.atualizacao = Date.now();
 
                     $scope.categoriaAtiva.$saveOrUpdate().then(function () {
-                        $scope.dialogClass = 'close';
+                        $scope.dialogClass = '';
                         $state.go('controle', {id:$stateParams.id});
                     });
                 } else {
-                    $scope.dialogClass = 'close';
+                    $scope.dialogClass = '';
                 }
             };
         };
