@@ -1,6 +1,15 @@
 body {
   background-color: #eee;
 }
+.brand {
+  padding-top: 6px;
+  padding-bottom: 0px;
+}
+
+.brand img {
+  margin-top: 10px;
+  height: 30px;
+}
 
 .form-signin {
   max-width: 330px;
