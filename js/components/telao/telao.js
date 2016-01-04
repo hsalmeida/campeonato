@@ -166,7 +166,11 @@ campeonato
                     .attr("text-anchor", "left")
                     .attr("class", "competidor-name")
                     .text(function (d) {
-                        return d.nome;
+                        if(d.nome.length > 14) {
+                            return d.nome.substring(0, 14) + "...";
+                        } else {
+                            return d.nome;
+                        }
                     });
 
                 nodeEnter.append("text")
@@ -180,7 +184,7 @@ campeonato
 
                 nodeEnter.append("text")
                     .attr("dx", -25)
-                    .attr("dy", 5)
+                    .attr("dy", -5)
                     .attr("text-anchor", "left")
                     .attr("class", "competidor-rodada")
                     .text(function (d) {

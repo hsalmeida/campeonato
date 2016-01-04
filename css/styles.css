@@ -146,15 +146,17 @@ body {
 
 .competidor-name {
   font-weight: bold;
+  font-size: 20px;
 }
 
 .competidor-academia {
   font-weight: lighter;
+  font-size: 16px;
 }
 
 .competidor-rodada {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .cockpit-nome-competidor {
