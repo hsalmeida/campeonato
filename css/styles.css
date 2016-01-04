@@ -1,6 +1,6 @@
 body {
   /*background-color: #eee;*/
-  background-image: url("../img/kidokwan.jpg");
+  background: url("../img/kidokwan.jpg") no-repeat;
   background-size: cover;
 }
 .brand {
