@@ -7,8 +7,8 @@ body {
 }
 
 .brand img {
-  margin-top: 10px;
-  height: 30px;
+  margin-top: -4px;
+  height: 60px;
 }
 
 .form-signin {
