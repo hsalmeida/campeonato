@@ -1,5 +1,5 @@
 body {
-  background: #eee url("../img/kidokwan.jpg") no-repeat;
+  background: #eee url("../img/kidokwan.jpg") center no-repeat fixed;
   background-size: cover;
 }
 .brand {
