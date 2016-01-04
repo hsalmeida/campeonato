@@ -1,5 +1,7 @@
 body {
-  background-color: #eee;
+  /*background-color: #eee;*/
+  background-image: url("../img/kidokwan.jpg");
+  background-size: cover;
 }
 .brand {
   padding-top: 6px;
@@ -27,9 +29,17 @@ body {
   margin: 25px;
 }
 
+.inverse {
+  color: #FFFFFF;
+}
+
 .categoria-form {
   margin : 20px;
   max-width: 450px;
+}
+
+.background-white {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .competidor-form {
@@ -102,6 +112,7 @@ body {
 
 #elimination-bracket {
   width: 1200px;
+  background: rgba(255,255,255,0.8);
 }
 
 .node circle {
@@ -116,7 +127,7 @@ body {
 
 .link {
   fill: none;
-  stroke: #ccc;
+  stroke: #e51c23;
   stroke-width: 2px;
 }
 

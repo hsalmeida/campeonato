@@ -5,7 +5,7 @@
     <li><a ui-sref="categorias({tipo:tipo})">Categorias</a></li>
     <li class="active">Editar Categoria {{categoria.nome}}</li>
   </ol>
-  <form class="form-horizontal" role="form" ng-submit="updateCategoria()">
+  <form class="form-horizontal background-white" role="form" ng-submit="updateCategoria()">
     <div ng-include="'views/categoria/categoria-form.html'" onload="initEdit()"></div>
   </form>
 </div>
