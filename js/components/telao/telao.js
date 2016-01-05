@@ -1,8 +1,8 @@
 campeonato
     .controller('TelaoController', ['$scope','App', 'Categorias',
-        'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas', '$cookies',
+        'Competidores', 'Chaves', '$stateParams', '$state', '$interval', 'Listas', '$cookies', '$timeout',
         function ($scope, App, Categorias, Competidores,
-                  Chaves, $stateParams, $state, $interval, Listas, $cookies) {
+                  Chaves, $stateParams, $state, $interval, Listas, $cookies, $timeout) {
 
             $scope.initTeloes = function(){
 
@@ -227,6 +227,13 @@ campeonato
                     .attr("transform", "translate(" + (margin.left + margin.right) + "," + margin.top + ")scale(" + scale + ")");
             }
 
+            function showTelao() {
+                $scope.dialogClass = 'open in';
+                $timeout(function(){
+                    $scope.dialogClass = '';
+                }, 60000);
+            }
+
             $scope.initTelao = function () {
 
                 desenharSVG();
@@ -247,7 +254,7 @@ campeonato
                             }
 
                             $scope.categoriaAtivada = categoria;
-                            console.log("atualizar");
+
                             if ($scope.categoriaAtivada) {
                                 updateBrackets($scope.categoriaAtivada);
                             }
@@ -255,6 +262,30 @@ campeonato
                         }
                     });
                 }, 5000);
+
+                $interval(function () {
+                    var query = {
+                        "chaveTelao.ativa": true,
+                        "telao" : Number($stateParams.id)
+                    };
+                    Categorias.query(query).then(function (categoria) {
+                        categoria = categoria[0];
+                        if (categoria) {
+                            if ($scope.categoriaAtivada) {
+                                if ($scope.categoriaAtivada._id.$oid === categoria._id.$oid &&
+                                    $scope.categoriaAtivada.chaveTelao.atualizacao === categoria.chaveTelao.atualizacao) {
+                                    return;
+                                }
+                            }
+
+                            $scope.categoriaAtivada.chaveTelao = categoria.chaveTelao;
+
+                            if ($scope.categoriaAtivada.chaveTelao) {
+                                showTelao();
+                            }
+                        }
+                    });
+                }, 8000);
 
                 /*
                  Categorias.all().then(function(categorias){

@@ -30,7 +30,7 @@ campeonato
                 $scope.saveAppSuccess = true;
                 $scope.saveAppErrorMsg = "";
                 $scope.saveAppError = false;
-                console.log($scope.campeonato);
+
                 if(!$scope.campeonato.data) {
                     $scope.saveAppSuccess = false;
                     $scope.saveAppError = true;
@@ -49,7 +49,7 @@ campeonato
                         usuarios.forEach(function(usuario){
                             usuario.campeonato = $scope.novoNome;
                             usuario.$saveOrUpdate().then(function(){
-                               console.log('atualizou user');
+
                             });
                         });
 

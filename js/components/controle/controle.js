@@ -1,6 +1,6 @@
 campeonato
-.controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas',
-    function($scope, Categorias, Competidores, $stateParams, $state, Listas) {
+.controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas', '$timeout',
+    function($scope, Categorias, Competidores, $stateParams, $state, Listas, $timeout) {
 
         var quantidadeRounds = Listas.quantidadeRounds;
 
@@ -52,6 +52,9 @@ campeonato
                     var no = {
                         nome: comp.nome,
                         academia: comp.academia,
+                        peso: comp.peso,
+                        idade: comp.idade,
+                        graduacao: comp.graduacao,
                         children: []
                     };
                     nos.push(no);
@@ -87,10 +90,28 @@ campeonato
                         for (var j = 0; j < loopPartidas; j++) {
                             //ultimo item da qtdPartidas
                             if (i === (qtdPartidas - 1)) {
-                                partida.push({"nome": nos[j].nome, "academia": nos[j].academia, vencedor: false});
+                                partida.push(
+                                    {
+                                        "nome": nos[j].nome,
+                                        "academia": nos[j].academia,
+                                        "peso" : nos[j].peso,
+                                        "idade" : nos[j].idade,
+                                        "graduacao": nos[j].graduacao,
+                                        "vencedor": false
+                                    }
+                                );
                             } else {
                                 //ainda esta no loop de qtdPartidas
-                                partida.push({"nome": "Vencedor " + j, "academia": "", vencedor: false});
+                                partida.push(
+                                    {
+                                        "nome": "Vencedor " + j,
+                                        "academia": "",
+                                        "peso" : 0,
+                                        "idade" : 0,
+                                        "graduacao": 0,
+                                        vencedor: false
+                                    }
+                                );
                             }
                         }
                         partidas.push(partida);
@@ -135,12 +156,23 @@ campeonato
                         var nomeOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome;
                         var academiaOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia;
 
+                        var idadeOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].idade;
+                        var pesoOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].peso;
+                        var graducacaoOriginal = partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].graduacao;
+
                         partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].nome = "Vencedor " + z;
                         partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].academia = "";
+                        partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].idade = 0;
+                        partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].peso = 0;
+                        partidas[(lenPartidas - 1)][((lenUltimaPartida - 1) - z)].graduacao = 0;
+
 
                         var filhoMovido = {
                             "nome": nomeOriginal,
                             "academia": academiaOriginal,
+                            "idade" : idadeOriginal,
+                            "peso": pesoOriginal,
+                            "graduacao" : graducacaoOriginal,
                             "rodada" : globalRodadas,
                             vencedor: false,
                             "pai" : {
@@ -153,6 +185,9 @@ campeonato
                         var filhoNovo = {
                             "nome": nos[z].nome,
                             "academia": nos[z].academia,
+                            "idade" : nos[z].idade,
+                            "peso": nos[z].peso,
+                            "graduacao" : nos[z].graduacao,
                             "rodada": globalRodadas,
                             vencedor: false,
                             "pai": {
@@ -207,11 +242,19 @@ campeonato
                 chave.vencedor = buscaVencedor(children);
                 chave.competidor1 = {
                     "nome": children[0].nome,
+                    "academia": children[0].academia ? children[0].academia : '',
+                    "idade": children[0].idade ? children[0].idade : 0,
+                    "peso": children[0].peso ? children[0].peso : 0,
+                    "graduacao": children[0].graduacao ? children[0].graduacao : 0,
                     "pontuacao": children[0].pontuacao ? children[0].pontuacao : 0,
                     "vencedor": children[0].vencedor ? children[0].vencedor : false
                 };
                 chave.competidor2 = {
                     "nome": children[1].nome,
+                    "academia": children[1].academia ? children[1].academia : '',
+                    "idade": children[1].idade ? children[1].idade : 0,
+                    "peso": children[1].peso ? children[1].peso : 0,
+                    "graduacao": children[1].graduacao ? children[1].graduacao : 0,
                     "pontuacao": children[1].pontuacao ? children[1].pontuacao : 0,
                     "vencedor": children[1].vencedor ? children[1].vencedor : false
                 };
@@ -297,7 +340,7 @@ campeonato
             var vencedor = {};
             //atualiza o no principal
             localizarNo($scope.categoriaAtiva.arvore, chave.rodada, chave);
-            //console.log(recursiveNode);
+
             for(var i = 0; i < recursiveNode.length; i++) {
                 if(recursiveNode[i].vencedor) {
                     vencedor = recursiveNode[i];
@@ -405,8 +448,30 @@ campeonato
 
             };
 
+            $scope.monstrarTelao = function(chave, categoriaAtiva, clickEvent) {
+
+                var el = clickEvent.target;
+
+                if($(el).prop('tagName') === 'BUTTON') {
+                    el = $(el).find('span');
+                }
+
+                $(el).attr("class", "glyphicon glyphicon-repeat waiting");
+
+                categoriaAtiva.chaveTelao = angular.merge({}, chave);
+                categoriaAtiva.chaveTelao.ativa = true;
+                categoriaAtiva.chaveTelao.atualizacao = Date.now();
+
+                categoriaAtiva.$saveOrUpdate().then(function(){
+                    $timeout(function(){
+                        $(el).attr("class", "glyphicon glyphicon-blackboard");
+                    }, 63000);
+                });
+
+            };
+
             $scope.cancelar = function(){
-                $scope.dialogClass = ''
+                $scope.dialogClass = '';
             };
 
             $scope.salvarChave = function(chave) {

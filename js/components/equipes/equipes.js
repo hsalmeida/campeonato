@@ -42,7 +42,7 @@ campeonato
                     $scope.dialogAddClass = 'close';
                 };
                 $scope.openAddCompetidor = function(equipe) {
-                    console.log('open');
+
                     var array = [];
                     if(equipe && equipe.competidores) {
                         equipe.competidores.forEach(function(competidor){
@@ -99,7 +99,7 @@ campeonato
                 $scope.equipe.competidores = [];
 
                 $scope.addEquipe = function (){
-                    console.log('salvar');
+
                     $scope.equipe.$save().then(function (){
                         $state.go('equipes');
                     });
