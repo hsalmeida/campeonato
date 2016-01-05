@@ -297,6 +297,8 @@ campeonato
                             $scope.categoriaAtiva.chaves = chaveGlobal;
                         //}
 
+                    } else {
+                        categoria.ativa = false;
                     }
 
                     var query = {
