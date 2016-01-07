@@ -1,6 +1,6 @@
 var campeonato = angular.module('campeonato', [
 	'ui.router','ngResource', 'grade', 'ui.bootstrap-slider', 'mongolabResourceHttp', 'ui.bootstrap',
-		'ngCookies'
+		'ngCookies', 'angularUtils.directives.dirPagination'
 ])
 .controller('HomeController', ['$scope', '$rootScope', 'Users', 'App', '$state', '$cookies',
 	function($scope, $rootScope, Users, App, $state, $cookies){

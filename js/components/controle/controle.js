@@ -8,6 +8,11 @@ campeonato
 
         var chaveGlobal = [];
 
+        /* paginacao*/
+        $scope.currentPage = 1;
+        $scope.pageSize = 10;
+        /* paginacao */
+
         $scope.listaGraduacoes = Listas.listaGraduacoes;
 
         $scope.listaImagens = Listas.listaImagens;

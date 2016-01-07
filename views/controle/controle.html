@@ -21,7 +21,7 @@
                 </div>
                 <div class="list-group-item"
                      ng-class="categoria.ativa ? 'list-group-item-success' : ''"
-                     ng-repeat="categoria in categorias | filter:searchtext | orderBy : ['-ativa', '-quantidadeCompetidores'] ">
+                     dir-paginate="categoria in categorias | filter:searchtext | orderBy : ['-ativa', '-quantidadeCompetidores'] | itemsPerPage : 10">
                     <h5 class="list-group-item-heading">
                         {{listaFormatos[categoria.formato]}} - {{categoria.nome}} <span ng-show="categoria.formato === 0">de {{categoria.peso[0]}} ate {{categoria.peso[1]}} Kg</span>
                         <span class="pull-right">
@@ -49,6 +49,7 @@
                         Quantidade de Compertidores: {{categoria.quantidadeCompetidores}}
                     </p>
                 </div>
+                <dir-pagination-controls boundary-links="true" ></dir-pagination-controls>
             </div>
 
         </div>
