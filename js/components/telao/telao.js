@@ -58,9 +58,13 @@ campeonato
 
             var globalRodadas;
 
-            var margin = {top: 10, right: 10, bottom: 10, left: 10},
-                width = 1200 - margin.right - margin.left, halfWidth = width / 2,
-                height = 800 - margin.top - margin.bottom;
+            var margin = {top: 10, right: 10, bottom: 10, left: 10}
+
+            var minWidth = window.innerWidth > 1200 ? window.innerWidth : 1200;
+            var minHeight = window.innerHeight > 800 ? window.innerHeight : 800;
+            var width = minWidth - margin.right - margin.left;
+            var height = minHeight - margin.top - margin.bottom;
+            var halfWidth = width / 2;
 
             var tree = d3.layout.tree()
                 .size([height, width]);
@@ -221,8 +225,8 @@ campeonato
             function desenharSVG(){
                 var scale = .8;
                 svg = d3.select("#elimination-bracket").append("svg")
-                    .attr("width", width + margin.right + margin.left)
-                    .attr("height", height + margin.top + margin.bottom)
+                    .attr("width", width - margin.left - margin.right)
+                    .attr("height", height)
                     .append("g")
                     .attr("transform", "translate(" + (margin.left + margin.right) + "," + margin.top + ")scale(" + scale + ")");
             }
