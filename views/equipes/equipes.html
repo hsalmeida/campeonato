@@ -29,7 +29,7 @@
         <span class="sortorder" ng-show="predicate === 'nome'" ng-class="{reverse:reverse}"></span>
       </label>
     </div>
-    <div class="list-group-item" ng-repeat="equipe in equipes | filter:searchtext | orderBy:predicate:reverse  ">
+    <div class="list-group-item" dir-paginate="equipe in equipes | filter:searchtext | orderBy:predicate:reverse | itemsPerPage : 5 ">
       <h4 class="list-group-item-heading">
         <a ui-sref="viewEquipe({id:equipe._id.$oid})">{{equipe.nome}}</a>
         <span class="pull-right">
@@ -57,6 +57,7 @@
         </li>
       </ul>
     </div>
+    <dir-pagination-controls boundary-links="true" ></dir-pagination-controls>
   </div>
   <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-class="dialogClass">
     <div class="modal-dialog">
