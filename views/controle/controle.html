@@ -60,14 +60,15 @@
 
             <div class="list-group list-categorias">
                 <div class="list-group-item active">
-                    <h4 class="list-group-item-heading">
+                    <h4 class="list-group-item-heading" ng-show="categoriaAtiva.ativa">
                         Chaves da Categoria: {{listaFormatos[categoriaAtiva.formato]}} -  {{categoriaAtiva.nome}}
                     </h4>
                 </div>
 
                 <div class="list-group-item"
                      ng-class="chave.vencedor ? 'list-group-item-success' : ''"
-                     ng-repeat="chave in categoriaAtiva.chaves | filter:filtroChave | orderBy:'rodada'">
+                     ng-repeat="chave in categoriaAtiva.chaves | filter:filtroChave | orderBy:'rodada'"
+                     ng-show="categoriaAtiva.ativa">
                     <div class="row">
                         <div class="col-xs-2">
                             <h4>#{{chave.rodada}}</h4>

@@ -212,7 +212,7 @@ campeonato
                 }
                 categoria.arvore = partidas[0][0];
                 categoria.chaves = [];
-
+                categoria.chaveTelao = {};
             }
         }
 
