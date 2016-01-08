@@ -271,6 +271,7 @@ campeonato
         }
 
         function initQuery(idTelao){
+            waitingDialog.show();
             $scope.numeroTelao = idTelao;
             var telao = {
                 "$or" : [
@@ -337,6 +338,7 @@ campeonato
                         categoria.competidores = competidores;
                         categoria.quantidadeCompetidores = competidores.length;
                     });
+                    waitingDialog.hide();
                 });
             });
         }
@@ -411,25 +413,30 @@ campeonato
                 return !chave.final;
             };
 
+            function endPlayCategoria() {
+                initQuery();
+                $state.go('controle', {id: $stateParams.id});
+            }
+
             $scope.playCategoria = function(categoria) {
 
                 categoria.ativa = true;
                 categoria.telao = Number($stateParams.id);
                 categoria.atualizacao = Date.now();
                 //verifica se possui chave
-                //if(!categoria.arvore || !categoria.arvore.children) {
+                if(!categoria.arvore || !categoria.arvore.children) {
                     criarArvore(categoria);
-                //}
+                }
                 categoria.$saveOrUpdate().then(function (){
                     if($scope.categoriaAtiva) {
                         $scope.categoriaAtiva.ativa = false;
                         $scope.categoriaAtiva.$saveOrUpdate().then(function (){
+                            endPlayCategoria();
                         });
+                    } else {
+                        endPlayCategoria();
                     }
-                    initQuery();
-                    $state.go('controle', {id:$stateParams.id});
                 });
-
             };
 
             $scope.stopCategoria = function(categoria) {

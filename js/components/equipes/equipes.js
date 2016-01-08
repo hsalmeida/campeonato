@@ -128,7 +128,7 @@ campeonato
                 });
             };
             $scope.initList = function(){
-
+                waitingDialog.show();
                 $scope.predicate = 'nome';
                 $scope.reverse = false;
 
@@ -143,6 +143,7 @@ campeonato
 
                 Equipes.query(query).then(function(equipes){
                     $scope.equipes = equipes;
+                    waitingDialog.hide();
                 });
 
                 $scope.open = function(equipe) {
@@ -151,10 +152,12 @@ campeonato
                 };
 
                 $scope.delete = function() {
+                    waitingDialog.show();
                     $scope.exEquipe.$remove().then(function(){
                         Competidores.query(query).then(function(equipes){
                             $scope.dialogClass = '';
                             $scope.equipes = equipes;
+                            waitingDialog.hide();
                         });
                     });
                 }

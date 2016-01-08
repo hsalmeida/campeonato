@@ -97,7 +97,7 @@ campeonato
           });
         };
         $scope.initList = function(){
-
+          waitingDialog.show();
           $scope.predicate = 'nome';
           $scope.reverse = false;
 
@@ -112,6 +112,7 @@ campeonato
 
           Competidores.query(query).then(function(competidores){
             $scope.competidores = competidores;
+            waitingDialog.hide();
           });
 
           $scope.open = function(competidor) {
@@ -120,10 +121,12 @@ campeonato
           };
 
           $scope.delete = function() {
+            waitingDialog.show();
             $scope.exCompetidor.$remove().then(function(){
               Competidores.query(query).then(function(competidores){
                 $scope.dialogClass = '';
                 $scope.competidores = competidores;
+                waitingDialog.hide();
               });
             });
           }

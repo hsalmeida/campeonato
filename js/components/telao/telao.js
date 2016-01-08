@@ -5,7 +5,7 @@ campeonato
                   Chaves, $stateParams, $state, $interval, Listas, $cookies, $timeout) {
 
             $scope.initTeloes = function(){
-
+                waitingDialog.show();
                 var nomeCampeonato = $cookies.get('nomeCampeonatoKey');
                 var query = {
                     "nome" : nomeCampeonato ? nomeCampeonato : "Campeonato Teste"
@@ -39,6 +39,7 @@ campeonato
                             $scope.teloes.push(telao);
                             telaoId++;
                         }
+                        waitingDialog.hide();
                     });
                 });
             };

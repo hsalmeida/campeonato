@@ -3,6 +3,7 @@ campeonato
         function($scope, App, $rootScope, Users, $cookies, $state){
 
         $scope.init = function(){
+            waitingDialog.show();
             $scope.newPassword = "";
             $scope.confirmPassword = "";
             $scope.saveUserSuccess = false;
@@ -23,10 +24,12 @@ campeonato
                 $scope.novoNome = $scope.campeonato.nome;
                 Users.getById($scope.currentUser._id.$oid).then(function(user){
                     $scope.currentUser = user;
+                    waitingDialog.hide();
                 })
             });
 
             $scope.updateApp = function(){
+                waitingDialog.show();
                 $scope.saveAppSuccess = true;
                 $scope.saveAppErrorMsg = "";
                 $scope.saveAppError = false;
@@ -60,13 +63,14 @@ campeonato
                             $cookies.putObject("CampeonatoObject", $scope.campeonato);
                             $state.go('app');
                         });
-
+                        waitingDialog.hide();
                     });
 
                 }
             };
 
             $scope.updateUser = function(){
+                waitingDialog.show();
                 var nPass = $scope.newPassword;
                 var cPass = $scope.confirmPassword;
                 if(nPass) {
@@ -82,6 +86,7 @@ campeonato
                               $scope.saveUserSuccess = true;
                               $scope.saveUserError = false;
                               $scope.saveUserErrorMsg = "Senha alterada com sucesso";
+                              waitingDialog.hide();
                           });
                       } else {
                           //erro de tamanho.

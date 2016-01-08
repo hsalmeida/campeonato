@@ -51,6 +51,7 @@ campeonato
       }
 
       $scope.initList = function(){
+        waitingDialog.show();
 
         $scope.predicate = 'nome';
         $scope.reverse = false;
@@ -64,6 +65,7 @@ campeonato
 
         Categorias.query(query).then(function(categorias){
           $scope.categorias = categorias;
+          waitingDialog.hide();
         });
 
         $scope.open = function(categoria) {
@@ -73,14 +75,15 @@ campeonato
         };
 
         $scope.delete = function() {
+          waitingDialog.show();
           $scope.exCategoria.$remove().then(function(){
             Categorias.query(query).then(function(categorias){
               $scope.dialogClass = '';
               $scope.categorias = categorias;
+              waitingDialog.hide();
             });
           });
         }
-
       };
 
       $scope.viewInit = function(){
