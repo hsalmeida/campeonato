@@ -414,7 +414,8 @@ campeonato
             };
 
             function endPlayCategoria() {
-                initQuery();
+                //initQuery($stateParams.id);
+                console.log('endPlayCategoria');
                 $state.go('controle', {id: $stateParams.id});
             }
 
@@ -428,11 +429,14 @@ campeonato
                     criarArvore(categoria);
                 }
                 categoria.$saveOrUpdate().then(function (){
-                    if($scope.categoriaAtiva) {
-                        $scope.categoriaAtiva.ativa = false;
-                        $scope.categoriaAtiva.$saveOrUpdate().then(function (){
-                            endPlayCategoria();
-                        });
+                    console.log(categoria);
+                    if($scope.categoriaAtiva && $scope.categoriaAtiva.ativa) {
+                        if($scope.categoriaAtiva._id.$oid !== categoria._id.$oid) {
+                            $scope.categoriaAtiva.ativa = false;
+                            $scope.categoriaAtiva.$saveOrUpdate().then(function () {
+                                endPlayCategoria();
+                            });
+                        }
                     } else {
                         endPlayCategoria();
                     }
@@ -442,6 +446,8 @@ campeonato
             $scope.stopCategoria = function(categoria) {
                 categoria.ativa = false;
                 categoria.$saveOrUpdate().then(function (){
+                    console.log(categoria);
+                    console.log($scope.categoriaAtiva);
                     $state.go('controle', {id:$stateParams.id});
                 });
             };
