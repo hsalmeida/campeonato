@@ -1,6 +1,6 @@
 campeonato
-.controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas', '$timeout',
-    function($scope, Categorias, Competidores, $stateParams, $state, Listas, $timeout) {
+.controller('ControleController', ['$scope', 'Categorias', 'Competidores', '$stateParams', '$state', 'Listas', '$timeout', '$filter',
+    function($scope, Categorias, Competidores, $stateParams, $state, Listas, $timeout, $filter) {
 
         var quantidadeRounds = Listas.quantidadeRounds;
 
@@ -52,7 +52,25 @@ campeonato
             //verifica se possui competidores
             if(categoria.competidores) {
                 var nos = [];
-                categoria.competidores.forEach(function (competidor) {
+
+                var competidoresCopy = angular.copy(categoria.competidores);
+
+                $filter('orderBy')(competidoresCopy, 'pais');
+
+                var competidores = [];
+
+                var prime = competidoresCopy.length % 2;
+
+                while(competidoresCopy.length) {
+                    competidores.push(competidoresCopy.shift());
+                    competidores.push(competidoresCopy.pop());
+                }
+
+                if(prime) {
+                    competidores.pop();
+                }
+
+                competidores.forEach(function (competidor) {
                     var comp = angular.copy(competidor);
                     var no = {
                         nome: comp.nome,
@@ -415,7 +433,7 @@ campeonato
 
             function endPlayCategoria() {
                 //initQuery($stateParams.id);
-                console.log('endPlayCategoria');
+
                 $state.go('controle', {id: $stateParams.id});
             }
 
@@ -429,7 +447,7 @@ campeonato
                     criarArvore(categoria);
                 }
                 categoria.$saveOrUpdate().then(function (){
-                    console.log(categoria);
+
                     if($scope.categoriaAtiva && $scope.categoriaAtiva.ativa) {
                         if($scope.categoriaAtiva._id.$oid !== categoria._id.$oid) {
                             $scope.categoriaAtiva.ativa = false;
@@ -446,8 +464,7 @@ campeonato
             $scope.stopCategoria = function(categoria) {
                 categoria.ativa = false;
                 categoria.$saveOrUpdate().then(function (){
-                    console.log(categoria);
-                    console.log($scope.categoriaAtiva);
+
                     $state.go('controle', {id:$stateParams.id});
                 });
             };
