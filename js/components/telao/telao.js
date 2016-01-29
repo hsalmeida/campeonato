@@ -4,6 +4,45 @@ campeonato
         function ($scope, App, Categorias, Competidores,
                   Chaves, $stateParams, $state, $interval, Listas, $cookies, $timeout) {
 
+            $scope.dialogClass = "";
+
+            var quantidadeRounds = Listas.quantidadeRounds;
+
+            $scope.listaGraduacoes = Listas.listaGraduacoes;
+
+            $scope.listaImagens = Listas.listaImagens;
+
+            $scope.listaFormatos = Listas.listaFormatos;
+
+            $scope.objSexo = Listas.objSexo;
+
+            var margin = {top: 10, right: 10, bottom: 10, left: 10};
+
+            var minWidth = window.innerWidth > 1200 ? window.innerWidth : 1200;
+            var minHeight = window.innerHeight > 800 ? window.innerHeight : 800;
+            var width = minWidth - margin.right - margin.left;
+            var height = minHeight - margin.top - margin.bottom;
+            var halfWidth = width / 2;
+
+            var tree = d3.layout.tree()
+                .size([height, width]);
+
+            var diagonal = d3.svg.line().interpolate('step')
+                .x(function (d) {
+                    return d.x;
+                })
+                .y(function (d) {
+                    return d.y;
+                });
+
+            var calcLeft = function (d) {
+                var l = d.y - halfWidth;
+                l = halfWidth - l;
+                return {x: d.x, y: l};
+            };
+
+            var svg;
+
             $scope.initTeloes = function(){
                 waitingDialog.show();
                 var nomeCampeonato = $cookies.get('nomeCampeonatoKey');
@@ -22,7 +61,7 @@ campeonato
                         "sort" : {
                             "telao" : 1
                         }
-                    }
+                    };
                     Categorias.query(query, options).then(function(categorias){
                         for(var idxtelao = 0; idxtelao < $scope.campeonato.teloes; idxtelao++) {
                             var telaoId = Number(idxtelao + 1);
@@ -45,47 +84,7 @@ campeonato
             };
 
 
-            $scope.dialogClass = "";
 
-            var quantidadeRounds = Listas.quantidadeRounds;
-
-            $scope.listaGraduacoes = Listas.listaGraduacoes;
-
-            $scope.listaImagens = Listas.listaImagens;
-
-            $scope.listaFormatos = Listas.listaFormatos;
-
-            $scope.objSexo = Listas.objSexo;
-
-            var globalRodadas;
-
-            var margin = {top: 10, right: 10, bottom: 10, left: 10}
-
-            var minWidth = window.innerWidth > 1200 ? window.innerWidth : 1200;
-            var minHeight = window.innerHeight > 800 ? window.innerHeight : 800;
-            var width = minWidth - margin.right - margin.left;
-            var height = minHeight - margin.top - margin.bottom;
-            var halfWidth = width / 2;
-
-            var tree = d3.layout.tree()
-                .size([height, width]);
-
-            var diagonal = d3.svg.line().interpolate('step')
-                .x(function (d) {
-                    return d.x;
-                })
-                .y(function (d) {
-                    return d.y;
-                });
-
-            var calcLeft = function (d) {
-                var l = d.y;
-                l = d.y - halfWidth;
-                l = halfWidth - l;
-                return {x: d.x, y: l};
-            };
-
-            var svg;
 
             function powerOfTwo(numero) {
                 return !(numero == 0) && !(numero & (numero - 1))
@@ -98,16 +97,6 @@ campeonato
                     len++;
                     return getQuantidadePartidas(len);
                 }
-            }
-
-            function updateBrackets(categoriaAtivada) {
-                //nao possui chaves
-                if (!categoriaAtivada.arvore) {
-
-                } else {
-                    montarArvore(categoriaAtivada.arvore);
-                }
-
             }
 
             function montarArvore(arvore) {
@@ -261,7 +250,7 @@ campeonato
                             $scope.categoriaAtivada = categoria;
 
                             if ($scope.categoriaAtivada) {
-                                updateBrackets($scope.categoriaAtivada);
+                                montarArvore($scope.categoriaAtivada.arvore);
                             }
 
                         }
@@ -291,81 +280,5 @@ campeonato
                         }
                     });
                 }, 8000);
-
-                /*
-                 Categorias.all().then(function(categorias){
-                 categorias.forEach(function( categoria ){
-                 var query = {
-                 "graduacao" : {
-                 "$gte" : categoria.graduacao[0],
-                 "$lte" : categoria.graduacao[1]
-                 },
-                 "idade" : {
-                 "$gte" : categoria.idade[0],
-                 "$lte" : categoria.idade[1]
-                 },
-                 "peso" : {
-                 "$gte" : categoria.peso[0],
-                 "$lte" : categoria.peso[1]
-                 },
-                 "formato" : {
-                 "$in" : [categoria.formato, 2]
-                 }
-                 };
-                 Competidores.query(query).then(function(competidores){
-                 categoria.competidores = competidores;
-                 });
-                 });
-                 $scope.categorias = categorias;
-                 });
-
-                 Competidores.all().then(function(competidores){
-                 $scope.competidores = competidores;
-
-                 var arr = angular.copy(competidores);
-
-                 var comp = [];
-
-                 var prime = arr.length % 2;
-
-                 while(arr.length) {
-                 comp.push(arr.shift());
-                 comp.push(arr.pop());
-                 }
-
-                 if(prime) {
-                 comp.pop();
-                 }
-
-                 $scope.comp = comp;
-
-                 var data = {};
-
-                 var teams = [];
-
-                 var nomes = angular.copy(comp);
-
-                 while(nomes.length) {
-                 var array = [];
-                 var nome1 = nomes.shift();
-                 if(nome1) {
-                 array.push(nome1.nome);
-                 }
-                 var nome2 = nomes.shift()
-                 if(nome2) {
-                 array.push(nome2.nome);
-                 }
-
-                 teams.push(array);
-                 }
-
-                 data.teams = teams;
-
-
-
-                 });
-                 */
-
             };
-
         }]);
